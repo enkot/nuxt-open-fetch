@@ -1,0 +1,103 @@
+<!--
+Get your module up and running quickly.
+
+Find and replace all on all files (CMD+SHIFT+F):
+- Name: My Module
+- Package name: my-module
+- Description: My new Nuxt module
+-->
+
+# Nuxt Open Fetch
+
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
+[![Nuxt][nuxt-src]][nuxt-href]
+
+Generate zero-overhead, typed OpenAPI clients for Nuxt.
+
+In other words - familiar `$fetch` and `useFetch`, but for OpenAPI requests. Uses awesome [openapi-typescript](https://github.com/drwpow/openapi-typescript) generator under the hood.
+
+- [✨ &nbsp;Release Notes](/CHANGELOG.md)
+<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
+<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+
+## Features
+
+<!-- Highlight some of the features your module provide here -->
+- 🍹 &nbsp;No manual typing of your API
+- 🍋 &nbsp;Supports OpenAPI 3.0 and 3.1 (including advanced features like [discriminators](https://spec.openapis.org/oas/v3.1.0#discriminator-object))
+- 🌲 &nbsp;Uses runtime-free types that outperform old-school codegen
+- 📡 &nbsp;Load schemas from YAML or JSON, locally or remotely
+
+## Quick Setup
+
+1. Add `nuxt-open-fetch` dependency to your project
+
+```bash
+# Using pnpm
+pnpm add -D nuxt-open-fetch
+
+# Using yarn
+yarn add --dev nuxt-open-fetch
+
+# Using npm
+npm install --save-dev nuxt-open-fetch
+```
+
+2. Add `nuxt-open-fetch` to the `modules` section of `nuxt.config.ts`
+
+```js
+export default defineNuxtConfig({
+  modules: [
+    'nuxt-open-fetch'
+  ]
+})
+```
+
+That's it! You can now use My Module in your Nuxt app ✨
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Generate type stubs
+npm run dev:prepare
+
+# Develop with the playground
+npm run dev
+
+# Build the playground
+npm run dev:build
+
+# Run ESLint
+npm run lint
+
+# Run Vitest
+npm run test
+npm run test:watch
+
+# Release new version
+npm run release
+```
+
+## License
+
+Made with ❤️
+
+Published under the [MIT License](./LICENCE).
+
+<!-- Badges -->
+[npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/my-module
+
+[npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/my-module
+
+[license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/my-module
+
+[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
+[nuxt-href]: https://nuxt.com

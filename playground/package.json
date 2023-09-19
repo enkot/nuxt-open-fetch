@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "playground-client",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev && listhen -w ./server.ts",
+    "build": "nuxi build",
+    "generate": "nuxi generate"
+  },
+  "devDependencies": {
+    "nuxt": "latest"
+  }
+}
