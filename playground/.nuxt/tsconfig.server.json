@@ -16,7 +16,7 @@
         "./types/nitro-imports"
       ],
       "#paths": [
-        "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/dist/core/runtime/nitro/paths"
+        "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/dist/core/runtime/nitro/paths"
       ],
       "~": [
         "./.."
@@ -59,7 +59,7 @@
   "exclude": [
     "../node_modules",
     "../../node_modules",
-    "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/node_modules",
+    "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/node_modules",
     "../dist"
   ]
 }

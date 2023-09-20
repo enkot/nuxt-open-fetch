@@ -3,6 +3,7 @@
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -10,6 +11,8 @@
     "isolatedModules": true,
     "useDefineForClassFields": true,
     "strict": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
     "allowJs": true,
     "noEmit": true,
     "resolveJsonModule": true,
@@ -46,13 +49,13 @@
         "../public"
       ],
       "#app": [
-        "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/dist/app"
+        "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/dist/app"
       ],
       "#app/*": [
-        "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/dist/app/*"
+        "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/dist/app/*"
       ],
       "vue-demi": [
-        "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/dist/app/compat/vue-demi"
+        "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/dist/app/compat/vue-demi"
       ],
       "#vue-router": [
         "./vue-router"
@@ -76,13 +79,13 @@
     "../**/*",
     "../../**/*",
     "..",
-    "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/dist/app",
-    "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/dist/app/compat/vue-demi"
+    "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/dist/app",
+    "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/dist/app/compat/vue-demi"
   ],
   "exclude": [
     "../node_modules",
     "../../node_modules",
-    "../../node_modules/.pnpm/nuxt@3.7.0_@types+node@18.17.12_eslint@8.48.0_rollup@3.28.1_typescript@4.9.5/node_modules/nuxt/node_modules",
+    "../../node_modules/.pnpm/nuxt@3.7.3_@types+node@18.17.17_eslint@8.49.0_rollup@3.29.2_typescript@5.2.2/node_modules/nuxt/node_modules",
     "../dist",
     "../.output"
   ]

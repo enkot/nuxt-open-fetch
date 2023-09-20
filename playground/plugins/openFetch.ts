@@ -1,5 +1,5 @@
 export default defineNuxtPlugin(() => {
-  useOpenFetchOptions('pets', (globalOptions) => {
+  useOpenFetchOptions((globalOptions) => {
     return {
       ...globalOptions,
       onResponse({ response }) {

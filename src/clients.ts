@@ -1,5 +1,4 @@
 import type { Ref } from 'vue'
-import type { FetchOptions } from 'ofetch'
 import type { ErrorResponse, HttpMethod, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap } from "openapi-typescript-helpers"
 import type { KeysOf, MultiWatchSources, AsyncDataOptions, AsyncData, PickFrom } from "#app/composables/asyncData"
 import type { OpenFetchClientName } from '#build/module/nuxt-open-fetch'
@@ -15,14 +14,14 @@ type ComputedOptions<T extends Record<string, any>> = {
 }
 type ParamsOption<T = void> = T extends { parameters: any } ? NonNullable<T["parameters"]> : { query: Record<string, unknown> }
 
-interface ApiOptions<M extends HttpMethod, P extends { path?: any, query?: any }> extends Omit<FetchOptions, 'method' | 'params' | 'query'> {
+interface FetchOptions<M extends HttpMethod, P extends { path?: any, query?: any }> extends Omit<OpenFetchOptions, 'query'> {
   params?: P extends { path: any } ? P['path'] : never
   query?: P['query']
-  method?: M 
+  method?: M
 }
-type ComputedFetchOptions<M extends HttpMethod, P extends { path?: any, query?: any }> = ComputedOptions<ApiOptions<M, P>>
+type ComputedFetchOptions<M extends HttpMethod, P extends { path?: any, query?: any }> = ComputedOptions<FetchOptions<M, P>>
 
-export interface UseApiOptions<
+export interface UseFetchOptions<
   Method extends HttpMethod,
   Params extends { path?: any, query?: any },
   ResT,
@@ -42,7 +41,7 @@ export type OpenFetchClient<Paths> = <
   ResT = FetchResponseData<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>
 >(
   path: ReqT,
-  options?: ApiOptions<Method, ParamsOption<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>>
+  options?: FetchOptions<Method, ParamsOption<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>>
 ) => Promise<ResT>
 
 export type UseOpenFetchClient<Paths> = <
@@ -55,8 +54,8 @@ export type UseOpenFetchClient<Paths> = <
   DefaultT = null,
 >(
   path: ReqT | (() => ReqT),
-  options?: UseApiOptions<Method, ParamsOption<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>, ResT, DataT, PickKeys, DefaultT>,
-  autoKey?: string 
+  options?: UseFetchOptions<Method, ParamsOption<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>, ResT, DataT, PickKeys, DefaultT>,
+  autoKey?: string
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
 export type UseLazyOpenFetchClient<Paths> = <
@@ -69,8 +68,8 @@ export type UseLazyOpenFetchClient<Paths> = <
   DefaultT = null,
 >(
   path: ReqT | (() => ReqT),
-  options?: Omit<UseApiOptions<Method, ParamsOption<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>, ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
-  autoKey?: string 
+  options?: Omit<UseFetchOptions<Method, ParamsOption<'get' extends Method ? Paths[ReqT]['get'] : Paths[ReqT][Method]>, ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
+  autoKey?: string
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
 export const getGlobalOptions = (name: OpenFetchClientName): OpenFetchOptions => {
@@ -102,12 +101,11 @@ export const createUseOpenFetchClient = <Paths>(name: OpenFetchClientName): UseO
 
 export const createUseLazyOpenFetchClient = <Paths>(name: OpenFetchClientName): UseLazyOpenFetchClient<Paths> => {
   return (path, { params, query, ...options } = {}, autoKey) => {
-    return useFetch(() => fillPath(toValue(path), toValue(params)), {
+    return useLazyFetch(() => fillPath(toValue(path), toValue(params)), {
       ...getGlobalOptions(name),
       key: autoKey,
       ...options,
-      query: computed(() => toValue(query)),
-      lazy: true
+      query: computed(() => toValue(query))
     })
   }
 }

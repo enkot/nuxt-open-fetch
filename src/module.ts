@@ -1,5 +1,5 @@
-import fs from 'node:fs'
-import internal from 'node:stream'
+import { existsSync } from 'node:fs'
+import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
 import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin, addImports } from '@nuxt/kit'
@@ -8,13 +8,14 @@ import { pascalCase, camelCase, kebabCase } from 'scule'
 import { defu } from 'defu'
 import { isValidUrl } from './utils'
 
-type OpenAPI3Schema = string | URL | OpenAPI3 | internal.Readable
+type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
-export interface OpenFetchOptions extends Omit<FetchOptions, 'method' | 'params'> {}
+export interface OpenFetchOptions extends Omit<FetchOptions, 'method' | 'params'> { }
+export interface SerializableOpenFetchOptions extends Omit<OpenFetchOptions, 'onRequest' | 'onRequestError' | 'onResponse' | 'onResponseError' | 'parseResponse' | 'body' | 'signal'> { }
 
 export interface OpenFetchClientOptions {
   schema?: OpenAPI3Schema
-  fetchOptions?: Omit<OpenFetchOptions, 'onRequest' | 'onRequestError' | 'onResponse' | 'onResponseError' | 'parseResponse' | 'body' | 'signal'>
+  fetchOptions?: SerializableOpenFetchOptions
   functionSuffix?: string
 }
 
@@ -44,9 +45,6 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt: '^3.0.0'
     }
   },
-  defaults: {
-    clients: {}
-  },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const schemas: ResolvedSchema[] = []
@@ -61,12 +59,12 @@ export default defineNuxtModule<ModuleOptions>({
         let schema: OpenAPI3Schema | undefined = undefined
 
         if (config.schema && typeof config.schema === 'string') {
-          schema = isValidUrl(config.schema) ? config.schema : resolve(srcDir, config.schema) 
+          schema = isValidUrl(config.schema) ? config.schema : resolve(srcDir, config.schema)
         } else {
           const jsonPath = resolve(schemasDir, `${name}/openapi.json`)
           const yamlPath = resolve(schemasDir, `${name}/openapi.yaml`)
 
-          schema = fs.existsSync(jsonPath) ? jsonPath : fs.existsSync(yamlPath) ? yamlPath : undefined
+          schema = existsSync(jsonPath) ? jsonPath : existsSync(yamlPath) ? yamlPath : undefined
         }
 
         if (!schema) throw new Error(`Could not find OpenAPI schema for "${name}"`)
@@ -166,11 +164,11 @@ export {}
 
     addImports({
       name: 'useOpenFetchOptions',
-      as: 'useOpenFetchOptions', 
+      as: 'useOpenFetchOptions',
       from: resolve('runtime/composables/useOpenFetchOptions')
     })
 
-    function getClientName(name: string, { suffix = 'fetch',  isComposable = false, lazy = false } = {}) {
+    function getClientName(name: string, { suffix = 'fetch', isComposable = false, lazy = false } = {}) {
       name = name === 'default' ? 'open' : name
       return isComposable ? `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-${suffix}`)}` : `$${camelCase(`${name}-${suffix}`)}`
     }

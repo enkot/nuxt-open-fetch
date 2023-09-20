@@ -3,9 +3,8 @@ import type { OpenFetchOptions } from '/Users/tarasbatenkov/Projects/nuxt-open-f
 import type { OpenFetchClient, UseOpenFetchClient, UseLazyOpenFetchClient } from '/Users/tarasbatenkov/Projects/nuxt-open-fetch/src/clients'
 
 import type { paths as PetsPaths } from '#build/types/nuxt-open-fetch/pets'
-import type { paths as UsptoPaths } from '#build/types/nuxt-open-fetch/uspto'
 
-export type OpenFetchClientName = 'pets' | 'uspto'
+export type OpenFetchClientName = 'pets'
 
 declare module '#app' {
   interface NuxtApp {
@@ -22,9 +21,5 @@ declare module 'vue' {
 export declare const $petsFetch: OpenFetchClient<PetsPaths>
 export declare const usePetsFetch: UseOpenFetchClient<PetsPaths>
 export declare const useLazyPetsFetch: UseLazyOpenFetchClient<PetsPaths>
-
-export declare const $usptoFetch: OpenFetchClient<UsptoPaths>
-export declare const useUsptoFetch: UseOpenFetchClient<UsptoPaths>
-export declare const useLazyUsptoFetch: UseLazyOpenFetchClient<UsptoPaths>
 
 export {}

@@ -10,5 +10,3 @@ export default defineNuxtConfig({
     }
   }
 })
-
-// https://petstore3.swagger.io/api/v3/pet/12

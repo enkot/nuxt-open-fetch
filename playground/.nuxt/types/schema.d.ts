@@ -18,12 +18,6 @@ declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
    openFetch: {
       clients: {
-         uspto: {
-            fetchOptions: {
-               baseURL: string,
-            },
-         },
-
          pets: {
             fetchOptions: {
                baseURL: string,
