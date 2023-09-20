@@ -30,14 +30,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: npm
+          cache: pnpm
           cache-dependency-path: './docs/pnpm-lock.json'
       - name: Install dependencies
         working-directory: ./docs
-        run: npm install
+        run: pnpm install
       - name: Static HTML export with Nuxt
         working-directory: ./docs
-        run: npm run generate
+        run: pnpm generate
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
