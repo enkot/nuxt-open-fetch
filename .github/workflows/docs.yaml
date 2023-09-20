@@ -10,7 +10,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -46,4 +46,3 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: docs/.output/public # The folder the action should deploy.
-          token: ${{ secrets.ACCESS_TOKEN }}
