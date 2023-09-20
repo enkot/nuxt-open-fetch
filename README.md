@@ -15,7 +15,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-Generate zero-overhead, typed OpenAPI clients for Nuxt.
+Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.
 
 In other words - `$fetch` and `useFetch` on steroids. Uses awesome [openapi-typescript](https://github.com/drwpow/openapi-typescript) generator under the hood.
 
@@ -31,6 +31,7 @@ In other words - `$fetch` and `useFetch` on steroids. Uses awesome [openapi-type
 - 🍋 &nbsp;Supports OpenAPI 3.0 and 3.1 (including advanced features like [discriminators](https://spec.openapis.org/oas/v3.1.0#discriminator-object))
 - 🌲 &nbsp;Uses runtime-free types that outperform old-school codegen
 - 📡 &nbsp;Load schemas from YAML or JSON, locally or remotely
+- 🥞 &nbsp;Works with Nuxt [Layers](https://nuxt.com/docs/getting-started/layers)
 
 ## Quick Setup
 
