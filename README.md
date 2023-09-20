@@ -6,7 +6,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 - Package name: my-module
 - Description: My new Nuxt module
 -->
-[![Nuxt Open Fetch](./docs/public/cover.png)](https://open-fetch.nuxtjs.org)
+[![Nuxt Open Fetch](./docs/public/cover.png)](https://enkot.github.io/nuxt-open-fetch/)
 
 # Nuxt Open Fetch
 
