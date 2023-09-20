@@ -19,7 +19,7 @@ Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.
 In other words - `$fetch` and `useFetch` on steroids. Uses awesome [openapi-typescript](https://github.com/drwpow/openapi-typescript) generator under the hood.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
-- [📖 &nbsp;Read the documentation](https://strapi.nuxtjs.org)
+- [📖 &nbsp;Read the documentation](https://enkot.github.io/nuxt-open-fetch/)
 <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
 <!-- - [📖 &nbsp;Documentation](https://example.com) -->
 
