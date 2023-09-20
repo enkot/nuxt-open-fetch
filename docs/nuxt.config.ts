@@ -9,5 +9,8 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
     // https://github.com/nuxt/devtools
     '@nuxt/devtools'
-  ]
+  ],
+  nitro: {
+    preset: 'github-pages'
+  }
 })
