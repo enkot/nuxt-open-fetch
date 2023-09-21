@@ -146,7 +146,7 @@ ${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
-export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}
+${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
 
 declare module '#app' {
   interface NuxtApp {

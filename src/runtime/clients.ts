@@ -5,7 +5,7 @@ import type { KeysOf, MultiWatchSources, AsyncDataOptions, AsyncData, PickFrom }
 import type { OpenFetchClientName } from '#build/module/nuxt-open-fetch'
 import { useFetch } from '#app'
 import { toValue, computed } from '#imports'
-import { fillPath } from '../utils'
+import { fillPath } from './utils'
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 type FetchResponseError<T> = FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>
