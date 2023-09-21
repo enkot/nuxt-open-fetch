@@ -1,11 +1,11 @@
 import type { Ref } from 'vue'
+import type { FetchOptions as _FetchOptions } from 'ofetch'
 import type { ErrorResponse, HttpMethod, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap } from "openapi-typescript-helpers"
 import type { KeysOf, MultiWatchSources, AsyncDataOptions, AsyncData, PickFrom } from "#app/composables/asyncData"
 import type { OpenFetchClientName } from '#build/module/nuxt-open-fetch'
-import type { OpenFetchOptions } from './module'
 import { useFetch } from '#app'
 import { toValue, computed } from '#imports'
-import { fillPath } from './utils'
+import { fillPath } from '../utils'
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 type FetchResponseError<T> = FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>
@@ -14,6 +14,7 @@ type ComputedOptions<T extends Record<string, any>> = {
 }
 type ParamsOption<T = void> = T extends { parameters: any } ? NonNullable<T["parameters"]> : { query: Record<string, unknown> }
 
+export interface OpenFetchOptions extends Omit<_FetchOptions, 'method' | 'params'> { }
 interface FetchOptions<M extends HttpMethod, P extends { path?: any, query?: any }> extends Omit<OpenFetchOptions, 'query'> {
   params?: P extends { path: any } ? P['path'] : never
   query?: P['query']
@@ -72,7 +73,7 @@ export type UseLazyOpenFetchClient<Paths> = <
   autoKey?: string
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
-export const getGlobalOptions = (name: OpenFetchClientName): OpenFetchOptions => {
+const getGlobalOptions = (name: OpenFetchClientName): OpenFetchOptions => {
   const { $openFetch } = useNuxtApp()
 
   return $openFetch[name]
