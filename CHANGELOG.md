@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.0.4
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.3...v0.0.4)
+
+### 🩹 Fixes
+
+- Badges ([38dc9bd](https://github.com/enkot/nuxt-open-fetch/commit/38dc9bd))
+- Fixes badges ([7dc924f](https://github.com/enkot/nuxt-open-fetch/commit/7dc924f))
+- Docs link ([2707272](https://github.com/enkot/nuxt-open-fetch/commit/2707272))
+- **docs:** Installation ([9da32b5](https://github.com/enkot/nuxt-open-fetch/commit/9da32b5))
+- **docs:** Cover image ([0f23264](https://github.com/enkot/nuxt-open-fetch/commit/0f23264))
+- Impoves types generation ([ae3baa4](https://github.com/enkot/nuxt-open-fetch/commit/ae3baa4))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.0.3
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.2...v0.0.3)
