@@ -3,8 +3,7 @@ import type { FetchOptions as _FetchOptions } from 'ofetch'
 import type { ErrorResponse, HttpMethod, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap } from "openapi-typescript-helpers"
 import type { KeysOf, MultiWatchSources, AsyncDataOptions, AsyncData, PickFrom } from "#app/composables/asyncData"
 import type { OpenFetchClientName } from '#build/module/nuxt-open-fetch'
-import { useFetch } from '#app'
-import { toValue, computed } from '#imports'
+import { toValue, computed, useNuxtApp, useFetch, useLazyFetch } from '#imports'
 import { fillPath } from './utils'
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>

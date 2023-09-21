@@ -5,6 +5,7 @@ export default defineNuxtConfig({
       pets: {
         fetchOptions: {
           baseURL: 'https://petstore3.swagger.io/api/v3',
+          headers: {}
         }
       }
     }
