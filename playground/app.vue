@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const { data } = await usePetsFetch('/pet/{petId}', {
   params: {
-    petId: 1
+    petId: 10
   }
 })
 </script>
 
 <template>
-  <pre>{{ }}</pre>
+  <pre>{{ data }}</pre>
 </template>
+  
