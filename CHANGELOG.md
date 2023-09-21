@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.0.6
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.5...v0.0.6)
+
+### 🩹 Fixes
+
+- Imports ([3cb4ccd](https://github.com/enkot/nuxt-open-fetch/commit/3cb4ccd))
+- **playground:** Removes "base" layer ([e11ab16](https://github.com/enkot/nuxt-open-fetch/commit/e11ab16))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.0.5
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.4...v0.0.5)
