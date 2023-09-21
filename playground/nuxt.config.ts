@@ -1,4 +1,4 @@
 export default defineNuxtConfig({
-  extends: ['./pets', './base'],
+  extends: ['./pets'],
   devtools: { enabled: true }
 })
