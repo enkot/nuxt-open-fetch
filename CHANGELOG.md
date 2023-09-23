@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.0.8
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.7...v0.0.8)
+
+### 🚀 Enhancements
+
+- Options support for factories ([84521db](https://github.com/enkot/nuxt-open-fetch/commit/84521db))
+- **docs:** Improved docs ([d17883f](https://github.com/enkot/nuxt-open-fetch/commit/d17883f))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.0.7
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.6...v0.0.7)
