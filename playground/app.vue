@@ -7,6 +7,6 @@ const { data } = await usePetsFetch('/pet/{petId}', {
 </script>
 
 <template>
-  <pre>{{ data }}</pre>
+  <pre>{{ data?.name }}</pre>
 </template>
   
