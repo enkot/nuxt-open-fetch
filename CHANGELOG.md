@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.0.7
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.6...v0.0.7)
+
+### 🚀 Enhancements
+
+- **docs:** Preview image ([d8eadf9](https://github.com/enkot/nuxt-open-fetch/commit/d8eadf9))
+
+### 🩹 Fixes
+
+- **docs:** Upscale image ([3b069ee](https://github.com/enkot/nuxt-open-fetch/commit/3b069ee))
+- **docs:** Simplified docs ([b357822](https://github.com/enkot/nuxt-open-fetch/commit/b357822))
+- Types ([ff71f85](https://github.com/enkot/nuxt-open-fetch/commit/ff71f85))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.0.6
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.5...v0.0.6)
