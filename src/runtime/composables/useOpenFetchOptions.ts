@@ -1,4 +1,4 @@
-import type { OpenFetchOptions } from '../../module'
+import type { OpenFetchOptions } from '#imports'
 import type { OpenFetchClientName } from '#build/module/nuxt-open-fetch'
 import { useNuxtApp } from '#app'
 
