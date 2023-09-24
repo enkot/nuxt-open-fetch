@@ -1,9 +1,6 @@
 export default defineNuxtConfig({
   // https://github.com/nuxt-themes/docus
   extends: '@nuxt-themes/docus',
-  app: {
-    baseURL: '/nuxt-open-fetch/'
-  },
   modules: [
     // https://github.com/nuxt-modules/plausible
     '@nuxtjs/plausible',
@@ -11,6 +8,6 @@ export default defineNuxtConfig({
     '@nuxt/devtools'
   ],
   nitro: {
-    preset: 'github-pages'
+    preset: 'vercel'
   }
 })
