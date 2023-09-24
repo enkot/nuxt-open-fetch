@@ -8,6 +8,6 @@ export default defineNuxtConfig({
     '@nuxt/devtools'
   ],
   nitro: {
-    preset: 'vercel'
+    preset: 'vercel-static'
   }
 })
