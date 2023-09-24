@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { data } = await usePetsFetch('/pet/{petId}', {
+const { data, execute } = await usePetsFetch('/pet/{petId}', {
+  immediate: false,
   params: {
     petId: 10
   }
@@ -8,5 +9,8 @@ const { data } = await usePetsFetch('/pet/{petId}', {
 
 <template>
   <pre>{{ data?.name }}</pre>
+  <button @click="() => execute()">
+    execute
+  </button>
 </template>
   

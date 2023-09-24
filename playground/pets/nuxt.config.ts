@@ -4,9 +4,12 @@ export default defineNuxtConfig({
     clients: {
       pets: {
         fetchOptions: {
-          baseURL: 'https://petstore3.swagger.io/api/v3'
+          baseURL: '/petsProxy'
         }
       }
     }
+  },
+  routeRules: {
+    '/petsProxy/**': { proxy: 'https://petstore3.swagger.io/api/v3/**' },
   }
 })
