@@ -6,7 +6,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 - Package name: my-module
 - Description: My new Nuxt module
 -->
-[![Nuxt Open Fetch](./docs/public/cover.png)](https://enkot.github.io/nuxt-open-fetch/)
+[![Nuxt Open Fetch](./docs/public/cover.png)](https://nuxt-open-fetch.vercel.app/)
 
 # Nuxt Open Fetch
 
@@ -19,7 +19,7 @@ Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.
 In other words - `$fetch` and `useFetch` on steroids. Uses awesome [openapi-typescript](https://github.com/drwpow/openapi-typescript) generator under the hood.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
-- [📖 &nbsp;Read the documentation](https://enkot.github.io/nuxt-open-fetch/)
+- [📖 &nbsp;Read the documentation](https://nuxt-open-fetch.vercel.app/)
 <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
 <!-- - [📖 &nbsp;Documentation](https://example.com) -->
 
