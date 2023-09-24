@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v0.0.9
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.8...v0.0.9)
+
+### 🩹 Fixes
+
+- Remove baseURL ([281d13e](https://github.com/enkot/nuxt-open-fetch/commit/281d13e))
+- Change preset ([1049112](https://github.com/enkot/nuxt-open-fetch/commit/1049112))
+- Remove github workflow ([dd4f19b](https://github.com/enkot/nuxt-open-fetch/commit/dd4f19b))
+- **docs:** Fixed factories docs ([7165ba9](https://github.com/enkot/nuxt-open-fetch/commit/7165ba9))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.0.8
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.7...v0.0.8)
