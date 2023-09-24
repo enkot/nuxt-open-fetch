@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.9...v0.1.0)
+
+### 🚀 Enhancements
+
+- **docs:** Adds "Proxy" docs ([bcc06aa](https://github.com/enkot/nuxt-open-fetch/commit/bcc06aa))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.0.9
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.8...v0.0.9)
