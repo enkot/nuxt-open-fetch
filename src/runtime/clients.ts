@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 import type { FetchOptions as _FetchOptions } from 'ofetch'
 import type { ErrorResponse, HttpMethod, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap } from "openapi-typescript-helpers"
 import type { KeysOf, MultiWatchSources, AsyncDataOptions, AsyncData, PickFrom } from "#app/composables/asyncData"
-import type { OpenFetchClientName } from '#build/module/nuxt-open-fetch'
+import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
 import { toValue, unref, computed, useNuxtApp, useFetch, useLazyFetch } from '#imports'
 import { fillPath } from './utils'
 
