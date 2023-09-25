@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.1.0...v0.1.1)
+
+### 🚀 Enhancements
+
+- **docs:** Extend "Proxy" docs ([e1a0876](https://github.com/enkot/nuxt-open-fetch/commit/e1a0876))
+
+### 🩹 Fixes
+
+- **docs:** Fixes links ([b0d58f3](https://github.com/enkot/nuxt-open-fetch/commit/b0d58f3))
+- Refactored module to use ".ts" template files ([812de33](https://github.com/enkot/nuxt-open-fetch/commit/812de33))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.1.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.0.9...v0.1.0)
