@@ -3,6 +3,7 @@ export default defineAppConfig({
     title: 'Nuxt Open Fetch',
     description: 'Generate zero-overhead, typed OpenAPI clients for Nuxt.',
     image: 'https://github.com/enkot/nuxt-open-fetch/raw/main/docs/public/cover.png',
+
     socials: {
       github: 'enkot/nuxt-open-fetch',
       nuxt: {
@@ -11,6 +12,7 @@ export default defineAppConfig({
         href: 'https://nuxt.com'
       }
     },
+
     github: {
       dir: '.starters/default/content',
       branch: 'main',
@@ -18,13 +20,21 @@ export default defineAppConfig({
       owner: 'nuxt-themes',
       edit: true
     },
+
     aside: {
       level: 0,
       collapsed: false,
       exclude: []
     },
+
     header: {
       logo: true,
+      fluid: false,
+      showLinkIcon: true
+    },
+
+    main: {
+      fluid: false
     }
   }
 })
