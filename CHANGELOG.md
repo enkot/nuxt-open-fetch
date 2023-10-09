@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.1.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.1.1...v0.1.2)
+
+### 🚀 Enhancements
+
+- **docs:** Addes nuxthq/studio ([7459ba1](https://github.com/enkot/nuxt-open-fetch/commit/7459ba1))
+
+### 🩹 Fixes
+
+- **docs:** Convert preview image to "webp" ([70cd619](https://github.com/enkot/nuxt-open-fetch/commit/70cd619))
+- **docs:** Tautology ([0b99300](https://github.com/enkot/nuxt-open-fetch/commit/0b99300))
+- **docs:** Fix module names ([45b808e](https://github.com/enkot/nuxt-open-fetch/commit/45b808e))
+- **docs:** Improved Schemas docs ([4a336a2](https://github.com/enkot/nuxt-open-fetch/commit/4a336a2))
+- Added note ([912042e](https://github.com/enkot/nuxt-open-fetch/commit/912042e))
+
+### 🏡 Chore
+
+- **deployment:** Add workflow file ([a6e875d](https://github.com/enkot/nuxt-open-fetch/commit/a6e875d))
+- **deployment:** Remove workflow file ([6a2ea8b](https://github.com/enkot/nuxt-open-fetch/commit/6a2ea8b))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.1.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.1.0...v0.1.1)
