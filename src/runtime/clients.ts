@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { FetchOptions as _FetchOptions } from 'ofetch'
+import type { FetchError, FetchOptions as _FetchOptions } from 'ofetch'
 import type { ErrorResponse, HttpMethod, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap } from "openapi-typescript-helpers"
 import type { KeysOf, MultiWatchSources, AsyncDataOptions, AsyncData, PickFrom } from "#app/composables/asyncData"
 import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
@@ -9,7 +9,7 @@ import { fillPath } from './utils'
 const interceptors = ['onRequest', 'onResponse', 'onRequestError', 'onResponseError'] as const
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
-type FetchResponseError<T> = FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>
+type FetchResponseError<T> = FetchError<FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>>
 type ComputedOptions<T extends Record<string, any>> = {
   [K in keyof T]: T[K] extends Function ? T[K] : T[K] extends Record<string, any> ? ComputedOptions<T[K]> | Ref<T[K]> | T[K] : Ref<T[K]> | T[K]
 }
