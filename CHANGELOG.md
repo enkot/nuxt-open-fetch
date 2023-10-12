@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.3
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.1.2...v0.1.3)
+
+### 🚀 Enhancements
+
+- Refactored types ([857162f](https://github.com/enkot/nuxt-open-fetch/commit/857162f))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.1.2
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.1.1...v0.1.2)
