@@ -111,7 +111,7 @@ export default defineNuxtModule<ModuleOptions>({
       from: resolve(`runtime/clients`),
       imports: [
         'createOpenFetchClient',
-        'createUseOpenFetchClient', 
+        'createUseOpenFetchClient',
         'createUseLazyOpenFetchClient',
         'OpenFetchClient',
         'UseOpenFetchClient',
