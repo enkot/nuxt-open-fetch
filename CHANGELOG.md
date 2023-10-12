@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.2.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.2.0...v0.2.1)
+
+### 🩹 Fixes
+
+- Use FetchError for error return type ([2de12d0](https://github.com/enkot/nuxt-open-fetch/commit/2de12d0))
+
+### 🏡 Chore
+
+- **release:** V0.2.0 ([cb34246](https://github.com/enkot/nuxt-open-fetch/commit/cb34246))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Ilya Semenov ([@IlyaSemenov](http://github.com/IlyaSemenov))
+
 ## v0.2.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.1.2...v0.2.0)
