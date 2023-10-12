@@ -1,14 +1,21 @@
 <script setup lang="ts">
-const { data, execute } = await usePetsFetch('/pet/{petId}', {
-  immediate: false,
-  params: {
-    petId: 10
+const { execute } = await usePetsFetch('/pet/{petId}', {
+  path: {
+    petId: 1,
   }
 })
+
+// const result = await $petsFetch('/pet', {
+//   method: 'post',
+//   body: {
+//     name: 'david',
+//     photoUrls: ['https://www.baidu.com']
+//   }
+// })
+
 </script>
 
 <template>
-  <pre>{{ data?.name }}</pre>
   <button @click="() => execute()">
     execute
   </button>
