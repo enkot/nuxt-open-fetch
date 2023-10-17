@@ -105,7 +105,7 @@ const getOptions = (arg: any): OpenFetchOptions => {
 }
 
 const combineInterceptors = (...args: ComputedOptions<FetchOptions<any, any, any>>[]) => {
-  return interceptors.reduce((acc, name) => ({
+  return interceptors.filter(name => args.some(options => options[name])).reduce((acc, name) => ({
     ...acc,
     [name]: async (ctx: any) => {
       await Promise.all(args.map((options) => unref(options[name])?.(ctx)))
