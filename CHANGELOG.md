@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.2.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.2.1...v0.2.2)
+
+### 🚀 Enhancements
+
+- Added warning message ([5ce9564](https://github.com/enkot/nuxt-open-fetch/commit/5ce9564))
+- **docs:** New preview image ([2489803](https://github.com/enkot/nuxt-open-fetch/commit/2489803))
+
+### 🩹 Fixes
+
+- **docs:** Replace npm with pnpm ([15633c3](https://github.com/enkot/nuxt-open-fetch/commit/15633c3))
+- **docs:** Fix quickstart ([362d724](https://github.com/enkot/nuxt-open-fetch/commit/362d724))
+- **docs:** Smaller preview image ([950a607](https://github.com/enkot/nuxt-open-fetch/commit/950a607))
+- **docs:** Edited warning ([6062d4f](https://github.com/enkot/nuxt-open-fetch/commit/6062d4f))
+- Custom $fetch client hooks ([d158565](https://github.com/enkot/nuxt-open-fetch/commit/d158565))
+
+### 🏡 Chore
+
+- **release:** V0.2.1 ([0a87b84](https://github.com/enkot/nuxt-open-fetch/commit/0a87b84))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Ilya Semenov ([@IlyaSemenov](http://github.com/IlyaSemenov))
+
 ## v0.2.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.2.0...v0.2.1)
