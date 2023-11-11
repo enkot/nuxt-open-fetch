@@ -1,15 +1,11 @@
 import type { Ref } from 'vue'
-import type { FetchError, FetchOptions as _FetchOptions } from 'ofetch'
+import type { $Fetch, FetchError, FetchOptions } from 'ofetch'
 import type { ErrorResponse, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap, OperationRequestBodyContent } from "openapi-typescript-helpers"
 import type { KeysOf, AsyncData, PickFrom } from "#app/composables/asyncData"
-import type { UseFetchOptions as _UseFetchOptions } from "#app/composables/fetch"
+import type { UseFetchOptions } from "#app/composables/fetch"
 import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
-import { toValue, unref, useNuxtApp, useFetch, useLazyFetch } from '#imports'
-import { fillPath } from './utils'
-
-const interceptors = ['onRequest', 'onResponse', 'onRequestError', 'onResponseError'] as const
-
-export interface OpenFetchOptions extends Omit<_FetchOptions, 'method'> { }
+import { $fetch } from 'ofetch'
+import { toValue, useNuxtApp, useFetch } from '#imports'
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 type FetchResponseError<T> = FetchError<FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>>
@@ -29,7 +25,7 @@ type RequestBodyOption<T> = OperationRequestBodyContent<T> extends never
   ? { body?: OperationRequestBodyContent<T> }
   : { body: OperationRequestBodyContent<T> };
 
-type FetchOptions<
+type OpenFetchOptions<
   Method,
   LowercasedMethod,
   Params,
@@ -38,9 +34,9 @@ type FetchOptions<
   MethodOption<Method, Params>
   & ParamsOption<Operation>
   & RequestBodyOption<Operation>
-  & Omit<OpenFetchOptions, 'query' | 'body'>
+  & Omit<FetchOptions, 'query' | 'body' | 'method'>
 
-type UseFetchOptions<
+type UseOpenFetchOptions<
   Method,
   LowercasedMethod,
   Params,
@@ -53,7 +49,7 @@ type UseFetchOptions<
   ComputedMethodOption<Method, Params>
   & ComputedOptions<ParamsOption<Operation>>
   & ComputedOptions<RequestBodyOption<Operation>>
-  & Omit<_UseFetchOptions<ResT, DataT, PickKeys, DefaultT>, 'method' | 'query' | 'body'>
+  & Omit<UseFetchOptions<ResT, DataT, PickKeys, DefaultT>, 'query' | 'body' | 'method'>
 
 export type OpenFetchClient<Paths> = <
   ReqT extends Extract<keyof Paths, string>,
@@ -63,10 +59,10 @@ export type OpenFetchClient<Paths> = <
   ResT = FetchResponseData<Paths[ReqT][DefaultMethod]>
 >(
   url: ReqT,
-  options?: FetchOptions<Method, LowercasedMethod, Paths[ReqT]>
+  options?: OpenFetchOptions<Method, LowercasedMethod, Paths[ReqT]>
 ) => Promise<ResT>
 
-export type UseOpenFetchClient<Paths> = <
+export type UseOpenFetchClient<Paths, Lazy extends boolean = false> = <
   ReqT extends Extract<keyof Paths, string>,
   Method extends Extract<keyof Paths[ReqT], string> | Uppercase<Extract<keyof Paths[ReqT], string>>,
   LowercasedMethod extends Lowercase<Method> extends keyof Paths[ReqT] ? Lowercase<Method> : never,
@@ -78,81 +74,39 @@ export type UseOpenFetchClient<Paths> = <
   DefaultT = null,
 >(
   url: ReqT | (() => ReqT),
-  options?: UseFetchOptions<Method, LowercasedMethod, Paths[ReqT], ResT, DataT, PickKeys, DefaultT>,
+  options?: Lazy extends true
+    ? Omit<UseOpenFetchOptions<Method, LowercasedMethod, Paths[ReqT], ResT, DataT, PickKeys, DefaultT>, 'lazy'>
+    : UseOpenFetchOptions<Method, LowercasedMethod, Paths[ReqT], ResT, DataT, PickKeys, DefaultT>,
   autoKey?: string
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
-export type UseLazyOpenFetchClient<Paths> = <
-  ReqT extends Extract<keyof Paths, string>,
-  Method extends Extract<keyof Paths[ReqT], string> | Uppercase<Extract<keyof Paths[ReqT], string>>,
-  LowercasedMethod extends Lowercase<Method> extends keyof Paths[ReqT] ? Lowercase<Method> : never,
-  DefaultMethod extends 'get' extends LowercasedMethod ? 'get' : LowercasedMethod,
-  ResT = FetchResponseData<Paths[ReqT][DefaultMethod]>,
-  ErrorT = FetchResponseError<Paths[ReqT][DefaultMethod]>,
-  DataT = ResT,
-  PickKeys extends KeysOf<DataT> = KeysOf<DataT>,
-  DefaultT = null,
->(
-  url: ReqT | (() => ReqT),
-  options?: Omit<UseFetchOptions<Method, LowercasedMethod, Paths[ReqT], ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
-  autoKey?: string
-) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
+// More flexible way to rewrite the request path,
+// but has downsides until (if) this feature is implemented https://github.com/unjs/ofetch/issues/319
+// export const openFetchRequestInterceptor = (ctx: FetchContext) => {
+//   ctx.request = fillPath(ctx.request as string, (ctx.options as { path: Record<string, string> }).path)
+// }
 
-const getOptions = (arg: any): OpenFetchOptions => {
-  const { $openFetch } = useNuxtApp()
-
-  return (typeof arg === 'string' ? $openFetch[arg as OpenFetchClientName] : arg)
-}
-
-const combineInterceptors = (...args: ComputedOptions<FetchOptions<any, any, any>>[]) => {
-  return interceptors.filter(name => args.some(options => options[name])).reduce((acc, name) => ({
-    ...acc,
-    [name]: async (ctx: any) => {
-      await Promise.all(args.map((options) => unref(options[name])?.(ctx)))
+export function createOpenFetch(options: FetchOptions | ((options: FetchOptions) => FetchOptions)) {
+  return (url: string, opts: any) => $fetch(
+    fillPath(url, opts.path),
+    typeof options === 'function' ? options(opts) : {
+      ...options,
+      ...opts
     }
-  }), {} as OpenFetchOptions)
+  )
 }
 
-export function createOpenFetchClient<Paths>(options: OpenFetchOptions): OpenFetchClient<Paths>
-export function createOpenFetchClient<Paths>(name: OpenFetchClientName): OpenFetchClient<Paths>
-export function createOpenFetchClient<Paths>(arg: OpenFetchOptions | OpenFetchClientName): OpenFetchClient<Paths> {
-  return (url, { path, ...options }: any = {}) => {
-    const sharedOptions = getOptions(arg)
+export function createUseOpenFetch<Paths, Lazy extends boolean = false>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> {
+  return (url: string | (() => string), options: any = {}, autoKey?: string) => {
+    const nuxtApp = useNuxtApp()
+    const $fetch = (typeof client === 'string' ? nuxtApp[`$${client}Fetch`] : client)
+    const opts = { $fetch, key: autoKey, ...options }
 
-    return $fetch(fillPath(url, path), {
-      ...sharedOptions,
-      ...options,
-      ...combineInterceptors(options, sharedOptions)
-    })
+    return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
   }
 }
 
-export function createUseOpenFetchClient<Paths>(options: OpenFetchOptions): UseOpenFetchClient<Paths>
-export function createUseOpenFetchClient<Paths>(name: OpenFetchClientName): UseOpenFetchClient<Paths>
-export function createUseOpenFetchClient<Paths>(arg: OpenFetchOptions | OpenFetchClientName): UseOpenFetchClient<Paths> {
-  return (url, { path, ...options }: any = {}, autoKey) => {
-    const sharedOptions = getOptions(arg)
-
-    return useFetch(() => fillPath(toValue(url), toValue(path)), {
-      ...sharedOptions,
-      key: autoKey,
-      ...options,
-      ...combineInterceptors(options, sharedOptions)
-    })
-  }
-}
-
-export function createUseLazyOpenFetchClient<Paths>(options: OpenFetchOptions): UseLazyOpenFetchClient<Paths>
-export function createUseLazyOpenFetchClient<Paths>(name: OpenFetchClientName): UseLazyOpenFetchClient<Paths>
-export function createUseLazyOpenFetchClient<Paths>(arg: OpenFetchOptions | OpenFetchClientName): UseLazyOpenFetchClient<Paths> {
-  return (url, { path, ...options }: any = {}, autoKey) => {
-    const sharedOptions = getOptions(arg)
-
-    return useLazyFetch(() => fillPath(toValue(url), toValue(path)), {
-      ...sharedOptions,
-      key: autoKey,
-      ...options,
-      ...combineInterceptors(options, sharedOptions)
-    })
-  }
+export function fillPath(path: string, params: object = {}) {
+  for (const [k, v] of Object.entries(params)) path = path.replace(`{${k}}`, encodeURIComponent(String(v)))
+  return path
 }

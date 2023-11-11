@@ -1,10 +1,16 @@
 export default defineNuxtPlugin(() => {
-  useOpenFetchOptions((globalOptions) => {
-    return {
-      ...globalOptions,
-      onResponse({ response }) {
-        console.log('----onResponse----', response._data)
-      }
+  const { public: { openFetch: clients }} = useRuntimeConfig()
+
+  return {
+    provide: {
+      petsFetch: createOpenFetch((options) => ({
+        ...clients.pets,
+        ...options,
+        onRequest(ctx) {
+          console.log('My logging', ctx.request)
+          return options.onRequest?.(ctx)
+        }
+      }))
     }
-  })
+  }
 })

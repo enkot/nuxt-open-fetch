@@ -1,11 +1,9 @@
 export default defineNuxtConfig({
-  modules: ['../src/module'],
   openFetch: {
+    disablePlugin: true,
     clients: {
       pets: {
-        fetchOptions: {
-          baseURL: '/petsProxy'
-        }
+        baseURL: '/petsProxy',
       }
     }
   },

@@ -1,18 +1,10 @@
 <script setup lang="ts">
-const { execute } = await usePetsFetch('/pet/{petId}', {
+const { execute, data } = await usePetsFetch('/pet/{petId}', {
   path: {
-    petId: 1,
-  }
+    petId: 12,
+  },
+  immediate: false,
 })
-
-// const result = await $petsFetch('/pet', {
-//   method: 'post',
-//   body: {
-//     name: 'david',
-//     photoUrls: ['https://www.baidu.com']
-//   }
-// })
-
 </script>
 
 <template>

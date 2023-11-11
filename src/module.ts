@@ -2,31 +2,29 @@ import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
-import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin, addImports } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin } from '@nuxt/kit'
 import openapiTS from "openapi-typescript"
-import { pascalCase, camelCase, kebabCase } from 'scule'
+import { pascalCase, kebabCase } from 'scule'
 import { defu } from 'defu'
 import { isValidUrl } from './utils'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
-export interface OpenFetchOptions extends Omit<FetchOptions, 'method' | 'params' | 'onRequest' | 'onRequestError' | 'onResponse' | 'onResponseError' | 'parseResponse' | 'body' | 'signal'> { }
+export interface OpenFetchOptions extends Pick<FetchOptions, 'baseURL' | 'query' | 'headers'> { }
 
-export interface OpenFetchClientOptions {
+export interface OpenFetchClientOptions extends OpenFetchOptions {
   schema?: OpenAPI3Schema
-  fetchOptions?: OpenFetchOptions
-  functionSuffix?: string
 }
 
 export interface ModuleOptions {
   clients?: Record<string, OpenFetchClientOptions>
   openAPITS?: OpenAPITSOptions
+  disablePlugin?: boolean
 }
 
 interface ResolvedSchema {
   name: string
   fetchName: {
-    raw: string,
     composable: string,
     lazyComposable: string
   },
@@ -47,12 +45,21 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const schemas: ResolvedSchema[] = []
+    const clients: Record<string, OpenFetchClientOptions> = defu(nuxt.options.runtimeConfig.openFetch as any, options.clients)
+
+    nuxt.options.runtimeConfig.public.openFetch = Object.fromEntries(Object.entries(clients)
+      .map(([key, { schema: _, ...options }]) => [key, options])) as any
 
     for (const layer of nuxt.options._layers) {
-      const { srcDir, openFetch: options } = layer.config
+      const { srcDir, openFetch } = layer.config
       const schemasDir = resolve(srcDir, 'openapi')
+      const layerClients = defu(
+        Object.fromEntries(Object.entries(clients).filter(([key]) => openFetch?.clients?.[key])),
+        openFetch?.clients,
+      ) as Record<string, OpenFetchClientOptions>
 
-      for (const [name, config] of Object.entries(options?.clients || {})) {
+      for (const [name, config] of Object.entries(layerClients)) {
+        // Skip if schema already added by upper layer or if config is not defined
         if (schemas.some(item => item.name === name) || !config) continue
 
         let schema: OpenAPI3Schema | undefined = undefined
@@ -71,17 +78,14 @@ export default defineNuxtModule<ModuleOptions>({
         schemas.push({
           name,
           fetchName: {
-            raw: getClientName(name, { suffix: config.functionSuffix }),
-            composable: getClientName(name, { suffix: config.functionSuffix, isComposable: true }),
-            lazyComposable: getClientName(name, { suffix: config.functionSuffix, isComposable: true, lazy: true })
+            composable: getClientName(name),
+            lazyComposable: getClientName(name, true)
           },
           schema,
           openAPITS: options?.openAPITS,
         })
       }
     }
-
-    nuxt.options.runtimeConfig.public.openFetch = defu(nuxt.options.runtimeConfig.public.openFetch as any, options)
 
     nuxt.options.optimization = nuxt.options.optimization || {
       keyedComposables: []
@@ -110,12 +114,11 @@ export default defineNuxtModule<ModuleOptions>({
     addImportsSources({
       from: resolve(`runtime/clients`),
       imports: [
-        'createOpenFetchClient',
-        'createUseOpenFetchClient',
-        'createUseLazyOpenFetchClient',
+        'createOpenFetch',
+        'createUseOpenFetch',
+        'openFetchRequestInterceptor',
         'OpenFetchClient',
         'UseOpenFetchClient',
-        'UseLazyOpenFetchClient',
         'OpenFetchOptions'
       ]
     })
@@ -124,7 +127,7 @@ export default defineNuxtModule<ModuleOptions>({
       filename: `${moduleName}.ts`,
       getContents() {
         return `
-import { createOpenFetchClient, createUseOpenFetchClient, createUseLazyOpenFetchClient } from '#imports'
+import { createUseOpenFetch } from '#imports'
 ${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
@@ -132,9 +135,8 @@ import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleNam
 ${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
 
 ${schemas.map(({ name, fetchName }) => `
-export const ${fetchName.raw} = createOpenFetchClient<${pascalCase(name)}Paths>('${name}')
-export const ${fetchName.composable} = createUseOpenFetchClient<${pascalCase(name)}Paths>('${name}')
-export const ${fetchName.lazyComposable} = createUseLazyOpenFetchClient<${pascalCase(name)}Paths>('${name}')
+export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}')
+export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}', true)
 `.trimStart()).join('\n')}`.trimStart()
       },
       write: true
@@ -143,18 +145,22 @@ export const ${fetchName.lazyComposable} = createUseLazyOpenFetchClient<${pascal
     addTypeTemplate({
       filename: `types/${moduleName}.d.ts`,
       getContents: () => `
-import type { OpenFetchOptions } from '#imports'
-import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
+import type { OpenFetchClient } from '#imports'
+${schemas.map(({ name }) => `
+import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
+`.trimStart()).join('').trimEnd()}
 
 declare module '#app' {
   interface NuxtApp {
-    $openFetch: Record<OpenFetchClientName, OpenFetchOptions>
+    ${schemas.map(({ name }) => `
+    $${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
   }
 }
         
 declare module 'vue' {
   interface ComponentCustomProperties {
-    $openFetch: Record<OpenFetchClientName, OpenFetchOptions>
+    ${schemas.map(({ name }) => `
+    $${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
   }
 }
 
@@ -162,17 +168,10 @@ export {}
 `.trimStart()
     })
 
-    addPlugin(resolve('./runtime/plugin'))
-
-    addImports({
-      name: 'useOpenFetchOptions',
-      as: 'useOpenFetchOptions',
-      from: resolve('runtime/composables/useOpenFetchOptions')
-    })
-
-    function getClientName(name: string, { suffix = 'fetch', isComposable = false, lazy = false } = {}) {
-      name = name === 'default' ? 'open' : name
-      return isComposable ? `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-${suffix}`)}` : `$${camelCase(`${name}-${suffix}`)}`
-    }
+    if (!options.disablePlugin) addPlugin(resolve('./runtime/plugin'))
   }
 })
+
+function getClientName(name: string, lazy = false) {
+  return `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-fetch`)}`
+}
