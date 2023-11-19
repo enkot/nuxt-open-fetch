@@ -1,15 +1,13 @@
 <script setup lang="ts">
-const { execute, data } = await usePetsFetch('/pet/{petId}', {
+import { usePetsFetch } from "#imports";
+const { execute, data } = await usePetsFetch("/pet/{petId}", {
   path: {
     petId: 12,
   },
   immediate: false,
-})
+});
 </script>
 
 <template>
-  <button @click="() => execute()">
-    execute
-  </button>
+  <button @click="() => execute()">execute</button>
 </template>
-  

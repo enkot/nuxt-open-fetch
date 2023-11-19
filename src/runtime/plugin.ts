@@ -1,4 +1,5 @@
 import { defineNuxtPlugin, useRuntimeConfig } from '#app'
+import { createOpenFetch } from '#imports'
 import type { FetchOptions } from 'ofetch'
 
 export default defineNuxtPlugin(() => {
