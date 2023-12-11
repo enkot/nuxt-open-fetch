@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { $Fetch, FetchError, FetchOptions } from 'ofetch'
+import type { $Fetch, FetchContext, FetchError, FetchOptions } from 'ofetch'
 import type { ErrorResponse, SuccessResponse, FilterKeys, MediaType, ResponseObjectMap, OperationRequestBodyContent } from "openapi-typescript-helpers"
 import type { KeysOf, AsyncData, PickFrom } from "#app/composables/asyncData"
 import type { UseFetchOptions } from "#app/composables/fetch"
@@ -81,10 +81,10 @@ export type UseOpenFetchClient<Paths, Lazy extends boolean = false> = <
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
 // More flexible way to rewrite the request path,
-// but has downsides until (if) this feature is implemented https://github.com/unjs/ofetch/issues/319
-// export const openFetchRequestInterceptor = (ctx: FetchContext) => {
-//   ctx.request = fillPath(ctx.request as string, (ctx.options as { path: Record<string, string> }).path)
-// }
+// but has problems - https://github.com/unjs/ofetch/issues/319
+export const openFetchRequestInterceptor = (ctx: FetchContext) => {
+  ctx.request = fillPath(ctx.request as string, (ctx.options as { path: Record<string, string> }).path)
+}
 
 export function createOpenFetch(options: FetchOptions | ((options: FetchOptions) => FetchOptions)) {
   return (url: string, opts: any) => $fetch(
@@ -96,7 +96,7 @@ export function createOpenFetch(options: FetchOptions | ((options: FetchOptions)
   )
 }
 
-export function createUseOpenFetch<Paths, Lazy extends boolean = false>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> {
+export function createUseOpenFetch<Paths, Lazy extends boolean = boolean>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> {
   return (url: string | (() => string), options: any = {}, autoKey?: string) => {
     const nuxtApp = useNuxtApp()
     const $fetch = (typeof client === 'string' ? nuxtApp[`$${client}Fetch`] : client)
