@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.4.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.0...v0.4.1)
+
+### 🚀 Enhancements
+
+- Expose `openFetchRequestInterceptor` ([c98e5c2](https://github.com/enkot/nuxt-open-fetch/commit/c98e5c2))
+
+### 🩹 Fixes
+
+- **docs:** Configuration ([55a6191](https://github.com/enkot/nuxt-open-fetch/commit/55a6191))
+- Add explicit imports to prevent bundling issues ([ace0d01](https://github.com/enkot/nuxt-open-fetch/commit/ace0d01))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Mathieu ([@guibulator](http://github.com/guibulator))
+
 ## v0.4.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.3.0...v0.4.0)
