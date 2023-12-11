@@ -1,5 +1,7 @@
+import { createOpenFetch } from "#imports"
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 export default defineNuxtPlugin(() => {
-  const { public: { openFetch: clients }} = useRuntimeConfig()
+  const { public: { openFetch: clients } } = useRuntimeConfig()
 
   return {
     provide: {
