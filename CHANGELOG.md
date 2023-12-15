@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.4.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.1...v0.4.2)
+
+### 🩹 Fixes
+
+- Enforce plugin to run first ([0e47d64](https://github.com/enkot/nuxt-open-fetch/commit/0e47d64))
+- Remove pinia ([f393989](https://github.com/enkot/nuxt-open-fetch/commit/f393989))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.4.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.0...v0.4.1)
