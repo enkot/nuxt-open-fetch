@@ -1,5 +1,8 @@
 export default defineNuxtConfig({
-  modules: ['../src/module'],
+  modules: [
+    '../src/module',
+    '@pinia/nuxt',
+  ],
   extends: ['./pets'],
   devtools: { enabled: false },
   openFetch: {
