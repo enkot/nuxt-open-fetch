@@ -7,6 +7,9 @@ export default defineNuxtConfig({
       foo: {
         baseURL: '/petsProxy'
       },
+      pets: {
+        baseURL: 'https://petstore3.swagger.io/api/v3'
+      },
     },
     servers: {
       pets: {

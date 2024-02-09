@@ -1,6 +1,7 @@
 import type { FetchContext, FetchOptions } from 'ofetch'
 import type { SuccessResponse, FilterKeys, MediaType, ResponseObjectMap, OperationRequestBodyContent } from "openapi-typescript-helpers"
 import { $fetch } from 'ofetch'
+import { isValidUrl } from '../utils'
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 
@@ -43,16 +44,22 @@ export const openFetchRequestInterceptor = (ctx: FetchContext) => {
 }
 
 export function createOpenFetch(options: FetchOptions | ((options: FetchOptions) => FetchOptions)): (url: string, opts: any) => Promise<any> {
-  return (url: string, opts: any): Promise<any> => $fetch(
-    fillPath(url, opts.path),
-    typeof options === 'function' ? options(opts) : {
+  return (url: string, opts: any): Promise<any> => {
+    const params = typeof options === 'function' ? options(opts) : {
       ...options,
       ...opts
     }
-  )
+    return $fetch(
+      fillPath(addBaseURL(url, params.baseURL), opts.path), params)
+  }
 }
 
 export function fillPath(path: string, params: object = {}) {
   for (const [k, v] of Object.entries(params)) path = path.replace(`{${k}}`, encodeURIComponent(String(v)))
   return path
+}
+
+export function addBaseURL(url: string, baseURL: string | undefined) {
+  if (isValidUrl(url)) return url
+  return `${(baseURL ?? '').replace(/\/$/, '')}/${url.replace(/^\//, '')}`
 }

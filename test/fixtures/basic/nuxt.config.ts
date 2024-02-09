@@ -7,10 +7,13 @@ export default defineNuxtConfig({
   openFetch: {
     clients: {
       pets: {
-        fetchOptions: {
-          baseURL: 'https://example.com/pets'
-        }
-      }
-    }
-  }
+        baseURL: 'https://petstore3.swagger.io/api/v3'
+      },
+    },
+    servers: {
+      pets: {
+        baseURL: 'https://petstore3.swagger.io/api/v3'
+      },
+    },
+  },
 })

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { usePetsFetch } from "#imports";
 const { execute: executeOnClient, data: clientData } = await usePetsFetch("/pet/{petId}", {
   path: {
     petId: 1,

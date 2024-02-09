@@ -4,7 +4,7 @@ import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
 import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin, addServerPlugin, addServerImports } from '@nuxt/kit'
 import openapiTS from "openapi-typescript"
-import { pascalCase, kebabCase } from 'scule'
+import { pascalCase, kebabCase, upperFirst } from 'scule'
 import { defu } from 'defu'
 import { isValidUrl } from './utils'
 
@@ -192,7 +192,7 @@ export {}
 `.trimStart()
     })
 
-    if (!options.disablePlugin) addPlugin(resolve('./runtime/plugin'))
+    if (!options.disablePlugin) addPlugin(resolve('./runtime/nuxt-plugin.ts'))
 
     /**
      * Add (nitro) server support
@@ -258,25 +258,35 @@ export {}
       filename: `${moduleName}.server.ts`,
       getContents() {
         return `
-import { createOpenFetch } from '#imports'
-${serverSchemas.map(({ name }) => `
+import type { OpenFetchClient } from '#imports'
+${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
-${serverSchemas.length ? `export type OpenFetchClientName = ${serverSchemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
+interface INuxtOpenFetchServer {
+  ${schemas.map(({ name }) => `
+  $fetch${upperFirst(name)}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
+}
 
-export const useNuxtOpenFetch = () => ({${serverSchemas.map(({ name, fetchName }) => `
-  ${fetchName}: createOpenFetch<${pascalCase(name)}Paths>('${name}'),
-`.trimStart()).join('\n')}
-})
+export const nuxtOpenFetchServer: INuxtOpenFetchServer = {} as INuxtOpenFetchServer
+
+export const useNuxtOpenFetchServer = () => nuxtOpenFetchServer
+
 `.trimStart()
       },
       write: true
     })
-    addServerImports([{
-      name: 'useNuxtOpenFetch',
+
+    const serverSourceTemplateImports = [
+      'nuxtOpenFetchServer',
+      'useNuxtOpenFetchServer',
+    ]
+    serverSourceTemplateImports.forEach((name) => { addServerImports([{
+      name: name,
       from: serverSourceTemplate.dst,
-    }])
+    }])})
+
+    if (!options.disablePlugin) addServerPlugin(resolve('./runtime/nitro-plugin.ts'))
   }
 })
 
@@ -284,6 +294,6 @@ function getClientName(name: string, lazy = false) {
   return `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-fetch`)}`
 }
 
-function getServerName(name: string) {
-  return `$fetch${name}`
+export function getServerName(name: string) {
+  return `$fetch${upperFirst(name)}`
 }
