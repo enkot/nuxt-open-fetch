@@ -192,7 +192,7 @@ export {}
 `.trimStart()
     })
 
-    if (!options.disablePlugin) addPlugin(resolve('./runtime/nuxt-plugin.ts'))
+    if (!options.disablePlugin) addPlugin(resolve('./runtime/nuxt-plugin'))
 
     /**
      * Add (nitro) server support
@@ -238,6 +238,7 @@ export {}
       }
     }
 
+    console.log('NOFPlugin: serverSchemas', serverSchemas)
 
     const serverImports = [
       'createOpenFetch',
@@ -286,7 +287,7 @@ export const useNuxtOpenFetchServer = () => nuxtOpenFetchServer
       from: serverSourceTemplate.dst,
     }])})
 
-    if (!options.disablePlugin) addServerPlugin(resolve('./runtime/nitro-plugin.ts'))
+    if (!options.disablePlugin) addServerPlugin(resolve('./runtime/nitro-plugin'))
   }
 })
 
