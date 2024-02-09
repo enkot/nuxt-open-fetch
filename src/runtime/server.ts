@@ -1,7 +1,6 @@
 import type { FetchContext, FetchOptions } from 'ofetch'
 import type { SuccessResponse, FilterKeys, MediaType, ResponseObjectMap, OperationRequestBodyContent } from "openapi-typescript-helpers"
 import { $fetch } from 'ofetch'
-import { isValidUrl } from '../utils'
 
 type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 
@@ -60,6 +59,5 @@ export function fillPath(path: string, params: object = {}) {
 }
 
 export function addBaseURL(url: string, baseURL: string | undefined) {
-  if (isValidUrl(url)) return url
   return `${(baseURL ?? '').replace(/\/$/, '')}/${url.replace(/^\//, '')}`
 }

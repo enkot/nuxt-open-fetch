@@ -207,12 +207,12 @@ export {}
     for (const layer of nuxt.options._layers) {
       const { srcDir, openFetch } = layer.config
       const schemasDir = resolve(srcDir, 'openapi')
-      const layerClients = defu(
-        Object.fromEntries(Object.entries(servers).filter(([key]) => openFetch?.clients?.[key])),
-        openFetch?.clients,
+      const layerServers = defu(
+        Object.fromEntries(Object.entries(servers).filter(([key]) => openFetch?.servers?.[key])),
+        openFetch?.servers,
       ) as Record<string, OpenFetchClientOptions>
 
-      for (const [name, config] of Object.entries(layerClients)) {
+      for (const [name, config] of Object.entries(layerServers)) {
         // Skip if schema already added by upper layer or if config is not defined
         if (serverSchemas.some(item => item.name === name) || !config) continue
 
@@ -238,8 +238,6 @@ export {}
       }
     }
 
-    console.log('NOFPlugin: serverSchemas', serverSchemas)
-
     const serverImports = [
       'createOpenFetch',
       'createUseOpenFetch',
@@ -255,17 +253,24 @@ export {}
       }])
     })
 
+    for (const { name, schema, openAPITS } of serverSchemas) {
+      addTypeTemplate({
+        filename: `types/${moduleName}/${kebabCase(name)}.server.d.ts`,
+        getContents: () => openapiTS(schema, openAPITS)
+      })
+    }
+
     const serverSourceTemplate = addTemplate({
       filename: `${moduleName}.server.ts`,
       getContents() {
         return `
 import type { OpenFetchClient } from '#imports'
-${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
+${serverSchemas.map(({ name }) => `
+import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}.server'
 `.trimStart()).join('').trimEnd()}
 
 interface INuxtOpenFetchServer {
-  ${schemas.map(({ name }) => `
+  ${serverSchemas.map(({ name }) => `
   $fetch${upperFirst(name)}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
 }
 
@@ -282,11 +287,15 @@ export const useNuxtOpenFetchServer = () => nuxtOpenFetchServer
       'nuxtOpenFetchServer',
       'useNuxtOpenFetchServer',
     ]
-    serverSourceTemplateImports.forEach((name) => { addServerImports([{
-      name: name,
-      from: serverSourceTemplate.dst,
-    }])})
+    serverSourceTemplateImports.forEach((name) => {
+      addServerImports([{
+        name: name,
+        from: serverSourceTemplate.dst,
+      }])
+    })
 
+    // Transpile need to solve error '#imports' not allowed in server runtime
+    nuxt.options.build.transpile.push(resolve('./runtime/nitro-plugin'))
     if (!options.disablePlugin) addServerPlugin(resolve('./runtime/nitro-plugin'))
   }
 })
