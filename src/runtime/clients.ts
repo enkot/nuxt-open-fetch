@@ -10,12 +10,10 @@ import type {
   
 } from "openapi-typescript-helpers"
 import type { AsyncData, UseFetchOptions } from "nuxt/app"
-// import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
+import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
 import { toValue } from 'vue'
 import { $fetch } from 'ofetch'
 import { useNuxtApp, useFetch } from 'nuxt/app'
-
-type OpenFetchClientName = 'pets'
 
 type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T;
 type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>;
