@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.4.3
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.2...v0.4.3)
+
+### 🩹 Fixes
+
+- Improved types; new docs ([897f70f](https://github.com/enkot/nuxt-open-fetch/commit/897f70f))
+- Cleanup ([4b40b79](https://github.com/enkot/nuxt-open-fetch/commit/4b40b79))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.4.2
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.1...v0.4.2)
