@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.4
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.3...v0.4.4)
+
+### 🩹 Fixes
+
+- Fixed OpenFetchClientName ([68d24ee](https://github.com/enkot/nuxt-open-fetch/commit/68d24ee))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.4.3
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.2...v0.4.3)
