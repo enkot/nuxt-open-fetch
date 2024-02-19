@@ -7,7 +7,6 @@ import type {
   MediaType, 
   ResponseObjectMap, 
   OperationRequestBodyContent,
-  
 } from "openapi-typescript-helpers"
 import type { AsyncData, UseFetchOptions } from "nuxt/app"
 import type { OpenFetchClientName } from '#build/nuxt-open-fetch'

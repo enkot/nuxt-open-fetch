@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { usePetsFetch, useRoute, useFetch, useLazyPetsFetch, computed, useNuxtApp, ref } from "#imports";
-import { c } from "vitest/dist/reporters-5f784f42.js";
+import { useLazyPetsFetch, ref } from "#imports";
 
 const petId = ref(2)
 
-
-const { data, error } = useLazyPetsFetch("/pet/{petId}", {
+const { data, error, execute } = useLazyPetsFetch("/pet/{petId}", {
+  immediate: false,
   path: {
-    petId: 2
+    petId
   },
   transform(input) {
     return {
@@ -22,13 +21,13 @@ const { data, error } = useLazyPetsFetch("/pet/{petId}", {
   }
 })
 
-const {data: data2 } = useFetch('/api/hello', {
-  transform(input) {
-    return {
-      foo: 'bar'
-    } 
-  }
-})
+// const {data: data2 } = useFetch('/api/hello', {
+//   transform(input) {
+//     return {
+//       foo: 'bar'
+//     } 
+//   }
+// })
 
 // const { execute } = usePetsFetch('/user/{username}', {
 //   method: 'put',
