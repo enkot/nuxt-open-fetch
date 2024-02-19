@@ -1,5 +1,5 @@
 title: 'Nuxt Open Fetch'
-description: 'Welcome to Nuxt UI Pro documentation template.'
+description: 'Generate zero-overhead, 100% typed OpenAPI fetch for Nuxt'
 navigation: false
 hero:
   title: 'OpenAPI fetch for Nuxt'
