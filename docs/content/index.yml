@@ -21,8 +21,8 @@ hero:
   code: |
     ```ts twoslash
     // @noErrors
-    const { data } = await usePetsFetch('/pet/{petId}', {
-    //                                               ^|  
+    const { data } = useLazyPetsFetch('/pet/{petId}', {
+    //                                             ^|  
       path: {
         petId: 2
       },
