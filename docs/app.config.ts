@@ -1,40 +1,67 @@
 export default defineAppConfig({
-  docus: {
-    title: 'Nuxt Open Fetch',
-    description: 'Generate zero-overhead, typed OpenAPI clients for Nuxt.',
-    image: 'https://github.com/enkot/nuxt-open-fetch/raw/main/docs/public/cover.png',
-
-    socials: {
-      github: 'enkot/nuxt-open-fetch',
-      nuxt: {
-        label: 'Nuxt',
-        icon: 'simple-icons:nuxtdotjs',
-        href: 'https://nuxt.com'
+  ui: {
+    primary: 'green',
+    gray: 'slate',
+    footer: {
+      bottom: {
+        left: 'text-sm text-gray-500 dark:text-gray-400',
+        wrapper: 'border-t border-gray-200 dark:border-gray-800'
       }
+    }
+  },
+  seo: {
+    siteName: 'Nuxt Open Fetch',
+  },
+  header: {
+    logo: {
+      alt: '',
+      light: '',
+      dark: ''
     },
-
-    github: {
-      dir: '.starters/default/content',
-      branch: 'main',
-      repo: 'docus',
-      owner: 'nuxt-themes',
-      edit: true
-    },
-
-    aside: {
-      level: 0,
-      collapsed: false,
-      exclude: []
-    },
-
-    header: {
-      logo: true,
-      fluid: false,
-      showLinkIcon: true
-    },
-
-    main: {
-      fluid: false
+    search: true,
+    colorMode: true,
+    links: [{
+      icon: 'i-simple-icons-github',
+      to: 'https://github.com/enkot/nuxt-open-fetch',
+      target: '_blank',
+      'aria-label': 'Nuxt Open Fetch'
+    }]
+  },
+  footer: {
+    credits: 'Copyright © 2024',
+    colorMode: false,
+    links: [{
+      icon: 'i-simple-icons-nuxtdotjs',
+      to: 'https://nuxt.com',
+      target: '_blank',
+      'aria-label': 'Nuxt Website'
+    }, {
+      icon: 'i-simple-icons-github',
+      to: 'https://github.com/enkot/nuxt-open-fetch',
+      target: '_blank',
+      'aria-label': 'Nuxt Open Fetch'
+    }]
+  },
+  toc: {
+    title: 'Table of Contents',
+    bottom: {
+      title: 'Useful Links',
+      links: [{
+        icon: 'i-heroicons-star',
+        label: 'Star on GitHub',
+        to: 'https://github.com/enkot/nuxt-open-fetch',
+        target: '_blank',
+      }, {
+        icon: 'i-simple-icons-typescript',
+        label: 'OpenAPI TypeScript',
+        to: 'https://openapi-ts.pages.dev/',
+        target: '_blank',
+      }, {
+        icon: 'i-simple-icons-nuxtdotjs',
+        label: 'Nuxt Website',
+        to: 'https://nuxt.com',
+        target: '_blank',
+      }]
     }
   }
 })

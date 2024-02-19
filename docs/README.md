@@ -1,57 +1,125 @@
-# Docus Starter
+![nuxt-ui-pro-docs-template](https://github.com/nuxt-ui-pro/docs/assets/904724/67fc15a7-92f6-4566-95b9-fe099012473c)
 
-Starter template for [Docus](https://docus.dev).
+# Nuxt UI Pro - Docs template
 
-## Clone
+[![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
+[![Nuxt Studio](https://img.shields.io/badge/Open%20in%20Nuxt%20Studio-18181B?&logo=nuxt.js&logoColor=3BB5EC)](https://nuxt.studio/themes/docs)
 
-Clone the repository (using `nuxi`):
+- [Live demo](https://nuxt-ui-pro-template-docs.vercel.app/)
+- [Play on Stackblitz](https://stackblitz.com/github/nuxt-ui-pro/docs)
+- [Documentation](https://ui.nuxt.com/pro/guide)
+- [Clone on Nuxt Studio](https://nuxt.studio/themes/docs)
 
-```bash
-npx nuxi init -t themes/docus
+## Quick Start
+
+```bash [Terminal]
+npx nuxi init -t github:nuxt-ui-pro/docs
 ```
 
 ## Setup
 
-Install dependencies:
+Make sure to install the dependencies:
 
 ```bash
+# npm
+npm install
+
+# pnpm
+pnpm install
+
+# yarn
 yarn install
+
+# bun
+bun install
 ```
 
-## Development
+## Development Server
+
+Start the development server on `http://localhost:3000`:
 
 ```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm run dev
+
+# yarn
 yarn dev
+
+# bun
+bun run dev
 ```
 
-## Edge Side Rendering
+## Production
 
-Can be deployed to Vercel Functions, Netlify Functions, AWS, and most Node-compatible environments.
-
-Look at all the available presets [here](https://v3.nuxtjs.org/guide/deploy/presets).
+Build the application for production:
 
 ```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
 yarn build
+
+# bun
+bun run build
 ```
 
-## Static Generation
-
-Use the `generate` command to build your application.
-
-The HTML files will be generated in the .output/public directory and ready to be deployed to any static compatible hosting.
+Locally preview production build:
 
 ```bash
-yarn generate
-```
+# npm
+npm run preview
 
-## Preview build
+# pnpm
+pnpm run preview
 
-You might want to preview the result of your build locally, to do so, run the following command:
-
-```bash
+# yarn
 yarn preview
+
+# bun
+bun run preview
 ```
 
----
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
-For a detailed explanation of how things work, check out [Docus](https://docus.dev).
+## Nuxt Studio integration
+
+Add `@nuxthq/studio` dependency to your package.json:
+
+```bash
+# npm
+npm install --save-dev @nuxthq/studio
+
+# pnpm
+pnpm add -D @nuxthq/studio
+
+# yarn
+yarn add -D @nuxthq/studio
+
+# bun
+bun add -d @nuxthq/studio
+```
+
+Add this module to your `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  ...
+  modules: [
+    ...
+    '@nuxthq/studio'
+  ]
+})
+```
+
+Read more on [Nuxt Studio docs](https://nuxt.studio/docs/projects/setup).
+
+## Renovate integration
+
+Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.

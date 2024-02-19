@@ -107,7 +107,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     addImportsSources({
-      from: resolve(nuxt.options.buildDir, `${moduleName}.ts`),
+      from: resolve(nuxt.options.buildDir, `${moduleName}.d.ts`),
       imports: schemas.flatMap(({ fetchName }) => Object.values(fetchName)),
     })
 
@@ -124,17 +124,23 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     addTemplate({
-      filename: `${moduleName}.ts`,
+      filename: `${moduleName}.d.ts`,
       getContents() {
         return `
-import { createUseOpenFetch } from '#imports'
+import { createUseOpenFetch } from './imports.d.ts'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
+import type { paths as ${pascalCase(name)}Paths } from './types/${moduleName}/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
 ${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
 
 ${schemas.map(({ name, fetchName }) => `
+/**
+ * Fetch data from an OpenAPI endpoint with an SSR-friendly composable.
+ * See {@link https://nuxt-open-fetch.vercel.app/composables/useclientfetch}
+ * @param string The OpenAPI path to fetch
+ * @param opts extends useFetch, $fetch options and useAsyncData options
+ */
 export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}')
 export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}', true)
 `.trimStart()).join('\n')}`.trimStart()
