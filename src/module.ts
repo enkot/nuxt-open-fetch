@@ -99,12 +99,18 @@ export default defineNuxtModule<ModuleOptions>({
       ])
     ]
 
-    for (const { name, schema, openAPITS } of schemas) {
-      addTypeTemplate({
+    const generatedSchemas = schemas.map(({ name, fetchName, schema, openAPITS }) => {
+      const { filename } = addTypeTemplate({
         filename: `types/${moduleName}/${kebabCase(name)}.d.ts`,
         getContents: () => openapiTS(schema, openAPITS)
       })
-    }
+
+      return {
+        name,
+        filename,
+        fetchName
+      }
+    })
 
     addImportsSources({
       from: resolve(nuxt.options.buildDir, `${moduleName}.d.ts`),
@@ -127,14 +133,14 @@ export default defineNuxtModule<ModuleOptions>({
       filename: `${moduleName}.d.ts`,
       getContents() {
         return `
-import { createUseOpenFetch } from './imports.d.ts'
-${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from './types/${moduleName}/${kebabCase(name)}'
+import { createUseOpenFetch } from '#imports'
+${generatedSchemas.map(({ name, filename }) => `
+import type { paths as ${pascalCase(name)}Paths } from '#build/${filename}'
 `.trimStart()).join('').trimEnd()}
 
-${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
+${generatedSchemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
 
-${schemas.map(({ name, fetchName }) => `
+${generatedSchemas.map(({ name, fetchName }) => `
 /**
  * Fetch data from an OpenAPI endpoint with an SSR-friendly composable.
  * See {@link https://nuxt-open-fetch.vercel.app/composables/useclientfetch}
@@ -142,6 +148,12 @@ ${schemas.map(({ name, fetchName }) => `
  * @param opts extends useFetch, $fetch options and useAsyncData options
  */
 export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}')
+/**
+ * Fetch data from an OpenAPI endpoint with an SSR-friendly composable.
+ * See {@link https://nuxt-open-fetch.vercel.app/composables/uselazyclientfetch}
+ * @param string The OpenAPI path to fetch
+ * @param opts extends useFetch, $fetch options and useAsyncData options
+ */
 export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}', true)
 `.trimStart()).join('\n')}`.trimStart()
       },
@@ -152,21 +164,19 @@ export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)
       filename: `types/${moduleName}.d.ts`,
       getContents: () => `
 import type { OpenFetchClient } from '#imports'
-${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
+${generatedSchemas.map(({ name, filename }) => `
+import type { paths as ${pascalCase(name)}Paths } from '#build/${filename}'
 `.trimStart()).join('').trimEnd()}
 
 declare module '#app' {
   interface NuxtApp {
-    ${schemas.map(({ name }) => `
-    $${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
+    ${generatedSchemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
         
 declare module 'vue' {
   interface ComponentCustomProperties {
-    ${schemas.map(({ name }) => `
-    $${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
+    ${generatedSchemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
 
