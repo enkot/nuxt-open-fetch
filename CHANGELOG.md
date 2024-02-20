@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.4.5
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.4...v0.4.5)
+
+### 🩹 Fixes
+
+- Docs ([fbb1e8a](https://github.com/enkot/nuxt-open-fetch/commit/fbb1e8a))
+- Docs local module ([62708c1](https://github.com/enkot/nuxt-open-fetch/commit/62708c1))
+- Renovate ([bc71ebe](https://github.com/enkot/nuxt-open-fetch/commit/bc71ebe))
+- Docs ([27c38e7](https://github.com/enkot/nuxt-open-fetch/commit/27c38e7))
+- Cover image ([6ac4972](https://github.com/enkot/nuxt-open-fetch/commit/6ac4972))
+- **docs:** Update description ([08fc861](https://github.com/enkot/nuxt-open-fetch/commit/08fc861))
+- **docs:** Gradient ([35f71e3](https://github.com/enkot/nuxt-open-fetch/commit/35f71e3))
+
+### 💅 Refactors
+
+- Simplified filenames management ([1bfe3b1](https://github.com/enkot/nuxt-open-fetch/commit/1bfe3b1))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.4.4
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.3...v0.4.4)
