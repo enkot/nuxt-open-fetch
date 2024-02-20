@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const { data: page } = await useAsyncData('index', () => queryContent('/').findOne())
 
+definePageMeta({
+  colorMode: 'dark',
+})
+
 useSeoMeta({
   title: page.value.title,
   ogTitle: page.value.title,
@@ -17,9 +21,8 @@ defineOgImage({
 
 <template>
   <div>
+    <span class="gradient" />
     <ULandingHero v-if="page.hero" v-bind="page.hero">
-
-
       <template #title>
         <MDC :value="page.hero.title" />
       </template>
@@ -34,3 +37,16 @@ defineOgImage({
     </ULandingSection>
   </div>
 </template>
+
+<style scoped>
+.gradient {
+  position: fixed;
+  top: 25vh;
+  width: 100%;
+  height: 30vh;
+  background: radial-gradient(50% 50% at 50% 50%, #00DC82 0%, rgba(0, 220, 130, 0) 100%);
+  filter: blur(180px);
+  opacity: 0.6;
+  z-index: -1;
+}
+</style>
