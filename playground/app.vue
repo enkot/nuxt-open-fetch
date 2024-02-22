@@ -1,12 +1,19 @@
 <script setup lang="ts">
-const { execute: executeOnClient, data: clientData } = await usePetsFetch("/pet/{petId}", {
-  path: {
-    petId: 1,
-  },
-  immediate: false,
-});
+const { execute: executeOnClient, data: clientData } = await usePetsFetch(
+  "/pet/{petId}",
+  {
+    path: {
+      petId: 1,
+    },
+    immediate: false,
+  }
+);
 
-const { data: serverData, execute: serverExecute, error: serverError } = await useFetch('/api/pets', {
+const {
+  data: serverData,
+  execute: serverExecute,
+  error: serverError,
+} = await useFetch("/api/pets", {
   immediate: false,
 })
 

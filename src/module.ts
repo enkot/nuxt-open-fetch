@@ -2,11 +2,12 @@ import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
-import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin, addServerPlugin, addServerImports } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin, addServerPlugin, addServerImports, addServerHandler } from '@nuxt/kit'
 import openapiTS from "openapi-typescript"
 import { pascalCase, kebabCase, upperFirst } from 'scule'
 import { defu } from 'defu'
 import { isValidUrl } from './utils'
+import { Project, ScriptTarget, SyntaxKind, printNode } from "ts-morph";
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
@@ -59,7 +60,7 @@ export default defineNuxtModule<ModuleOptions>({
       .map(([key, { schema: _, ...options }]) => [key, options])) as any
 
     for (const layer of nuxt.options._layers) {
-      const { srcDir, openFetch } = layer.config
+      const { srcDir, openFetch } = layer.config as typeof layer.config & { openFetch?: ModuleOptions }
       const schemasDir = resolve(srcDir, 'openapi')
       const layerClients = defu(
         Object.fromEntries(Object.entries(clients).filter(([key]) => openFetch?.clients?.[key])),
@@ -205,7 +206,7 @@ export {}
       .map(([key, { schema: _, ...options }]) => [key, options])) as any
 
     for (const layer of nuxt.options._layers) {
-      const { srcDir, openFetch } = layer.config
+      const { srcDir, openFetch } = layer.config = layer.config as typeof layer.config & { openFetch?: ModuleOptions }
       const schemasDir = resolve(srcDir, 'openapi')
       const layerServers = defu(
         Object.fromEntries(Object.entries(servers).filter(([key]) => openFetch?.servers?.[key])),
@@ -253,12 +254,17 @@ export {}
       }])
     })
 
+    const schemaASTs = new Map<string, string>()
+
     for (const { name, schema, openAPITS } of serverSchemas) {
+      schemaASTs.set(name, await openapiTS(schema, openAPITS))
       addTypeTemplate({
         filename: `types/${moduleName}/${kebabCase(name)}.server.d.ts`,
         getContents: () => openapiTS(schema, openAPITS)
       })
     }
+
+    const serverFetchNamePrefix = '$fetch'
 
     const serverSourceTemplate = addTemplate({
       filename: `${moduleName}.server.ts`,
@@ -270,8 +276,10 @@ import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleNam
 `.trimStart()).join('').trimEnd()}
 
 interface INuxtOpenFetchServer {
+  [key: string]: OpenFetchClient<any>
+
   ${serverSchemas.map(({ name }) => `
-  $fetch${upperFirst(name)}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
+  ${serverFetchNamePrefix}${upperFirst(name)}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n')}
 }
 
 export const nuxtOpenFetchServer: INuxtOpenFetchServer = {} as INuxtOpenFetchServer
@@ -293,6 +301,31 @@ export const useNuxtOpenFetchServer = () => nuxtOpenFetchServer
         from: serverSourceTemplate.dst,
       }])
     })
+
+    for (const [name, ast] of schemaASTs) {
+      const project = new Project({
+        compilerOptions: {
+          target: ScriptTarget.ESNext,
+        },
+      });
+
+      const tsSourceFile = project.createSourceFile(resolve(`runtime/server/types/${moduleName}/${kebabCase(name)}.d.ts`), ast)
+
+      const tsPathInterface = tsSourceFile.getInterfaceOrThrow('paths');
+      const tsPathInterfaceProperties = tsPathInterface.getProperties()
+
+      tsPathInterfaceProperties.forEach((prop) => {
+        const route = prop.getSymbolOrThrow().getName()
+        const methods = prop.getType().getSymbolOrThrow().getMembers().map( m => m.getName())
+        methods.forEach((method) =>
+          addServerHandler({
+            route: `/api${route}`,
+            method,
+            handler: resolve('./runtime/testhandler.ts')
+          })
+        )
+      })
+    }
 
     // Transpile need to solve error '#imports' not allowed in server runtime
     nuxt.options.build.transpile.push(resolve('./runtime/nitro-plugin'))

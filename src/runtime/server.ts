@@ -42,10 +42,10 @@ export const openFetchRequestInterceptor = (ctx: FetchContext) => {
   ctx.request = fillPath(ctx.request as string, (ctx.options as { path: Record<string, string> }).path)
 }
 
-export function createOpenFetch(options: FetchOptions | ((options: FetchOptions) => FetchOptions)): (url: string, opts: any) => Promise<any> {
+export function createOpenFetch(options: FetchOptions | ((options: FetchOptions | undefined) => FetchOptions)): (url: string, opts: any) => Promise<any> {
   return (url: string, opts: any): Promise<any> => {
     const params = typeof options === 'function' ? options(opts) : {
-      ...options,
+      ...options ?? {},
       ...opts
     }
     return $fetch(
