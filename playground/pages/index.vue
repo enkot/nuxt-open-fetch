@@ -7,6 +7,7 @@ const {
   path: {
     petId: 1,
   },
+  immediate: false,
 });
 
 const {
@@ -17,6 +18,7 @@ const {
   path: {
     petId: 1,
   },
+  immediate: false,
 });
 
 const {
@@ -24,6 +26,7 @@ const {
   execute: useFetchExecute,
   error: useFetchError,
 } = await useFetch("/api/manual/pet/1", {
+  immediate: false,
 });
 
 const {
@@ -31,13 +34,51 @@ const {
   execute: usePetsFetchServerExecute,
   error: usePetsFetchServerError,
 } = await usePetsFetchServer("/pet/{petId}", {
+  immediate: false,
   path: {
     petId: 1,
   },
 });
+
+const { $petsFetch } = useNuxtApp()
+
+const petId = ref(2)
+
+const data = await $petsFetch('/pet/{petId}', {
+  path: {
+    petId: petId.value
+  }
+})
+
+const { data: data2, error, execute } = await usePetsFetch('/pet/{petId}', {
+  immediate: false,
+  path: {
+    petId
+  }
+})
+
+const {data: data3 } = useLazyPetsFetch('/pet/{petId}', {
+  path: {
+    petId
+  },
+  transform(input) {
+    return {
+      name: input.name,
+      age: input.status
+    }
+  },
+  default() {
+    return {
+      foo: 'bar'
+    }
+  }
+})
 </script>
 
 <template>
+  <button @click="() => execute()">
+    execute
+  </button>
   <button
     data-test="client-button"
     @click="() => usePetsFetchExecute()"

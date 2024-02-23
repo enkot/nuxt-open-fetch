@@ -28,18 +28,20 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build",
-    "prepack:watch": "nodemon --watch src -e ts --exec 'pnpm prepack'",
     "dev": "nuxi dev playground",
-    "dev:watch": "nodemon -L --watch ./dist --exec 'pnpm dev'",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "dev:server": "listhen -w ./playground/server.ts",
-    "build:watch": "concurrently --kill-others 'pnpm prepack:watch' 'pnpm dev:watch'",
     "start:server": "listhen ./playground/server.ts",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "watch:dev": "nodemon --watch dist --watch src -e ts --exec 'pnpm dev'",
+    "watch:prepack": "nodemon --watch src -e ts --exec 'pnpm prepack'",
+    "watch:test": "nodemon --watch test -e ts --exec 'pnpm run test'",
+    "watch:build": "concurrently --kill-others --handle-input 'pnpm watch:prepack' 'pnpm watch:dev'",
+    "watch": "concurrently --kill-others --handle-input 'pnpm watch:prepack' 'pnpm watch:dev' 'pnpm watch:test'"
   },
   "dependencies": {
     "@nuxt/kit": "^3.10.2",

@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  extends: ['./pets'],
+  extends: ['./petsProxy'],
   devtools: { enabled: true },
   openFetch: {
     clients: {
@@ -8,6 +8,9 @@ export default defineNuxtConfig({
         baseURL: '/petsProxy'
       },
       pets: {
+        baseURL: 'https://petstore3.swagger.io/api/v3'
+      },
+      petsProxy: {
         baseURL: 'https://petstore3.swagger.io/api/v3'
       },
     },
@@ -19,9 +22,11 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     openFetch: {
-      pets: {
-        baseURL: '/petsProxy',
-      },
+      clients: {
+        petsProxy: {
+          baseURL: '/petsProxy',
+        },
+      }
     },
   },
 })
