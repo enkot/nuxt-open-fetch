@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import { ref, useLazyPetsFetch, usePetsFetch, useNuxtApp } from "#imports"
+import { usePetsFetch } from "#imports";
+const { execute: executeOnClient, data: clientData } = await usePetsFetch("/pet/{petId}", {
+  path: {
+    petId: 1,
+  },
+  immediate: false,
+});
+
+const { data: serverData, execute: serverExecute, error: serverError } = await useFetch('/api/pets', {
+  immediate: false,
+})
 
 const { $petsFetch } = useNuxtApp()
 
@@ -40,4 +50,28 @@ const {data: data3 } = useLazyPetsFetch('/pet/{petId}', {
   <button @click="() => execute()">
     execute
   </button>
+  <button
+    data-test="client-button"
+    @click="() => executeOnClient()"
+  >
+    execute on client
+  </button>
+  <pre
+    v-if="clientData"
+    data-test="client-result"
+  >
+    clientData: {{ clientData }}
+  </pre>
+  <button
+    data-test="server-button"
+    @click="() => serverExecute()"
+  >
+    fetch from server
+  </button>
+  <pre
+    v-if="serverData || serverError"
+    data-test="server-result"
+  >
+    serverData: {{ serverData }} {{ serverError }}
+  </pre>
 </template>

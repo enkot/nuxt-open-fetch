@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
-import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin, addServerPlugin, addServerImports } from '@nuxt/kit'
 import openapiTS from "openapi-typescript"
 import { pascalCase, kebabCase } from 'scule'
 import { defu } from 'defu'
@@ -18,6 +18,7 @@ export interface OpenFetchClientOptions extends OpenFetchOptions {
 
 export interface ModuleOptions {
   clients?: Record<string, OpenFetchClientOptions>
+  servers?: Record<string, OpenFetchClientOptions>
   openAPITS?: OpenAPITSOptions
   disablePlugin?: boolean
 }
@@ -28,6 +29,13 @@ interface ResolvedSchema {
     composable: string,
     lazyComposable: string
   },
+  schema: OpenAPI3Schema
+  openAPITS?: OpenAPITSOptions
+}
+
+interface ResolvedServerSchema {
+  name: string
+  fetchName: string,
   schema: OpenAPI3Schema
   openAPITS?: OpenAPITSOptions
 }
@@ -173,7 +181,7 @@ declare module '#app' {
     ${generatedSchemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
-        
+
 declare module 'vue' {
   interface ComponentCustomProperties {
     ${generatedSchemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
@@ -185,9 +193,97 @@ export {}
     })
 
     if (!options.disablePlugin) addPlugin(resolve('./runtime/plugin'))
+
+    /**
+     * Add (nitro) server support
+     */
+
+    const serverSchemas: ResolvedServerSchema[] = []
+    const servers: Record<string, OpenFetchClientOptions> = defu(nuxt.options.runtimeConfig.openFetchServer as any, options.servers)
+
+    nuxt.options.runtimeConfig.public.openFetchServer = Object.fromEntries(Object.entries(servers)
+      .map(([key, { schema: _, ...options }]) => [key, options])) as any
+
+    for (const layer of nuxt.options._layers) {
+      const { srcDir, openFetch } = layer.config
+      const schemasDir = resolve(srcDir, 'openapi')
+      const layerClients = defu(
+        Object.fromEntries(Object.entries(servers).filter(([key]) => openFetch?.clients?.[key])),
+        openFetch?.clients,
+      ) as Record<string, OpenFetchClientOptions>
+
+      for (const [name, config] of Object.entries(layerClients)) {
+        // Skip if schema already added by upper layer or if config is not defined
+        if (serverSchemas.some(item => item.name === name) || !config) continue
+
+        let schema: OpenAPI3Schema | undefined = undefined
+
+        if (config.schema && typeof config.schema === 'string') {
+          schema = isValidUrl(config.schema) ? config.schema : resolve(srcDir, config.schema)
+        } else {
+          const jsonPath = resolve(schemasDir, `${name}/openapi.json`)
+          const yamlPath = resolve(schemasDir, `${name}/openapi.yaml`)
+
+          schema = existsSync(jsonPath) ? jsonPath : existsSync(yamlPath) ? yamlPath : undefined
+        }
+
+        if (!schema) throw new Error(`Could not find OpenAPI schema for "${name}"`)
+
+        serverSchemas.push({
+          name,
+          fetchName: getServerName(name),
+          schema,
+          openAPITS: options?.openAPITS,
+        })
+      }
+    }
+
+
+    const serverImports = [
+      'createOpenFetch',
+      'createUseOpenFetch',
+      'openFetchRequestInterceptor',
+      'OpenFetchClient',
+      'UseOpenFetchClient',
+      'OpenFetchOptions',
+    ]
+    serverImports.forEach((name) => {
+      addServerImports([{
+        name,
+        from: resolve('runtime/server'),
+      }])
+    })
+
+    const serverSourceTemplate = addTemplate({
+      filename: `${moduleName}.server.ts`,
+      getContents() {
+        return `
+import { createOpenFetch } from '#imports'
+${serverSchemas.map(({ name }) => `
+import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/${kebabCase(name)}'
+`.trimStart()).join('').trimEnd()}
+
+${serverSchemas.length ? `export type OpenFetchClientName = ${serverSchemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
+
+export const useNuxtOpenFetch = () => ({${serverSchemas.map(({ name, fetchName }) => `
+  ${fetchName}: createOpenFetch<${pascalCase(name)}Paths>('${name}'),
+`.trimStart()).join('\n')}
+})
+`.trimStart()
+      },
+      write: true
+    })
+    addServerImports([{
+      name: 'useNuxtOpenFetch',
+      from: serverSourceTemplate.dst,
+    }])
   }
 })
 
 function getClientName(name: string, lazy = false) {
   return `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-fetch`)}`
+}
+
+function getServerName(name: string) {
+  return `$fetch${name}`
 }
