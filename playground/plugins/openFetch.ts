@@ -5,10 +5,10 @@ export default defineNuxtPlugin({
   enforce: 'pre',
   setup() {
     const { public: { openFetch: clients } } = useRuntimeConfig()
-  
+
     return {
       provide: {
-        petsFetch: createOpenFetch((options) => ({
+        manualPetsFetch: createOpenFetch((options) => ({
           ...clients.pets,
           ...options,
           onRequest(ctx) {

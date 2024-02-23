@@ -3,7 +3,8 @@
   "name": "playground-client",
   "type": "module",
   "scripts": {
-    "dev": "nuxi dev && listhen -w ./server.ts",
+    "dev": "nuxi dev",
+    "dev:listen": "nuxi dev && listhen -w ./server.ts",
     "build": "nuxi build",
     "generate": "nuxi generate"
   },

@@ -1,11 +1,11 @@
 import type { Ref } from 'vue'
 import type { $Fetch, FetchContext, FetchError, FetchOptions } from 'ofetch'
-import type { 
-  ErrorResponse, 
-  SuccessResponse, 
-  FilterKeys, 
-  MediaType, 
-  ResponseObjectMap, 
+import type {
+  ErrorResponse,
+  SuccessResponse,
+  FilterKeys,
+  MediaType,
+  ResponseObjectMap,
   OperationRequestBodyContent,
 } from "openapi-typescript-helpers"
 import type { AsyncData, UseFetchOptions } from "nuxt/app"
@@ -13,6 +13,7 @@ import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
 import { toValue } from 'vue'
 import { $fetch } from 'ofetch'
 import { useNuxtApp, useFetch } from 'nuxt/app'
+import { fillPath } from '../utils'
 
 type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T;
 type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>;
@@ -68,7 +69,7 @@ export type OpenFetchClient<Paths> = <
   DefaultMethod extends 'get' extends LowercasedMethod ? 'get' : LowercasedMethod,
   ResT = FetchResponseData<Paths[ReqT][DefaultMethod]>
 >(
-  url: ReqT, 
+  url: ReqT,
   options?: OpenFetchOptions<Method, LowercasedMethod, Paths[ReqT]>
 ) => Promise<ResT>
 
@@ -107,13 +108,13 @@ export function createOpenFetch<Paths>(options: FetchOptions | ((options: FetchO
 }
 
 export function createUseOpenFetch<
-  Paths, 
-  Lazy = false,      
->(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> 
+  Paths,
+  Lazy = false,
+>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy>
 export function createUseOpenFetch<
-  Paths, 
-  Lazy = true,      
->(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> 
+  Paths,
+  Lazy = true,
+>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy>
 export function createUseOpenFetch<
   Paths,
   Lazy extends boolean
@@ -125,9 +126,4 @@ export function createUseOpenFetch<
 
     return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
   }
-}
-
-export function fillPath(path: string, params: object = {}) {
-  for (const [k, v] of Object.entries(params)) path = path.replace(`{${k}}`, encodeURIComponent(String(v)))
-  return path
 }
