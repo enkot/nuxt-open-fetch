@@ -40,11 +40,11 @@ const {
   },
 });
 
-const { $petsFetch } = useNuxtApp()
+const { $manualPetsFetch } = useNuxtApp()
 
 const petId = ref(2)
 
-const data = await $petsFetch('/pet/{petId}', {
+const data = await $manualPetsFetch('/pet/{petId}', {
   path: {
     petId: petId.value
   }

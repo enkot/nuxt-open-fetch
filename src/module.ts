@@ -23,7 +23,7 @@ export interface OpenFetchServerOptions extends OpenFetchOptions {
 
 export interface ModuleOptions {
   clients?: Record<string, OpenFetchClientOptions>
-  servers?: Record<string, OpenFetchClientOptions>
+  servers?: Record<string, OpenFetchServerOptions>
   openAPITS?: OpenAPITSOptions
   disablePlugin?: boolean
 }
@@ -213,8 +213,9 @@ export {}
     const serverSchemas: ResolvedServerSchema[] = []
     const servers: Record<string, OpenFetchServerOptions> = defu(nuxt.options.runtimeConfig.openFetchServer as any, options.servers)
 
+    // TODO: Fix 'as any' type cast
     nuxt.options.runtimeConfig.public.openFetchServer = Object.fromEntries(Object.entries(servers)
-      .map(([key, { schema: _, ...options }]) => [key, { ...options, apiRoutePrefix: getServerAPIRoutePrefix(key) }])) as Record<string, OpenFetchServerOptions>
+      .map(([key, { schema: _, ...options }]) => [key, { ...options, apiRoutePrefix: getServerAPIRoutePrefix(key) }])) as any
 
     for (const layer of nuxt.options._layers) {
       const { srcDir, openFetch } = layer.config = layer.config as typeof layer.config & { openFetch?: ModuleOptions }

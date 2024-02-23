@@ -8,7 +8,7 @@ export default defineNuxtPlugin({
 
     return {
       provide: {
-        petsFetch: createOpenFetch((options) => ({
+        manualPetsFetch: createOpenFetch((options) => ({
           ...clients.pets,
           ...options,
           onRequest(ctx) {
