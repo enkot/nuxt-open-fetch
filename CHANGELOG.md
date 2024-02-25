@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.6
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.5...v0.4.6)
+
+### 🚀 Enhancements
+
+- Nitro support ([d30287f](https://github.com/enkot/nuxt-open-fetch/commit/d30287f))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.4.5
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.4...v0.4.5)
