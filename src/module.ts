@@ -2,7 +2,16 @@ import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
-import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImportsSources, addPlugin } from '@nuxt/kit'
+import { 
+  defineNuxtModule, 
+  createResolver, 
+  addTypeTemplate, 
+  addTemplate, 
+  addImportsSources, 
+  addPlugin,
+  addServerPlugin, 
+  addServerImports
+} from '@nuxt/kit'
 import openapiTS from "openapi-typescript"
 import { pascalCase, kebabCase } from 'scule'
 import { defu } from 'defu'
@@ -19,7 +28,8 @@ export interface OpenFetchClientOptions extends OpenFetchOptions {
 export interface ModuleOptions {
   clients?: Record<string, OpenFetchClientOptions>
   openAPITS?: OpenAPITSOptions
-  disablePlugin?: boolean
+  disableNuxtPlugin?: boolean
+  disableNitroPlugin?: boolean
 }
 
 interface ResolvedSchema {
@@ -99,17 +109,11 @@ export default defineNuxtModule<ModuleOptions>({
       ])
     ]
 
-    const generatedSchemas = schemas.map(({ name, fetchName, schema, openAPITS }) => {
-      const { filename } = addTypeTemplate({
-        filename: `types/${moduleName}/${kebabCase(name)}.d.ts`,
+    schemas.forEach(({ name, schema, openAPITS }) => {
+      addTypeTemplate({
+        filename: `types/${moduleName}/schemas/${kebabCase(name)}.d.ts`,
         getContents: () => openapiTS(schema, openAPITS)
       })
-
-      return {
-        name,
-        filename,
-        fetchName
-      }
     })
 
     addImportsSources({
@@ -118,29 +122,45 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     addImportsSources({
-      from: resolve(`runtime/clients`),
+      from: resolve(`runtime/fetch`),
       imports: [
         'createOpenFetch',
-        'createUseOpenFetch',
         'openFetchRequestInterceptor',
         'OpenFetchClient',
-        'UseOpenFetchClient',
         'OpenFetchOptions'
       ]
     })
+
+    addImportsSources({
+      from: resolve(`runtime/useFetch`),
+      imports: [
+        'createUseOpenFetch',
+        'UseOpenFetchClient'
+      ]
+    })
+
+    addServerImports([{
+      name: 'createOpenFetch',
+      from: resolve('runtime/fetch'),
+    }])
+
+    addServerImports([{
+      name: 'OpenFetchClient',
+      from: resolve('runtime/fetch'),
+    }])
 
     addTemplate({
       filename: `${moduleName}.d.ts`,
       getContents() {
         return `
 import { createUseOpenFetch } from '#imports'
-${generatedSchemas.map(({ name, filename }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#build/${filename}'
+${schemas.map(({ name }) => `
+import type { paths as ${pascalCase(name)}Paths } from './types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
 
-${generatedSchemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
+${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
 
-${generatedSchemas.map(({ name, fetchName }) => `
+${schemas.map(({ name, fetchName }) => `
 /**
  * Fetch data from an OpenAPI endpoint with an SSR-friendly composable.
  * See {@link https://nuxt-open-fetch.vercel.app/composables/useclientfetch}
@@ -160,23 +180,24 @@ export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)
       write: true
     })
 
+    // Nuxt types
     addTypeTemplate({
-      filename: `types/${moduleName}.d.ts`,
+      filename: `types/${moduleName}/nuxt.d.ts`,
       getContents: () => `
 import type { OpenFetchClient } from '#imports'
-${generatedSchemas.map(({ name, filename }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#build/${filename}'
+${schemas.map(({ name }) => `
+import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
 
 declare module '#app' {
   interface NuxtApp {
-    ${generatedSchemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
+    ${schemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
         
 declare module 'vue' {
   interface ComponentCustomProperties {
-    ${generatedSchemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
+    ${schemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
 
@@ -184,7 +205,31 @@ export {}
 `.trimStart()
     })
 
-    if (!options.disablePlugin) addPlugin(resolve('./runtime/plugin'))
+    // Nitro types
+    addTemplate({
+      filename: `types/${moduleName}/nitro.d.ts`,
+      getContents: () => `
+import type { OpenFetchClient } from '#imports'
+${schemas.map(({ name }) => `
+import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(name)}.d.ts'
+`.trimStart()).join('').trimEnd()}
+
+declare module 'nitropack' {
+  interface NitroApp {
+    ${schemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
+  }
+}
+
+export {}
+`.trimStart()
+    })
+
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.typescript?.tsConfig?.include?.push(`./types/${moduleName}/nitro.d.ts`)
+    })
+
+    if (!options.disableNuxtPlugin) addPlugin(resolve('./runtime/nuxt-plugin'))
+    if (!options.disableNitroPlugin) addServerPlugin(resolve('./runtime/nitro-plugin'))
   }
 })
 

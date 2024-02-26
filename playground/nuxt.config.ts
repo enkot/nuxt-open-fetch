@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   openFetch: {
     clients: {
-      foo: {
-        baseURL: '/petsProxy'
+      api: {
+        baseURL: 'https://petstore3.swagger.io/api/v3/'
       },
     },
   },

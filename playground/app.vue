@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useLazyPetsFetch, usePetsFetch, useNuxtApp } from "#imports"
+import { ref, useLazyApiFetch, usePetsFetch, useNuxtApp } from "#imports"
 
 const { $petsFetch } = useNuxtApp()
 
@@ -18,7 +18,7 @@ const { data: data2, error, execute } = await usePetsFetch('/pet/{petId}', {
   }
 })
 
-const {data: data3 } = useLazyPetsFetch('/pet/{petId}', {
+const {data: data3 } = useLazyApiFetch('/pet/{petId}', {
   path: {
     petId
   },

@@ -7,9 +7,7 @@ export default defineNuxtConfig({
   openFetch: {
     clients: {
       pets: {
-        fetchOptions: {
-          baseURL: 'https://example.com/pets'
-        }
+        baseURL: '/api'
       }
     }
   }
