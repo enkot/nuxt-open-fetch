@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v0.5.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.5.1...v0.5.2)
+
+### 🩹 Fixes
+
+- Option type is "undefined" when params not exixts. ([7cdf7f1](https://github.com/enkot/nuxt-open-fetch/commit/7cdf7f1))
+- Use utils in place ([a120749](https://github.com/enkot/nuxt-open-fetch/commit/a120749))
+
+### 🏡 Chore
+
+- **release:** V0.6.0 ([4e12642](https://github.com/enkot/nuxt-open-fetch/commit/4e12642))
+- **release:** V0.7.0 ([9740bac](https://github.com/enkot/nuxt-open-fetch/commit/9740bac))
+- **release:** V0.8.0 ([52f917e](https://github.com/enkot/nuxt-open-fetch/commit/52f917e))
+- **release:** V0.8.0" ([81bc3b8](https://github.com/enkot/nuxt-open-fetch/commit/81bc3b8))
+- **release:** V0.7.0" ([b7c6da0](https://github.com/enkot/nuxt-open-fetch/commit/b7c6da0))
+- **release:** V0.6.0" ([106bf68](https://github.com/enkot/nuxt-open-fetch/commit/106bf68))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Yifan Xiao ([@hempflower](http://github.com/hempflower))
+
 ## v0.5.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.5.0...v0.5.1)
