@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.8.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.7.0...v0.8.0)
+
 ## v0.7.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.0...v0.7.0)
