@@ -2,20 +2,19 @@ import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
-import { 
-  defineNuxtModule, 
-  createResolver, 
-  addTypeTemplate, 
-  addTemplate, 
-  addImportsSources, 
+import {
+  defineNuxtModule,
+  createResolver,
+  addTypeTemplate,
+  addTemplate,
+  addImportsSources,
   addPlugin,
-  addServerPlugin, 
+  addServerPlugin,
   addServerImports
 } from '@nuxt/kit'
 import openapiTS from "openapi-typescript"
 import { pascalCase, kebabCase } from 'scule'
 import { defu } from 'defu'
-import { isValidUrl } from './utils'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
@@ -96,7 +95,7 @@ export default defineNuxtModule<ModuleOptions>({
         })
       }
     }
-
+    
     nuxt.options.optimization = nuxt.options.optimization || {
       keyedComposables: []
     }
@@ -235,4 +234,13 @@ export {}
 
 function getClientName(name: string, lazy = false) {
   return `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-fetch`)}`
+}
+
+function isValidUrl(url: string) {
+  try {
+    return Boolean(new URL(url))
+  }
+  catch (e) {
+    return false
+  }
 }

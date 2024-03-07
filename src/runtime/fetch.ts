@@ -7,14 +7,13 @@ import type {
   ResponseObjectMap, 
   OperationRequestBodyContent,
 } from "openapi-typescript-helpers"
-import { fillPath } from '../utils'
 
 export type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 export type FetchResponseError<T> = FetchError<FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>>
 
 export type MethodOption<M, P> = 'get' extends keyof P ? { method?: M } : { method: M }
 
-export type ParamsOption<T> = T extends { parameters?: any, query?: any } ? T["parameters"] : never
+export type ParamsOption<T> = T extends { parameters?: any, query?: any } ? T["parameters"] : {}
 
 export type RequestBodyOption<T> = OperationRequestBodyContent<T> extends never
   ? { body?: never }
@@ -58,4 +57,9 @@ export function createOpenFetch<Paths>(options: FetchOptions | ((options: FetchO
       ...opts
     }
   )
+}
+
+export function fillPath(path: string, params: object = {}) {
+  for (const [k, v] of Object.entries(params)) path = path.replace(`{${k}}`, encodeURIComponent(String(v)))
+  return path
 }
