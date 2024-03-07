@@ -7,7 +7,7 @@ import type {
   ResponseObjectMap, 
   OperationRequestBodyContent,
 } from "openapi-typescript-helpers"
-import { fillPath } from '../utils'
+import { fillPath } from './utils'
 
 export type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
 export type FetchResponseError<T> = FetchError<FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>>

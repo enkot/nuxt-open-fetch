@@ -15,7 +15,7 @@ import {
 import openapiTS from "openapi-typescript"
 import { pascalCase, kebabCase } from 'scule'
 import { defu } from 'defu'
-import { isValidUrl } from './utils'
+import { isValidUrl } from './runtime/utils'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
