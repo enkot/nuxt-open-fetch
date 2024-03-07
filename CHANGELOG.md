@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.5.0...v0.5.1)
+
+### 🏡 Chore
+
+- Changelog ([e0ccc7b](https://github.com/enkot/nuxt-open-fetch/commit/e0ccc7b))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.5.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.4.5...v0.5.0)
