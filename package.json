@@ -30,7 +30,7 @@
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxi prepare playground",
     "dev:server": "listhen -w ./playground/server.ts",
     "start:server": "listhen ./playground/server.ts",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release --major && npm publish && git push --follow-tags",
