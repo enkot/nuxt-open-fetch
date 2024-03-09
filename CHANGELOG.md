@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.1...v0.6.2)
+
+### 🩹 Fixes
+
+- Relative imports ([49959d5](https://github.com/enkot/nuxt-open-fetch/commit/49959d5))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.6.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.0...v0.6.1)
