@@ -5,6 +5,16 @@
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.5.2...v0.6.0)
 
+### 🚀 Enhancements
+
+🚨 This is likely to need code changes in your project 🚨
+
+- Removed the postfix `Fetch', which makes it difficult to read the composable name ([182d684](https://github.com/enkot/nuxt-open-fetch/commit/182d684))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.5.2
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.5.1...v0.5.2)
