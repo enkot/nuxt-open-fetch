@@ -3,9 +3,9 @@
 </template>
 
 <script setup>
-import { usePetsFetch } from '#imports'
+import { usePets } from '#imports'
 
-const { data } = await usePetsFetch('/pet/{petId}', {
+const { data } = await usePets('/pet/{petId}', {
   path: {
     petId: 1
   }

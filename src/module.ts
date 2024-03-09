@@ -190,13 +190,13 @@ import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(na
 
 declare module '#app' {
   interface NuxtApp {
-    ${schemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
+    ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
         
 declare module 'vue' {
   interface ComponentCustomProperties {
-    ${schemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
+    ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
 
@@ -215,7 +215,7 @@ import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(na
 
 declare module 'nitropack' {
   interface NitroApp {
-    ${schemas.map(({ name }) => `$${name}Fetch: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
+    ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
 
@@ -233,7 +233,7 @@ export {}
 })
 
 function getClientName(name: string, lazy = false) {
-  return `use${lazy ? 'Lazy' : ''}${pascalCase(`${name}-fetch`)}`
+  return `use${lazy ? 'Lazy' : ''}${pascalCase(name)}`
 }
 
 function isValidUrl(url: string) {

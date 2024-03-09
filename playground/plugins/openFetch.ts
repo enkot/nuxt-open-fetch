@@ -7,16 +7,17 @@ export default defineNuxtPlugin({
     const { public: { openFetch: clients } } = useRuntimeConfig()
   
     return {
-      provide: {
-        petsFetch: createOpenFetch((options) => ({
-          ...clients.pets,
+      provide: Object.entries(clients).reduce((acc, [name, client]) => ({
+        ...acc,
+        [name]: createOpenFetch((options) => ({
+          ...client,
           ...options,
           onRequest(ctx) {
             console.log('My logging', ctx.request)
             return options.onRequest?.(ctx)
           }
         }))
-      }
+      }), {})
     }
   }
 })

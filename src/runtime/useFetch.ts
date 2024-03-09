@@ -61,7 +61,7 @@ export function createUseOpenFetch<
 >(client: $Fetch | OpenFetchClientName, lazy = false): UseOpenFetchClient<Paths, Lazy> {
   return (url: string | (() => string), options: any = {}, autoKey?: string) => {
     const nuxtApp = useNuxtApp()
-    const $fetch = (typeof client === 'string' ? nuxtApp[`$${client}Fetch`] : client)
+    const $fetch = (typeof client === 'string' ? nuxtApp[`$${client}`] : client)
     const opts = { $fetch, key: autoKey, ...options }
 
     return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
