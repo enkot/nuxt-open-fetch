@@ -152,7 +152,7 @@ export default defineNuxtModule<ModuleOptions>({
       filename: `${moduleName}.d.ts`,
       getContents() {
         return `
-import { createUseOpenFetch } from '#imports'
+import { createUseOpenFetch } from './imports.d.ts'
 ${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from './types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
@@ -183,7 +183,7 @@ export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)
     addTypeTemplate({
       filename: `types/${moduleName}/nuxt.d.ts`,
       getContents: () => `
-import type { OpenFetchClient } from '#imports'
+import type { OpenFetchClient } from '../../imports.d.ts'
 ${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
@@ -208,7 +208,7 @@ export {}
     addTemplate({
       filename: `types/${moduleName}/nitro.d.ts`,
       getContents: () => `
-import type { OpenFetchClient } from '#imports'
+import type { OpenFetchClient } from '../../imports.d.ts'
 ${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}

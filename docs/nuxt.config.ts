@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     '@nuxtjs/fontaine',
     '@nuxtjs/google-fonts',
     'nuxt-og-image',
-    'nuxt-open-fetch',
+    '../src/module',
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
@@ -30,7 +30,9 @@ export default defineNuxtConfig({
   twoslash: {
     floatingVueOptions: {
       classMarkdown: 'prose prose-primary dark:prose-invert'
-    }
+    },
+    throws: false,
+    includeNuxtTypes: true
   },
   // Fonts
   fontMetrics: {
@@ -74,6 +76,7 @@ export default defineNuxtConfig({
     }
   },
   openFetch: {
+    disableNitroPlugin: true,
     clients: {
       pets: {
         baseURL: '/petsProxy'
