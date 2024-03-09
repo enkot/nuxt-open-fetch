@@ -42,8 +42,8 @@ dependencies:
     specifier: ^2.2.4
     version: 2.2.4(@nuxt/devtools@1.0.8)(@vue/compiler-core@3.4.18)(nuxt@3.10.2)(postcss@8.4.35)(vite@5.1.1)(vue@3.3.13)(webpack@5.90.1)
   nuxt-open-fetch:
-    specifier: ^0.6.1
-    version: 0.6.1
+    specifier: ^0.6.2
+    version: 0.6.2
   openapi-typescript:
     specifier: ^6.7.4
     version: 6.7.4
@@ -7584,8 +7584,8 @@ packages:
       - webpack
     dev: false
 
-  /nuxt-open-fetch@0.6.1:
-    resolution: {integrity: sha512-LlxZ3xsYb4zQpo8moqiIa8PjAImcndRilYIz9dDmR6ErAQwd498J2QksmZLhZZjOwpiT1AzcCnNqf9ZjQjK1Mw==}
+  /nuxt-open-fetch@0.6.2:
+    resolution: {integrity: sha512-ScGzhHwxPsSKHEpPg0r/YAneaDQfvXp6ANZ8uBKtN1bu9xb4ITmGpy7LIvYyA2TIRC3YFFiwdDezU1lLFfBczQ==}
     dependencies:
       '@nuxt/kit': 3.10.2
       defu: 6.1.4
