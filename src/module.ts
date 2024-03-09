@@ -228,7 +228,11 @@ export {}
     })
 
     if (!options.disableNuxtPlugin) addPlugin(resolve('./runtime/nuxt-plugin'))
-    if (!options.disableNitroPlugin) addServerPlugin(resolve('./runtime/nitro-plugin'))
+    if (!options.disableNitroPlugin) {
+      // https://github.com/nuxt/nuxt/issues/21497
+      nuxt.options.build.transpile.push(resolve('./runtime/nitro-plugin'))
+      addServerPlugin(resolve('./runtime/nitro-plugin'))
+    }
   }
 })
 
