@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.6.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.0...v0.6.1)
+
+### 🩹 Fixes
+
+- Docs ([ab039f4](https://github.com/enkot/nuxt-open-fetch/commit/ab039f4))
+- Transpile nitro plugin ([e7c2423](https://github.com/enkot/nuxt-open-fetch/commit/e7c2423))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.6.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.5.2...v0.6.0)
