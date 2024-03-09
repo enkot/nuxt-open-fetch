@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     '@nuxtjs/fontaine',
     '@nuxtjs/google-fonts',
     'nuxt-og-image',
-    '../src/module',
+    'nuxt-open-fetch',
   ],
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
