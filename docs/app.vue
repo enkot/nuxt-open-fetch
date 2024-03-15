@@ -27,6 +27,10 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
+defineOgImage({
+  url: '/cover.png',
+})
+
 provide('navigation', navigation)
 </script>
 

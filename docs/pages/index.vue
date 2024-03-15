@@ -13,7 +13,7 @@ useSeoMeta({
 })
 
 defineOgImage({
-  component: 'Docs',
+  url: '/cover.png',
   title: page.value.title,
   description: page.value.description,
 })

@@ -88,4 +88,8 @@ export default defineNuxtConfig({
       __NUXT_ASYNC_CONTEXT__: false,
     },
   },
+  site: {
+    // production URL
+    url: 'https://nuxt-open-fetch.vercel.app',
+  },
 })
