@@ -2,13 +2,13 @@ import NuxtOpenFetch from '../../../src/module'
 
 export default defineNuxtConfig({
   modules: [
-    NuxtOpenFetch
+    NuxtOpenFetch,
   ],
   openFetch: {
     clients: {
       pets: {
-        baseURL: '/api'
-      }
-    }
-  }
+        baseURL: '/api',
+      },
+    },
+  },
 })

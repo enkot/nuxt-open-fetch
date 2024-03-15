@@ -1,13 +1,13 @@
 import type { Ref } from 'vue'
 import type { $Fetch } from 'ofetch'
-import type { AsyncData, UseFetchOptions } from "nuxt/app"
-import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
-import type { FetchResponseData, FetchResponseError, ParamsOption, RequestBodyOption } from './fetch'
+import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import { toValue } from 'vue'
-import { useNuxtApp, useFetch } from 'nuxt/app'
+import { useFetch, useNuxtApp } from 'nuxt/app'
+import type { FetchResponseData, FetchResponseError, ParamsOption, RequestBodyOption } from './fetch'
+import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
 
-type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T;
-type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>;
+type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T
+type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>
 
 type ComputedOptions<T> = {
   [K in keyof T]: T[K] extends Function ? T[K] : T[K] extends Record<string, unknown> ? ComputedOptions<T[K]> : Ref<T[K]> | T[K]
@@ -22,7 +22,7 @@ type UseOpenFetchOptions<
   DataT = ResT,
   PickKeys extends KeysOf<DataT> = KeysOf<DataT>,
   DefaultT = null,
-  Operation = 'get' extends LowercasedMethod ? ('get' extends keyof Params ? Params['get'] : never) : LowercasedMethod extends keyof Params ? Params[LowercasedMethod] : never
+  Operation = 'get' extends LowercasedMethod ? ('get' extends keyof Params ? Params['get'] : never) : LowercasedMethod extends keyof Params ? Params[LowercasedMethod] : never,
 > =
   ComputedMethodOption<Method, Params>
   & ComputedOptions<ParamsOption<Operation>>
@@ -48,16 +48,16 @@ export type UseOpenFetchClient<Paths, Lazy> = <
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
 export function createUseOpenFetch<
-  Paths, 
-  Lazy = false,      
->(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> 
-export function createUseOpenFetch<
-  Paths, 
-  Lazy = true,      
->(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy> 
+  Paths,
+  Lazy = false,
+>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy>
 export function createUseOpenFetch<
   Paths,
-  Lazy extends boolean
+  Lazy = true,
+>(client: $Fetch | OpenFetchClientName, lazy?: Lazy): UseOpenFetchClient<Paths, Lazy>
+export function createUseOpenFetch<
+  Paths,
+  Lazy extends boolean,
 >(client: $Fetch | OpenFetchClientName, lazy = false): UseOpenFetchClient<Paths, Lazy> {
   return (url: string | (() => string), options: any = {}, autoKey?: string) => {
     const nuxtApp = useNuxtApp()
@@ -67,4 +67,3 @@ export function createUseOpenFetch<
     return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
   }
 }
-

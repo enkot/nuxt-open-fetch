@@ -1,15 +1,15 @@
-title: 'Nuxt Open Fetch'
+title: Nuxt Open Fetch
 description: 'Generate zero-overhead, 100% typed OpenAPI fetch for Nuxt'
 navigation: false
 hero:
-  title: 'OpenAPI fetch for Nuxt'
+  title: OpenAPI fetch for Nuxt
   description: 'Generate zero-overhead, 100% typed OpenAPI fetch clients'
   orientation: horizontal
   links:
     - label: Get started
       icon: i-heroicons-arrow-right-20-solid
       trailing: true
-      to: '/setup/quick-start'
+      to: /setup/quick-start
       size: lg
     - label: View on GitHub
       icon: i-simple-icons-github
@@ -22,7 +22,7 @@ hero:
     ```ts twoslash
     // @noErrors
     const { data } = useLazyPets('/pet/{petId}', {
-    //                                        ^|  
+    //                                        ^|
       path: {
         petId: 2
       },
@@ -38,18 +38,18 @@ hero:
     ```
 features:
   items:
-    - title: 'Full type safety'
+    - title: Full type safety
       description: 'All parameters, request bodies, and responses are type-checked and 100% match your schema'
-      icon: 'i-simple-icons-typescript'
-    - title: 'OpenAPI'
-      description: 'Supports OpenAPI 3.0 and 3.1 (including advanced features like discriminators)'
-      icon: 'i-simple-icons-openapiinitiative'
-    - title: 'YAML or JSON'
+      icon: i-simple-icons-typescript
+    - title: OpenAPI
+      description: Supports OpenAPI 3.0 and 3.1 (including advanced features like discriminators)
+      icon: i-simple-icons-openapiinitiative
+    - title: YAML or JSON
       description: 'Load schemas from YAML or JSON, locally or remotely'
-      icon: 'i-simple-icons-json'
-    - title: 'Runtime-free'
-      description: 'Generate runtime-free types that outperform old school codegen'
-    - title: 'Fast'
-      description: 'Generate types for even huge schemas within milliseconds'
-    - title: 'Layers'
-      description: 'Works with Nuxt Layers'
+      icon: i-simple-icons-json
+    - title: Runtime-free
+      description: Generate runtime-free types that outperform old school codegen
+    - title: Fast
+      description: Generate types for even huge schemas within milliseconds
+    - title: Layers
+      description: Works with Nuxt Layers

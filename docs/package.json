@@ -1,7 +1,7 @@
 {
   "name": "nuxt-ui-pro-template-docs",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -22,7 +22,6 @@
     "fast-glob": "^3.3.2",
     "nuxt": "^3.10.2",
     "nuxt-content-twoslash": "^0.0.10",
-    "nuxt-og-image": "^2.2.4",
     "nuxt-open-fetch": "^0.6.2",
     "openapi-typescript": "^6.7.4",
     "picocolors": "^1.0.0",
@@ -32,12 +31,13 @@
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxthq/studio": "^1.0.10",
     "eslint": "^8.56.0",
+    "nuxt-og-image": "^2.2.4",
     "vue-tsc": "^1.8.27"
   },
-  "resolutions": {
+  "overrides": {
     "vue": "3.3.13"
   },
-  "overrides": {
+  "resolutions": {
     "vue": "3.3.13"
   }
 }

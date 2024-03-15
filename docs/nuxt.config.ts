@@ -1,10 +1,12 @@
+import { url } from 'node:inspector'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   nitro: {
-    preset: 'vercel-static'
+    preset: 'vercel-static',
   },
   extends: [
-    '@nuxt/ui-pro'
+    '@nuxt/ui-pro',
   ],
   modules: [
     'nuxt-content-twoslash',
@@ -19,46 +21,49 @@ export default defineNuxtConfig({
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
     'components:extend': (components) => {
-      const globals = components.filter((c) => ['UButton', 'UIcon'].includes(c.pascalName))
+      const globals = components.filter(c => ['UButton', 'UIcon'].includes(c.pascalName))
 
-      globals.forEach((c) => c.global = true)
-    }
+      globals.forEach(c => c.global = true)
+    },
+  },
+  site: {
+    url: 'https://nuxt-open-fetch.vercel.app',
   },
   ui: {
-    icons: ['heroicons', 'simple-icons']
+    icons: ['heroicons', 'simple-icons'],
   },
   twoslash: {
     floatingVueOptions: {
-      classMarkdown: 'prose prose-primary dark:prose-invert'
+      classMarkdown: 'prose prose-primary dark:prose-invert',
     },
     throws: false,
-    includeNuxtTypes: true
+    includeNuxtTypes: true,
   },
   // Fonts
   fontMetrics: {
-    fonts: ['DM Sans']
+    fonts: ['DM Sans'],
   },
   googleFonts: {
     display: 'swap',
     download: true,
     families: {
-      'DM+Sans': [400, 500, 600, 700]
-    }
+      'DM+Sans': [400, 500, 600, 700],
+    },
   },
   routeRules: {
     '/api/search.json': { prerender: true },
   },
   devtools: {
-    enabled: true
+    enabled: true,
   },
   typescript: {
-    strict: false
+    strict: false,
   },
   content: {
     highlight: {
       theme: {
         default: 'material-theme-lighter',
-        dark: 'material-theme-palenight'
+        dark: 'material-theme-palenight',
       },
       langs: [
         'js',
@@ -71,21 +76,21 @@ export default defineNuxtConfig({
         'bash',
         'md',
         'mdc',
-        'json'
-      ]
-    }
+        'json',
+      ],
+    },
   },
   openFetch: {
     disableNitroPlugin: true,
     clients: {
       pets: {
-        baseURL: '/petsProxy'
+        baseURL: '/petsProxy',
       },
     },
   },
   vite: {
     define: {
-      __NUXT_ASYNC_CONTEXT__: false
-    }
-  }
+      __NUXT_ASYNC_CONTEXT__: false,
+    },
+  },
 })

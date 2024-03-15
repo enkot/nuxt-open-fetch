@@ -1,19 +1,19 @@
 import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
-import type { OpenAPI3, OpenAPITSOptions } from "openapi-typescript"
+import type { OpenAPI3, OpenAPITSOptions } from 'openapi-typescript'
 import {
-  defineNuxtModule,
-  createResolver,
-  addTypeTemplate,
-  addTemplate,
   addImportsSources,
   addPlugin,
+  addServerImports,
   addServerPlugin,
-  addServerImports
+  addTemplate,
+  addTypeTemplate,
+  createResolver,
+  defineNuxtModule,
 } from '@nuxt/kit'
-import openapiTS from "openapi-typescript"
-import { pascalCase, kebabCase } from 'scule'
+import openapiTS from 'openapi-typescript'
+import { kebabCase, pascalCase } from 'scule'
 import { defu } from 'defu'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
@@ -34,9 +34,9 @@ export interface ModuleOptions {
 interface ResolvedSchema {
   name: string
   fetchName: {
-    composable: string,
+    composable: string
     lazyComposable: string
-  },
+  }
   schema: OpenAPI3Schema
   openAPITS?: OpenAPITSOptions
 }
@@ -48,8 +48,8 @@ export default defineNuxtModule<ModuleOptions>({
     name: moduleName,
     configKey: 'openFetch',
     compatibility: {
-      nuxt: '^3.0.0'
-    }
+      nuxt: '^3.0.0',
+    },
   },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
@@ -69,49 +69,52 @@ export default defineNuxtModule<ModuleOptions>({
 
       for (const [name, config] of Object.entries(layerClients)) {
         // Skip if schema already added by upper layer or if config is not defined
-        if (schemas.some(item => item.name === name) || !config) continue
+        if (schemas.some(item => item.name === name) || !config)
+          continue
 
-        let schema: OpenAPI3Schema | undefined = undefined
+        let schema: OpenAPI3Schema | undefined
 
         if (config.schema && typeof config.schema === 'string') {
           schema = isValidUrl(config.schema) ? config.schema : resolve(srcDir, config.schema)
-        } else {
+        }
+        else {
           const jsonPath = resolve(schemasDir, `${name}/openapi.json`)
           const yamlPath = resolve(schemasDir, `${name}/openapi.yaml`)
 
           schema = existsSync(jsonPath) ? jsonPath : existsSync(yamlPath) ? yamlPath : undefined
         }
 
-        if (!schema) throw new Error(`Could not find OpenAPI schema for "${name}"`)
+        if (!schema)
+          throw new Error(`Could not find OpenAPI schema for "${name}"`)
 
         schemas.push({
           name,
           fetchName: {
             composable: getClientName(name),
-            lazyComposable: getClientName(name, true)
+            lazyComposable: getClientName(name, true),
           },
           schema,
           openAPITS: options?.openAPITS,
         })
       }
     }
-    
+
     nuxt.options.optimization = nuxt.options.optimization || {
-      keyedComposables: []
+      keyedComposables: [],
     }
 
     nuxt.options.optimization.keyedComposables = [
       ...nuxt.options.optimization.keyedComposables,
       ...schemas.flatMap(({ fetchName }) => [
         { name: fetchName.composable, argumentLength: 3 },
-        { name: fetchName.lazyComposable, argumentLength: 3 }
-      ])
+        { name: fetchName.lazyComposable, argumentLength: 3 },
+      ]),
     ]
 
     schemas.forEach(({ name, schema, openAPITS }) => {
       addTypeTemplate({
         filename: `types/${moduleName}/schemas/${kebabCase(name)}.d.ts`,
-        getContents: () => openapiTS(schema, openAPITS)
+        getContents: () => openapiTS(schema, openAPITS),
       })
     })
 
@@ -126,16 +129,16 @@ export default defineNuxtModule<ModuleOptions>({
         'createOpenFetch',
         'openFetchRequestInterceptor',
         'OpenFetchClient',
-        'OpenFetchOptions'
-      ]
+        'OpenFetchOptions',
+      ],
     })
 
     addImportsSources({
       from: resolve(`runtime/useFetch`),
       imports: [
         'createUseOpenFetch',
-        'UseOpenFetchClient'
-      ]
+        'UseOpenFetchClient',
+      ],
     })
 
     addServerImports([{
@@ -176,7 +179,7 @@ export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Pat
 export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}', true)
 `.trimStart()).join('\n')}`.trimStart()
       },
-      write: true
+      write: true,
     })
 
     // Nuxt types
@@ -201,7 +204,7 @@ declare module 'vue' {
 }
 
 export {}
-`.trimStart()
+`.trimStart(),
     })
 
     // Nitro types
@@ -220,20 +223,21 @@ declare module 'nitropack' {
 }
 
 export {}
-`.trimStart()
+`.trimStart(),
     })
 
     nuxt.hook('nitro:config', (nitroConfig) => {
       nitroConfig.typescript?.tsConfig?.include?.push(`./types/${moduleName}/nitro.d.ts`)
     })
 
-    if (!options.disableNuxtPlugin) addPlugin(resolve('./runtime/nuxt-plugin'))
+    if (!options.disableNuxtPlugin)
+      addPlugin(resolve('./runtime/nuxt-plugin'))
     if (!options.disableNitroPlugin) {
       // https://github.com/nuxt/nuxt/issues/21497
       nuxt.options.build.transpile.push(resolve('./runtime/nitro-plugin'))
       addServerPlugin(resolve('./runtime/nitro-plugin'))
     }
-  }
+  },
 })
 
 function getClientName(name: string, lazy = false) {

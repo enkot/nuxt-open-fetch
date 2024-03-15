@@ -1,5 +1,5 @@
 import type { NitroApp } from 'nitropack'
-import { useRuntimeConfig, createOpenFetch } from '#imports'
+import { createOpenFetch, useRuntimeConfig } from '#imports'
 
 type NitroAppPlugin = (nitro: NitroApp) => void
 

@@ -6,7 +6,7 @@ export default defineEventHandler(async () => {
 
   return $pets('/pet/{petId}', {
     path: {
-      petId: 2
-    }
+      petId: 2,
+    },
   })
 })

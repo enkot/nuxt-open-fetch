@@ -1,10 +1,10 @@
 {
   "name": "nuxt-open-fetch",
+  "type": "module",
   "version": "0.6.2",
   "description": "Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.",
-  "repository": "enkot/nuxt-open-fetch",
   "license": "MIT",
-  "type": "module",
+  "repository": "enkot/nuxt-open-fetch",
   "keywords": [
     "nuxt",
     "nuxt3",
@@ -35,6 +35,7 @@
     "start:server": "listhen ./playground/server.ts",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch"
   },
@@ -46,6 +47,7 @@
     "scule": "^1.0.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.8.2",
     "@nuxt/eslint-config": "^0.1.1",
     "@nuxt/module-builder": "^0.5.1",
     "@nuxt/schema": "^3.10.2",

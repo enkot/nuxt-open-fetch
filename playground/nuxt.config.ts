@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   openFetch: {
     clients: {
       api: {
-        baseURL: 'https://petstore3.swagger.io/api/v3/'
+        baseURL: 'https://petstore3.swagger.io/api/v3/',
       },
     },
   },
