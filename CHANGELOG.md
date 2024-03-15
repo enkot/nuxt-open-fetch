@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.6.3
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.2...v0.6.3)
+
+### 🚀 Enhancements
+
+- Eslint flat config ([21dcc36](https://github.com/enkot/nuxt-open-fetch/commit/21dcc36))
+
+### 🩹 Fixes
+
+- Docs ([9c5443c](https://github.com/enkot/nuxt-open-fetch/commit/9c5443c))
+- **docs:** Update pnpm-lock ([9c2cd7f](https://github.com/enkot/nuxt-open-fetch/commit/9c2cd7f))
+- Improved ParamsOption types ([7dcce5e](https://github.com/enkot/nuxt-open-fetch/commit/7dcce5e))
+- Cleanup ([e89e09f](https://github.com/enkot/nuxt-open-fetch/commit/e89e09f))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.6.2
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.1...v0.6.2)
