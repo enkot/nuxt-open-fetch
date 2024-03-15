@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.6.4
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.3...v0.6.4)
+
+### 🩹 Fixes
+
+- Use build aliases and set declaration as ts file ([31595da](https://github.com/enkot/nuxt-open-fetch/commit/31595da))
+- Cleanup ([7ef9e0b](https://github.com/enkot/nuxt-open-fetch/commit/7ef9e0b))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Julien Huang <julien.huang@leetchi.com>
+
 ## v0.6.3
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.2...v0.6.3)
