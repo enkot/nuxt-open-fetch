@@ -119,7 +119,7 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     addImportsSources({
-      from: resolve(nuxt.options.buildDir, `${moduleName}.d.ts`),
+      from: resolve(nuxt.options.buildDir, `${moduleName}.ts`),
       imports: schemas.flatMap(({ fetchName }) => Object.values(fetchName)),
     })
 
@@ -152,12 +152,12 @@ export default defineNuxtModule<ModuleOptions>({
     }])
 
     addTemplate({
-      filename: `${moduleName}.d.ts`,
+      filename: `${moduleName}.ts`,
       getContents() {
         return `
-import { createUseOpenFetch } from './imports.d.ts'
+import { createUseOpenFetch } from '#imports'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from './types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
+import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
 
 ${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
@@ -186,9 +186,9 @@ export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)
     addTypeTemplate({
       filename: `types/${moduleName}/nuxt.d.ts`,
       getContents: () => `
-import type { OpenFetchClient } from '../../imports.d.ts'
+import type { OpenFetchClient } from '#imports'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(name)}.d.ts'
+import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
 
 declare module '#app' {
@@ -211,9 +211,9 @@ export {}
     addTemplate({
       filename: `types/${moduleName}/nitro.d.ts`,
       getContents: () => `
-import type { OpenFetchClient } from '../../imports.d.ts'
+import type { OpenFetchClient } from '#imports'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from './schemas/${kebabCase(name)}.d.ts'
+import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
 `.trimStart()).join('').trimEnd()}
 
 declare module 'nitropack' {
