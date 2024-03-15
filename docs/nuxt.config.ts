@@ -1,5 +1,3 @@
-import { url } from 'node:inspector'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   nitro: {
@@ -25,9 +23,6 @@ export default defineNuxtConfig({
 
       globals.forEach(c => c.global = true)
     },
-  },
-  site: {
-    url: 'https://nuxt-open-fetch.vercel.app',
   },
   ui: {
     icons: ['heroicons', 'simple-icons'],
