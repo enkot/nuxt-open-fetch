@@ -1,6 +1,5 @@
 # Nuxt dev/build outputs
 .output
-.vercel
 .data
 .nuxt
 .nitro

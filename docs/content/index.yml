@@ -21,8 +21,8 @@ hero:
   code: |
     ```ts twoslash
     // @noErrors
-    const { data } = useLazyPets('/pet/{petId}', {
-    //                                        ^|
+    const { data } = await usePets('/pet/{petId}', {
+    //                                          ^|
       path: {
         petId: 2
       },
@@ -33,7 +33,8 @@ hero:
       default: () => ({
         name: 'Tony Stark',
         email: 'tony@stark.com'
-      })
+      }),
+      lazy: true
     })
     ```
 features:

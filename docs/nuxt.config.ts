@@ -1,19 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: {
-    preset: 'vercel-static',
-  },
-  extends: [
-    '@nuxt/ui-pro',
-  ],
+  extends: ['@nuxt/ui-pro'],
   modules: [
     'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/ui',
+    '@nuxt/fonts',
     '@nuxthq/studio',
-    '@nuxtjs/fontaine',
-    '@nuxtjs/google-fonts',
-    'nuxt-og-image',
     'nuxt-open-fetch',
   ],
   hooks: {
@@ -27,24 +20,6 @@ export default defineNuxtConfig({
   ui: {
     icons: ['heroicons', 'simple-icons'],
   },
-  twoslash: {
-    floatingVueOptions: {
-      classMarkdown: 'prose prose-primary dark:prose-invert',
-    },
-    throws: false,
-    includeNuxtTypes: true,
-  },
-  // Fonts
-  fontMetrics: {
-    fonts: ['DM Sans'],
-  },
-  googleFonts: {
-    display: 'swap',
-    download: true,
-    families: {
-      'DM+Sans': [400, 500, 600, 700],
-    },
-  },
   routeRules: {
     '/api/search.json': { prerender: true },
   },
@@ -54,26 +29,12 @@ export default defineNuxtConfig({
   typescript: {
     strict: false,
   },
-  content: {
-    highlight: {
-      theme: {
-        default: 'material-theme-lighter',
-        dark: 'material-theme-palenight',
-      },
-      langs: [
-        'js',
-        'ts',
-        'vue',
-        'css',
-        'scss',
-        'sass',
-        'html',
-        'bash',
-        'md',
-        'mdc',
-        'json',
-      ],
+  twoslash: {
+    floatingVueOptions: {
+      classMarkdown: 'prose prose-primary dark:prose-invert',
     },
+    throws: false,
+    includeNuxtTypes: true,
   },
   openFetch: {
     disableNitroPlugin: true,
@@ -82,14 +43,5 @@ export default defineNuxtConfig({
         baseURL: '/petsProxy',
       },
     },
-  },
-  vite: {
-    define: {
-      __NUXT_ASYNC_CONTEXT__: false,
-    },
-  },
-  site: {
-    // production URL
-    url: 'https://nuxt-open-fetch.vercel.app',
   },
 })
