@@ -165,14 +165,14 @@ ${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) =
 ${schemas.map(({ name, fetchName }) => `
 /**
  * Fetch data from an OpenAPI endpoint with an SSR-friendly composable.
- * See {@link https://nuxt-open-fetch.vercel.app/composables/useclientfetch}
+ * See {@link https://nuxt-open-fetch.vercel.app/composables/useclient}
  * @param string The OpenAPI path to fetch
  * @param opts extends useFetch, $fetch options and useAsyncData options
  */
 export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}')
 /**
  * Fetch data from an OpenAPI endpoint with an SSR-friendly composable.
- * See {@link https://nuxt-open-fetch.vercel.app/composables/uselazyclientfetch}
+ * See {@link https://nuxt-open-fetch.vercel.app/composables/uselazyclient}
  * @param string The OpenAPI path to fetch
  * @param opts extends useFetch, $fetch options and useAsyncData options
  */
