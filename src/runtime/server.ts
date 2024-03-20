@@ -1,7 +1,7 @@
 import type { $Fetch, FetchOptions } from 'ofetch'
 import { $fetch } from 'ofetch'
 import type { OpenFetchClientName, UseOpenFetchClient } from '#build/nuxt-open-fetch/clients'
-import { fillPath } from '../utils'
+import { fillPath } from '#build/nuxt-open-fetch/utils'
 
 export type FetchOptionsServer = FetchOptions & { apiRoutePrefix: string }
 

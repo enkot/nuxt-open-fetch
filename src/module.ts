@@ -6,7 +6,7 @@ import { defineNuxtModule, createResolver, addTypeTemplate, addTemplate, addImpo
 import openapiTS from "openapi-typescript"
 import { pascalCase, kebabCase, upperFirst } from 'scule'
 import { defu } from 'defu'
-import { isValidUrl } from './utils'
+import { isValidUrl } from './runtime/utils'
 import { Project, ScriptTarget } from "ts-morph";
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
@@ -361,6 +361,16 @@ export {}
       addServerImports([{
         name,
         from: resolve('runtime/server'),
+      }])
+    })
+
+    const utilsImports = [
+      'fillPath',
+    ]
+    utilsImports.forEach((name) => {
+      addServerImports([{
+        name,
+        from: resolve('runtime/utils'),
       }])
     })
 
