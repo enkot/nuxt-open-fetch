@@ -51,7 +51,7 @@ export function openFetchRequestInterceptor(ctx: FetchContext) {
 
 export function createOpenFetch<Paths>(options: FetchOptions | ((options: FetchOptions) => FetchOptions)): OpenFetchClient<Paths> {
   return (url: string, opts: any) => globalThis.$fetch(
-    fillPath(url, opts.path),
+    fillPath(url, opts?.path),
     typeof options === 'function'
       ? options(opts)
       : {
