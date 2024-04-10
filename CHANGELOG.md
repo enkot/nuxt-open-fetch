@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.6.5
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.4...v0.6.5)
+
+### 🚀 Enhancements
+
+- Og image ([2b1e634](https://github.com/enkot/nuxt-open-fetch/commit/2b1e634))
+
+### 🩹 Fixes
+
+- **docs:** Lock module ([ff956d0](https://github.com/enkot/nuxt-open-fetch/commit/ff956d0))
+- Docs og image; twoslash for utils ([1025b15](https://github.com/enkot/nuxt-open-fetch/commit/1025b15))
+- Docs links ([9c4e12d](https://github.com/enkot/nuxt-open-fetch/commit/9c4e12d))
+- Add optional operator on createOpenFetch opts ([fba38b5](https://github.com/enkot/nuxt-open-fetch/commit/fba38b5))
+- Lint issues ([c023621](https://github.com/enkot/nuxt-open-fetch/commit/c023621))
+
+### 📖 Documentation
+
+- Add optional operator ([9c60191](https://github.com/enkot/nuxt-open-fetch/commit/9c60191))
+
+### 🏡 Chore
+
+- Update deps ([cd6824d](https://github.com/enkot/nuxt-open-fetch/commit/cd6824d))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Julien Huang <julien.huang@outlook.fr>
+
 ## v0.6.4
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.3...v0.6.4)
