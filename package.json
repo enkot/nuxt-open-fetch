@@ -42,7 +42,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.11.2",
     "defu": "^6.1.2",
-    "openapi-typescript": "^6.7.3",
+    "openapi-typescript": "7.0.0-next.8",
     "openapi-typescript-helpers": "^0.0.4",
     "scule": "^1.0.0"
   },

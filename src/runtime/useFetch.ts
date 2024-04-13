@@ -3,8 +3,8 @@ import type { $Fetch } from 'ofetch'
 import type { AsyncData, UseFetchOptions } from 'nuxt/app'
 import { toValue } from 'vue'
 import { useFetch, useNuxtApp } from 'nuxt/app'
-import type { FetchResponseData, FetchResponseError, ParamsOption, RequestBodyOption } from './fetch'
-import type { OpenFetchClientName } from '#build/nuxt-open-fetch'
+import type { FetchResponseData, FetchResponseError, FilterMethods, ParamsOption, RequestBodyOption } from './fetch'
+import type { OpenFetchClientName } from '#build/open-fetch'
 
 type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T
 type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>
@@ -31,19 +31,20 @@ type UseOpenFetchOptions<
 
 export type UseOpenFetchClient<Paths, Lazy> = <
   ReqT extends Extract<keyof Paths, string>,
-  Method extends Extract<keyof Paths[ReqT], string> | Uppercase<Extract<keyof Paths[ReqT], string>>,
-  LowercasedMethod extends Lowercase<Method> extends keyof Paths[ReqT] ? Lowercase<Method> : never,
+  Methods extends FilterMethods<Paths[ReqT]>,
+  Method extends Extract<keyof Methods, string> | Uppercase<Extract<keyof Methods, string>>,
+  LowercasedMethod extends Lowercase<Method> extends keyof Methods ? Lowercase<Method> : never,
   DefaultMethod extends 'get' extends LowercasedMethod ? 'get' : LowercasedMethod,
-  ResT = FetchResponseData<Paths[ReqT][DefaultMethod]>,
-  ErrorT = FetchResponseError<Paths[ReqT][DefaultMethod]>,
+  ResT = FetchResponseData<Methods[DefaultMethod]>,
+  ErrorT = FetchResponseError<Methods[DefaultMethod]>,
   DataT = ResT,
   PickKeys extends KeysOf<DataT> = KeysOf<DataT>,
   DefaultT = null,
 >(
   url: ReqT | (() => ReqT),
   options?: Lazy extends true
-    ? Omit<UseOpenFetchOptions<Method, LowercasedMethod, Paths[ReqT], ResT, DataT, PickKeys, DefaultT>, 'lazy'>
-    : UseOpenFetchOptions<Method, LowercasedMethod, Paths[ReqT], ResT, DataT, PickKeys, DefaultT>,
+    ? Omit<UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>, 'lazy'>
+    : UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>,
   autoKey?: string
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 

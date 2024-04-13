@@ -21,6 +21,8 @@ export type RequestBodyOption<T> = OperationRequestBodyContent<T> extends never
     ? { body?: OperationRequestBodyContent<T> }
     : { body: OperationRequestBodyContent<T> }
 
+export type FilterMethods<T> = { [K in keyof Omit<T, 'parameters'> as T[K] extends never | undefined ? never : K]: T[K] }
+
 type OpenFetchOptions<
   Method,
   LowercasedMethod,
@@ -34,13 +36,14 @@ type OpenFetchOptions<
 
 export type OpenFetchClient<Paths> = <
   ReqT extends Extract<keyof Paths, string>,
-  Method extends Extract<keyof Paths[ReqT], string> | Uppercase<Extract<keyof Paths[ReqT], string>>,
-  LowercasedMethod extends Lowercase<Method> extends keyof Paths[ReqT] ? Lowercase<Method> : never,
+  Methods extends FilterMethods<Paths[ReqT]>,
+  Method extends Extract<keyof Methods, string> | Uppercase<Extract<keyof Methods, string>>,
+  LowercasedMethod extends Lowercase<Method> extends keyof FilterMethods<Paths[ReqT]> ? Lowercase<Method> : never,
   DefaultMethod extends 'get' extends LowercasedMethod ? 'get' : LowercasedMethod,
   ResT = FetchResponseData<Paths[ReqT][DefaultMethod]>,
 >(
   url: ReqT,
-  options?: OpenFetchOptions<Method, LowercasedMethod, Paths[ReqT]>
+  options?: OpenFetchOptions<Method, LowercasedMethod, Methods>
 ) => Promise<ResT>
 
 // More flexible way to rewrite the request path,

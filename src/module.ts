@@ -12,8 +12,8 @@ import {
   createResolver,
   defineNuxtModule,
 } from '@nuxt/kit'
-import openapiTS from 'openapi-typescript'
-import { kebabCase, pascalCase } from 'scule'
+import openapiTS, { astToString } from 'openapi-typescript'
+import { camelCase, kebabCase, pascalCase } from 'scule'
 import { defu } from 'defu'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
@@ -41,12 +41,12 @@ interface ResolvedSchema {
   openAPITS?: OpenAPITSOptions
 }
 
-const moduleName = 'nuxt-open-fetch'
+const moduleName = 'open-fetch'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: moduleName,
-    configKey: 'openFetch',
+    name: `nuxt-${moduleName}`,
+    configKey: camelCase(moduleName),
     compatibility: {
       nuxt: '^3.0.0',
     },
@@ -72,16 +72,17 @@ export default defineNuxtModule<ModuleOptions>({
         if (schemas.some(item => item.name === name) || !config)
           continue
 
-        let schema: OpenAPI3Schema | undefined
+        let schema: OpenAPI3Schema | undefined = config.schema
 
-        if (config.schema && typeof config.schema === 'string') {
-          schema = isValidUrl(config.schema) ? config.schema : resolve(srcDir, config.schema)
-        }
-        else {
+        if (!config.schema) {
           const jsonPath = resolve(schemasDir, `${name}/openapi.json`)
           const yamlPath = resolve(schemasDir, `${name}/openapi.yaml`)
 
           schema = existsSync(jsonPath) ? jsonPath : existsSync(yamlPath) ? yamlPath : undefined
+          schema = schema ? new URL(`file://${schema}`) : undefined
+        }
+        else if (typeof config.schema === 'string') {
+          schema = isValidUrl(config.schema) ? config.schema : new URL(`file://${resolve(srcDir, config.schema)}`)
         }
 
         if (!schema)
@@ -114,7 +115,10 @@ export default defineNuxtModule<ModuleOptions>({
     schemas.forEach(({ name, schema, openAPITS }) => {
       addTypeTemplate({
         filename: `types/${moduleName}/schemas/${kebabCase(name)}.d.ts`,
-        getContents: () => openapiTS(schema, openAPITS),
+        getContents: async () => {
+          const ast = await openapiTS(schema, openAPITS)
+          return astToString(ast)
+        },
       })
     })
 
