@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.7.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.5...v0.7.0)
+
+### 🚀 Enhancements
+
+- Migrate to openapi-typescript v7 ([d2bb51a](https://github.com/enkot/nuxt-open-fetch/commit/d2bb51a))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.6.5
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.4...v0.6.5)
