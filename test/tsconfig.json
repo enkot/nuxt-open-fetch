@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "#build": [
+        "../playground/.nuxt"
+      ],
+      "#build/*": [
+        "../playground/.nuxt/*"
+      ],
+      "#imports": [
+        "../playground/.nuxt/imports"
+      ],
+      "#open-fetch-schemas/*": [
+        "../playground/.nuxt/types/open-fetch/schemas/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "types": [],
+    "allowJs": true,
+    "strict": true,
+    "noImplicitThis": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./**/*.test-d.ts"
+  ]
+}
