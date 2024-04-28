@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.8.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.7.0...v0.8.0)
+
+### 🚀 Enhancements
+
+- Tests ([c642386](https://github.com/enkot/nuxt-open-fetch/commit/c642386))
+
+### 🩹 Fixes
+
+- Use TS file for openAPI TS files ([4df36bb](https://github.com/enkot/nuxt-open-fetch/commit/4df36bb))
+- Use alias for schemas ([b9cc181](https://github.com/enkot/nuxt-open-fetch/commit/b9cc181))
+- Cleanup ([6ced4bc](https://github.com/enkot/nuxt-open-fetch/commit/6ced4bc))
+- Mark "pathe" as external dep ([96a5122](https://github.com/enkot/nuxt-open-fetch/commit/96a5122))
+
+### 💅 Refactors
+
+- Rename to open-fetch-schemas ([6f68599](https://github.com/enkot/nuxt-open-fetch/commit/6f68599))
+- Simplified merging layers logic ([41a5631](https://github.com/enkot/nuxt-open-fetch/commit/41a5631))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+- Julien Huang <julien.huang@outlook.fr>
+
 ## v0.7.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.6.5...v0.7.0)
