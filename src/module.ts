@@ -63,12 +63,9 @@ export default defineNuxtModule<ModuleOptions>({
     for (const layer of nuxt.options._layers) {
       const { srcDir, openFetch } = layer.config
       const schemasDir = resolve(srcDir, 'openapi')
-      const layerClients = defu(
-        Object.fromEntries(Object.entries(clients).filter(([key]) => openFetch?.clients?.[key])),
-        openFetch?.clients,
-      ) as Record<string, OpenFetchClientOptions>
+      const layerClients = Object.entries(clients).filter(([key]) => openFetch?.clients?.[key])
 
-      for (const [name, config] of Object.entries(layerClients)) {
+      for (const [name, config] of layerClients) {
         // Skip if schema already added by upper layer or if config is not defined
         if (schemas.some(item => item.name === name) || !config)
           continue
