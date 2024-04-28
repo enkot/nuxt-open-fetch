@@ -15,6 +15,7 @@ import {
 import openapiTS, { astToString } from 'openapi-typescript'
 import { camelCase, kebabCase, pascalCase } from 'scule'
 import { defu } from 'defu'
+import { join } from 'pathe'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
@@ -98,6 +99,11 @@ export default defineNuxtModule<ModuleOptions>({
           openAPITS: options?.openAPITS,
         })
       }
+    }
+
+    nuxt.options.alias = {
+      ...nuxt.options.alias,
+      '#open-fetch-schemas': join(nuxt.options.buildDir, 'types', moduleName, 'schemas'),
     }
 
     nuxt.options.optimization = nuxt.options.optimization || {
@@ -217,7 +223,7 @@ export {}
       getContents: () => `
 import type { OpenFetchClient } from '#imports'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#build/types/${moduleName}/schemas/${kebabCase(name)}.d.ts'
+import type { paths as ${pascalCase(name)}Paths } from '#open-fetch-schemas/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
 declare module 'nitropack' {
