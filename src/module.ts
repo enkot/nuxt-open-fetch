@@ -103,7 +103,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.alias = {
       ...nuxt.options.alias,
-      '#nuxt-open-fetch-schemas': join(nuxt.options.buildDir, 'types', moduleName, 'schemas'),
+      '#open-fetch-schemas': join(nuxt.options.buildDir, 'types', moduleName, 'schemas'),
     }
 
     nuxt.options.optimization = nuxt.options.optimization || {
@@ -223,7 +223,7 @@ export {}
       getContents: () => `
 import type { OpenFetchClient } from '#imports'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#nuxt-open-fetch-schemas/${kebabCase(name)}'
+import type { paths as ${pascalCase(name)}Paths } from '#open-fetch-schemas/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
 declare module 'nitropack' {
