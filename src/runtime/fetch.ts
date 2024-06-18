@@ -1,4 +1,4 @@
-import type { $Fetch, FetchContext, FetchError, FetchOptions } from 'ofetch'
+import type { FetchContext, FetchError, FetchOptions } from 'ofetch'
 import type {
   ErrorResponse,
   FilterKeys,
