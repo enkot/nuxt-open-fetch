@@ -1,10 +1,10 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#app'
-import { createOpenFetch } from '#imports'
+import { createOpenFetch, defineNuxtPlugin, useRequestFetch, useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin({
   enforce: 'pre',
   setup() {
     const { public: { openFetch: clients } } = useRuntimeConfig()
+    const $fetch = useRequestFetch()
 
     return {
       provide: Object.entries(clients).reduce((acc, [name, client]) => ({
@@ -17,7 +17,7 @@ export default defineNuxtPlugin({
             console.log('My logging', ctx.request)
             return options.onRequest?.(ctx)
           },
-        })),
+        }), $fetch),
       }), {}),
     }
   },

@@ -1,4 +1,4 @@
-import type { FetchContext, FetchError, FetchOptions } from 'ofetch'
+import type { $Fetch, FetchContext, FetchError, FetchOptions } from 'ofetch'
 import type {
   ErrorResponse,
   FilterKeys,
@@ -52,16 +52,31 @@ export function openFetchRequestInterceptor(ctx: FetchContext) {
   ctx.request = fillPath(ctx.request as string, (ctx.options as { path: Record<string, string> }).path)
 }
 
-export function createOpenFetch<Paths>(options: FetchOptions | ((options: FetchOptions) => FetchOptions)): OpenFetchClient<Paths> {
-  return (url: string, opts: any) => globalThis.$fetch(
-    fillPath(url, opts?.path),
-    typeof options === 'function'
+export function createOpenFetch<Paths>(
+  options: FetchOptions | ((options: FetchOptions) => FetchOptions),
+  localFetch?: typeof globalThis.$fetch,
+): OpenFetchClient<Paths> {
+  return (url: string, opts: any) => {
+    opts = typeof options === 'function'
       ? options(opts)
       : {
           ...options,
           ...opts,
-        },
-  )
+        }
+    const $fetch = getFetch(url, opts, localFetch)
+
+    return $fetch(fillPath(url, opts?.path), opts)
+  }
+}
+
+function getFetch(url: string, opts: FetchOptions, localFetch?: typeof globalThis.$fetch) {
+  if (import.meta.server && localFetch) {
+    const isLocalFetch = url[0] === '/' && (!opts.baseURL || opts.baseURL![0] === '/')
+    if (isLocalFetch)
+      return localFetch
+  }
+
+  return globalThis.$fetch
 }
 
 export function fillPath(path: string, params: object = {}) {

@@ -10,9 +10,11 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    openFetch: {
-      pets: {
-        baseURL: '/petsProxy',
+    public: {
+      openFetch: {
+        pets: {
+          baseURL: '/petsProxy',
+        },
       },
     },
   },

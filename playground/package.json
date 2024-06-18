@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nuxi dev && listhen -w ./server.ts",
+    "dev": "nuxi dev",
     "build": "nuxi build",
     "generate": "nuxi generate"
   },
