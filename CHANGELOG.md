@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.9.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.8.0...v0.9.0)
+
+### 🩹 Fixes
+
+- Cleanup ([309a017](https://github.com/enkot/nuxt-open-fetch/commit/309a017))
+- Fetch on SSR ([d739e83](https://github.com/enkot/nuxt-open-fetch/commit/d739e83))
+
+### 📖 Documentation
+
+- Fix example ([3d5e114](https://github.com/enkot/nuxt-open-fetch/commit/3d5e114))
+
+### 🏡 Chore
+
+- Cleanup ([f984e89](https://github.com/enkot/nuxt-open-fetch/commit/f984e89))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.8.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.7.0...v0.8.0)
