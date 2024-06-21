@@ -116,8 +116,8 @@ export default defineNuxtModule<ModuleOptions>({
     ]
 
     schemas.forEach(({ name, schema, openAPITS }) => {
-      addTypeTemplate({
-        filename: `types/${moduleName}/schemas/${kebabCase(name)}.d.ts`,
+      addTemplate({
+        filename: `types/${moduleName}/schemas/${kebabCase(name)}.ts`,
         getContents: async () => {
           const ast = await openapiTS(schema, openAPITS)
           return astToString(ast)
