@@ -100,7 +100,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.alias = {
       ...nuxt.options.alias,
-      '#open-fetch-schemas': join(nuxt.options.buildDir, 'types', moduleName, 'schemas'),
+      '#open-fetch-schemas/*': join(nuxt.options.buildDir, 'types', moduleName, 'schemas', '*'),
     }
 
     nuxt.options.optimization = nuxt.options.optimization || {
@@ -204,7 +204,7 @@ declare module '#app' {
     ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
-        
+
 declare module 'vue' {
   interface ComponentCustomProperties {
     ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
