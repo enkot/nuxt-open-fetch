@@ -116,8 +116,8 @@ export default defineNuxtModule<ModuleOptions>({
     ]
 
     schemas.forEach(({ name, schema, openAPITS }) => {
-      addTemplate({
-        filename: `types/${moduleName}/schemas/${kebabCase(name)}.ts`,
+      addTypeTemplate({
+        filename: `types/${moduleName}/schemas/${kebabCase(name)}.d.ts`,
         getContents: async () => {
           const ast = await openapiTS(schema, openAPITS)
           return astToString(ast)
@@ -204,7 +204,7 @@ declare module '#app' {
     ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }
 }
-        
+
 declare module 'vue' {
   interface ComponentCustomProperties {
     ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
