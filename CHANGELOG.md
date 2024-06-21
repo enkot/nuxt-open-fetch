@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.9.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.0...v0.9.1)
+
+### 🩹 Fixes
+
+- **types:** Type template and filename ([0095160](https://github.com/enkot/nuxt-open-fetch/commit/0095160))
+- Tsconfig paths ([cd0fe57](https://github.com/enkot/nuxt-open-fetch/commit/cd0fe57))
+- Use path ([642b7a5](https://github.com/enkot/nuxt-open-fetch/commit/642b7a5))
+- Use path ([0e9784d](https://github.com/enkot/nuxt-open-fetch/commit/0e9784d))
+
+### 📖 Documentation
+
+- Fixed and simplified custom client example ([797c374](https://github.com/enkot/nuxt-open-fetch/commit/797c374))
+
+### ❤️ Contributors
+
+- Adam DeHaven <adam@dehaven.org>
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.9.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.8.0...v0.9.0)
