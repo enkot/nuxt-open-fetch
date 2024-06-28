@@ -18,7 +18,7 @@ await $pets('/store/order', {
   },
 })
 
-const status = useState<'available' | undefined>(() => undefined)
+const status = useState<'available' | 'pending' | 'sold' | undefined>(() => undefined)
 const { data, execute } = await usePets('/pet/findByStatus', {
   immediate: false,
   query: {
