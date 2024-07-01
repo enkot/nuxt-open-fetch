@@ -18,17 +18,18 @@ await $pets('/store/order', {
   },
 })
 
-const status = useState<'available' | 'pending' | 'sold' | undefined>(() => undefined)
+const statusAsRef = useState<'available' | 'pending' | 'sold' | undefined>(() => undefined)
+
 const { data, execute } = await usePets('/pet/findByStatus', {
   immediate: false,
   query: {
-    status,
+    status: statusAsRef,
   },
 })
 </script>
 
 <template>
-  <select v-model="status" placeholder="Select a status">
+  <select v-model="statusAsRef" placeholder="Select a status">
     <option value="available">
       available
     </option>
