@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useNuxtApp, usePets } from '#imports'
+import { ref, useNuxtApp, usePets, useState } from '#imports'
 
 const { $pets } = useNuxtApp()
 
@@ -18,15 +18,28 @@ await $pets('/store/order', {
   },
 })
 
-const { data, execute } = await usePets('/pet/{petId}', {
+const statusAsRef = useState<'available' | 'pending' | 'sold' | undefined>(() => undefined)
+
+const { data, execute } = await usePets('/pet/findByStatus', {
   immediate: false,
-  path: {
-    petId,
+  query: {
+    status: statusAsRef,
   },
 })
 </script>
 
 <template>
+  <select v-model="statusAsRef" placeholder="Select a status">
+    <option value="available">
+      available
+    </option>
+    <option value="pending">
+      pending
+    </option>
+    <option value="sold">
+      sold
+    </option>
+  </select>
   <pre>{{ data }}</pre>
   <button @click="() => execute()">
     execute
