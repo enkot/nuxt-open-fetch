@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.9.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.1...v0.9.2)
+
+### 🚀 Enhancements
+
+- **docs:** $[client] usage example inside Nitro handler ([546f656](https://github.com/enkot/nuxt-open-fetch/commit/546f656))
+- **github:** Added bug and feature requests ([6c7182a](https://github.com/enkot/nuxt-open-fetch/commit/6c7182a))
+- Expose request and response types ([bd8bd43](https://github.com/enkot/nuxt-open-fetch/commit/bd8bd43))
+
+### 🩹 Fixes
+
+- **docs:** Custom Nitro client example ([0d73421](https://github.com/enkot/nuxt-open-fetch/commit/0d73421))
+- **docs:** Improved custom client docs ([b9a48d3](https://github.com/enkot/nuxt-open-fetch/commit/b9a48d3))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.9.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.0...v0.9.1)
