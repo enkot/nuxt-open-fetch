@@ -100,6 +100,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.alias = {
       ...nuxt.options.alias,
+      '#open-fetch': join(nuxt.options.buildDir, moduleName),
       '#open-fetch-schemas/*': join(nuxt.options.buildDir, 'types', moduleName, 'schemas', '*'),
     }
 
@@ -165,7 +166,7 @@ export default defineNuxtModule<ModuleOptions>({
         return `
 import { createUseOpenFetch } from '#imports'
 ${schemas.map(({ name }) => `
-import type { paths as ${pascalCase(name)}Paths } from '#open-fetch-schemas/${kebabCase(name)}'
+import type { paths as ${pascalCase(name)}Paths, operations as ${pascalCase(name)}Operations } from '#open-fetch-schemas/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
 ${schemas.length ? `export type OpenFetchClientName = ${schemas.map(({ name }) => `'${name}'`).join(' | ')}` : ''}
@@ -185,6 +186,16 @@ export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Pat
  * @param opts extends useFetch, $fetch options and useAsyncData options
  */
 export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}', true)
+
+export type ${pascalCase(name)}Response<T extends keyof ${pascalCase(name)}Operations, R extends keyof ${pascalCase(name)}Operations[T]['responses'] = 200 extends keyof ${pascalCase(name)}Operations[T]['responses'] ? 200 : never> = ${pascalCase(name)}Operations[T]['responses'][R] extends { content: { 'application/json': infer U } }
+  ? U
+  : never
+
+export type ${pascalCase(name)}RequestBody<T extends keyof ${pascalCase(name)}Operations> = ${pascalCase(name)}Operations[T]['requestBody'] extends { content: { 'application/json': infer U } }
+  ? U
+  : never
+
+export type ${pascalCase(name)}RequestQuery<T extends keyof ${pascalCase(name)}Operations> = ${pascalCase(name)}Operations[T]['parameters'] extends { query?: infer U } ? U : never
 `.trimStart()).join('\n')}`.trimStart()
       },
       write: true,
