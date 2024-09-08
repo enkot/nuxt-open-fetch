@@ -11,6 +11,7 @@ import {
   addTypeTemplate,
   createResolver,
   defineNuxtModule,
+  updateTemplates,
 } from '@nuxt/kit'
 import openapiTS, { astToString } from 'openapi-typescript'
 import { camelCase, kebabCase, pascalCase } from 'scule'
@@ -60,6 +61,8 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.openFetch = Object.fromEntries(Object.entries(clients)
       .map(([key, { schema: _, ...options }]) => [key, options])) as any
 
+    const packageSrc = nuxt.options._layers[0].cwd
+
     for (const layer of nuxt.options._layers) {
       const { srcDir, openFetch } = layer.config
       const schemasDir = resolve(srcDir, 'openapi')
@@ -94,6 +97,14 @@ export default defineNuxtModule<ModuleOptions>({
           },
           schema,
           openAPITS: options?.openAPITS,
+        })
+
+        nuxt.hook('builder:watch', async (event, path) => {
+          if (new URL(`file://${resolve(packageSrc, path)}`).href === (schema as URL).href) {
+            updateTemplates({
+              filter: t => t.filename === `types/${moduleName}/schemas/${kebabCase(name)}.ts`,
+            })
+          }
         })
       }
     }
