@@ -10,7 +10,7 @@ type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends
 type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>
 
 type ComputedOptions<T> = {
-  [K in keyof T]: T[K] extends Function ? T[K] : T[K] extends Record<string, unknown> ? ComputedOptions<T[K]> : Ref<T[K]> | T[K]
+  [K in keyof T]: T[K] extends Function ? T[K] : ComputedOptions<T[K]> | Ref<T[K]> | T[K]
 }
 type ComputedMethodOption<M, P> = 'get' extends keyof P ? ComputedOptions<{ method?: M }> : ComputedOptions<{ method: M }>
 
