@@ -11,27 +11,27 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxthq/studio',
     'nuxt-og-image',
-    'nuxt-open-fetch',
+    'nuxt-open-fetch'
   ],
 
   devtools: {
-    enabled: true,
+    enabled: true
   },
 
   site: {
-    url: 'https://nuxt-open-fetch.vercel.app',
+    url: 'https://nuxt-open-fetch.vercel.app'
   },
 
   colorMode: {
-    disableTransition: true,
+    disableTransition: true
   },
 
   routeRules: {
-    '/api/search.json': { prerender: true },
+    '/api/search.json': { prerender: true }
   },
 
   future: {
-    compatibilityVersion: 4,
+    compatibilityVersion: 4
   },
 
   compatibilityDate: '2024-07-11',
@@ -39,14 +39,14 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: [
-        '/',
+        '/'
       ],
-      crawlLinks: true,
-    },
+      crawlLinks: true
+    }
   },
 
   typescript: {
-    strict: false,
+    strict: false
   },
 
   hooks: {
@@ -55,32 +55,32 @@ export default defineNuxtConfig({
       const globals = components.filter(c => ['UButton', 'UIcon'].includes(c.pascalName))
 
       globals.forEach(c => c.global = true)
-    },
+    }
   },
 
   eslint: {
     config: {
       stylistic: {
         commaDangle: 'never',
-        braceStyle: '1tbs',
-      },
-    },
+        braceStyle: '1tbs'
+      }
+    }
   },
 
   openFetch: {
     disableNitroPlugin: true,
     clients: {
       pets: {
-        baseURL: '/petsProxy',
-      },
-    },
+        baseURL: '/petsProxy'
+      }
+    }
   },
 
   twoslash: {
     floatingVueOptions: {
-      classMarkdown: 'prose prose-primary dark:prose-invert',
+      classMarkdown: 'prose prose-primary dark:prose-invert'
     },
     throws: false,
-    // includeNuxtTypes: true
-  },
+    includeNuxtTypes: true
+  }
 })
