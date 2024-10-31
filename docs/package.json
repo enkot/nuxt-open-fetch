@@ -1,7 +1,8 @@
 {
   "name": "nuxt-ui-pro-template-docs",
-  "private": true,
   "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.12.2",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -28,6 +29,5 @@
     "eslint": "^9.13.0",
     "nuxt-content-twoslash": "^0.1.1",
     "vue-tsc": "^2.1.6"
-  },
-  "packageManager": "pnpm@9.12.2"
+  }
 }

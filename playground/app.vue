@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useApi, useNuxtApp } from '#imports'
+import { ref, useApi } from '#imports'
 
 // const { $api } = useNuxtApp()
 

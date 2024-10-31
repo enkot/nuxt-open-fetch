@@ -1,4 +1,4 @@
-import { createOpenFetch, defineNuxtPlugin, useRequestFetch, useRuntimeConfig } from '#imports'
+import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin({
   enforce: 'pre',
