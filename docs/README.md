@@ -8,7 +8,9 @@
 - [Live demo](https://docs-template.nuxt.dev/)
 - [Play on Stackblitz](https://stackblitz.com/github/nuxt-ui-pro/docs)
 - [Documentation](https://ui.nuxt.com/pro/getting-started)
-- [Clone on Nuxt Studio](https://nuxt.studio/themes/docs)
+- [Clone on Nuxt Studio](https://nuxt.studio/templates/docs)
+
+[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?repo=nuxt-ui-pro/docs)
 
 ## Quick Start
 
@@ -110,13 +112,15 @@ Add this module to your `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
+  ...
   modules: [
+    ...
     '@nuxthq/studio'
   ]
 })
 ```
 
-Read more on [Nuxt Studio docs](https://nuxt.studio/docs/projects/setup).
+Read more on [Nuxt Studio docs](https://nuxt.studio/docs/get-started/setup).
 
 ## Renovate integration
 

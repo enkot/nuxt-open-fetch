@@ -7,6 +7,9 @@
     "build": "nuxi build",
     "generate": "nuxi generate"
   },
+  "dependencies": {
+    "nuxt-open-fetch": "workspace:*"
+  },
   "devDependencies": {
     "nuxt": "^3.10.2"
   }

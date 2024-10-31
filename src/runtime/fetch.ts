@@ -1,15 +1,14 @@
 import type { FetchContext, FetchError, FetchOptions } from 'ofetch'
 import type {
   ErrorResponse,
-  FilterKeys,
   MediaType,
   OperationRequestBodyContent,
   ResponseObjectMap,
   SuccessResponse,
 } from 'openapi-typescript-helpers'
 
-export type FetchResponseData<T> = FilterKeys<SuccessResponse<ResponseObjectMap<T>>, MediaType>
-export type FetchResponseError<T> = FetchError<FilterKeys<ErrorResponse<ResponseObjectMap<T>>, MediaType>>
+export type FetchResponseData<T extends Record<string | number, any>> = SuccessResponse<ResponseObjectMap<T>, MediaType>
+export type FetchResponseError<T extends Record<string | number, any>> = FetchError<ErrorResponse<ResponseObjectMap<T>, MediaType>>
 
 export type MethodOption<M, P> = 'get' extends keyof P ? { method?: M } : { method: M }
 
@@ -38,9 +37,9 @@ export type OpenFetchClient<Paths> = <
   ReqT extends Extract<keyof Paths, string>,
   Methods extends FilterMethods<Paths[ReqT]>,
   Method extends Extract<keyof Methods, string> | Uppercase<Extract<keyof Methods, string>>,
-  LowercasedMethod extends Lowercase<Method> extends keyof FilterMethods<Paths[ReqT]> ? Lowercase<Method> : never,
+  LowercasedMethod extends Lowercase<Method> extends keyof Methods ? Lowercase<Method> : never,
   DefaultMethod extends 'get' extends LowercasedMethod ? 'get' : LowercasedMethod,
-  ResT = FetchResponseData<Paths[ReqT][DefaultMethod]>,
+  ResT = Methods[DefaultMethod] extends Record<string | number, any> ? FetchResponseData<Methods[DefaultMethod]> : never,
 >(
   url: ReqT,
   options?: OpenFetchOptions<Method, LowercasedMethod, Methods>
@@ -49,7 +48,8 @@ export type OpenFetchClient<Paths> = <
 // More flexible way to rewrite the request path,
 // but has problems - https://github.com/unjs/ofetch/issues/319
 export function openFetchRequestInterceptor(ctx: FetchContext) {
-  ctx.request = fillPath(ctx.request as string, (ctx.options as { path: Record<string, string> }).path)
+  // @ts-expect-error - `path` is not in FetchOptions
+  ctx.request = fillPath(ctx.request as string, (ctx.options).path)
 }
 
 export function createOpenFetch<Paths>(
@@ -79,7 +79,7 @@ function getFetch(url: string, opts: FetchOptions, localFetch?: typeof globalThi
   return globalThis.$fetch
 }
 
-export function fillPath(path: string, params: object = {}) {
+export function fillPath(path: string, params: Record<string, string> = {}) {
   for (const [k, v] of Object.entries(params)) path = path.replace(`{${k}}`, encodeURIComponent(String(v)))
   return path
 }
