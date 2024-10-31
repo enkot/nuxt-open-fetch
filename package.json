@@ -1,7 +1,7 @@
 {
   "name": "nuxt-open-fetch",
   "type": "module",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.",
   "license": "MIT",
   "repository": "enkot/nuxt-open-fetch",

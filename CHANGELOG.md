@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.9.3
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.2...v0.9.3)
+
+### 🩹 Fixes
+
+- Types and docs ([3b0071d](https://github.com/enkot/nuxt-open-fetch/commit/3b0071d))
+- Eslint ([59c44fe](https://github.com/enkot/nuxt-open-fetch/commit/59c44fe))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.9.2
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.1...v0.9.2)
