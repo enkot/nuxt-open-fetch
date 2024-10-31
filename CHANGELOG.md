@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.9.4
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.3...v0.9.4)
+
+### 🩹 Fixes
+
+- Module import in docs ([b6364dd](https://github.com/enkot/nuxt-open-fetch/commit/b6364dd))
+- Pnpm-lock ([3e3a07b](https://github.com/enkot/nuxt-open-fetch/commit/3e3a07b))
+- Ref type for query params ([a0c7d71](https://github.com/enkot/nuxt-open-fetch/commit/a0c7d71))
+
+### 📖 Documentation
+
+- Added "Type helpers" section ([5e0f815](https://github.com/enkot/nuxt-open-fetch/commit/5e0f815))
+
+### 🏡 Chore
+
+- Eslint ([16f3edd](https://github.com/enkot/nuxt-open-fetch/commit/16f3edd))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.9.3
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.2...v0.9.3)
