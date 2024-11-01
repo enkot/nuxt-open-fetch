@@ -14,7 +14,6 @@ import {
 } from '@nuxt/kit'
 import openapiTS, { astToString } from 'openapi-typescript'
 import { camelCase, kebabCase, pascalCase } from 'scule'
-import { defu } from 'defu'
 import { join } from 'pathe'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
@@ -53,17 +52,19 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   async setup(options, nuxt) {
+    if (!options.clients)
+      return
+
     const { resolve } = createResolver(import.meta.url)
     const schemas: ResolvedSchema[] = []
-    const clients: Record<string, OpenFetchClientOptions> = defu(nuxt.options.runtimeConfig.openFetch as any, options.clients)
 
-    nuxt.options.runtimeConfig.public.openFetch = Object.fromEntries(Object.entries(clients)
+    nuxt.options.runtimeConfig.public.openFetch = Object.fromEntries(Object.entries(options.clients)
       .map(([key, { schema: _, ...options }]) => [key, options])) as any
 
     for (const layer of nuxt.options._layers) {
       const { srcDir, openFetch } = layer.config
       const schemasDir = resolve(srcDir, 'openapi')
-      const layerClients = Object.entries(clients).filter(([key]) => openFetch?.clients?.[key])
+      const layerClients = Object.entries(options.clients).filter(([key]) => openFetch?.clients?.[key])
 
       for (const [name, config] of layerClients) {
         // Skip if schema already added by upper layer or if config is not defined
@@ -267,7 +268,7 @@ function isValidUrl(url: string) {
   try {
     return Boolean(new URL(url))
   }
-  catch {
+  catch (e) {
     return false
   }
 }
