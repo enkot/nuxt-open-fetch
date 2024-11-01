@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useApi } from '#imports'
+import { ref, usePets } from '#imports'
 
 // const { $api } = useNuxtApp()
 
@@ -18,7 +18,7 @@ const petId = ref(1)
 //   },
 // })
 
-const { data, execute } = await useApi('/pet/{petId}', {
+const { data, execute } = await usePets('/pet/{petId}', {
   immediate: false,
   path: {
     petId,
