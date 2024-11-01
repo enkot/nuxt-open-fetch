@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.9.5
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.4...v0.9.5)
+
+### 💅 Refactors
+
+- Remove redundant "defu" merge ([3e9e8c9](https://github.com/enkot/nuxt-open-fetch/commit/3e9e8c9))
+
+### 📖 Documentation
+
+- Impoved configuration docs ([4d8d7de](https://github.com/enkot/nuxt-open-fetch/commit/4d8d7de))
+- Fixes configuration docs ([66524df](https://github.com/enkot/nuxt-open-fetch/commit/66524df))
+
+### 🏡 Chore
+
+- Eslint ([eec7b79](https://github.com/enkot/nuxt-open-fetch/commit/eec7b79))
+
+### ❤️ Contributors
+
+- Enkot ([@enkot](http://github.com/enkot))
+
 ## v0.9.4
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.3...v0.9.4)
