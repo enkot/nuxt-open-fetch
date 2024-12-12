@@ -64,7 +64,10 @@ export function createUseOpenFetch<
     const nuxtApp = useNuxtApp()
     const $fetch = (typeof client === 'string' ? nuxtApp[`$${client}`] : client)
     const opts = { $fetch, key: autoKey, ...options }
-
+    if (opts.header) {
+      opts.headers = opts.header
+      delete opts.header
+    }
     return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
   }
 }
