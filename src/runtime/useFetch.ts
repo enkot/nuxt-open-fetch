@@ -61,9 +61,10 @@ export function createUseOpenFetch<
   Lazy extends boolean,
 >(client: $Fetch | OpenFetchClientName, lazy = false): UseOpenFetchClient<Paths, Lazy> {
   return (url: string | (() => string), options: any = {}, autoKey?: string) => {
+    // https://nuxt.com/docs/guide/recipes/custom-usefetch#custom-usefetchuseasyncdata
     const nuxtApp = useNuxtApp()
-    const $fetch = (typeof client === 'string' ? nuxtApp[`$${client}`] : client)
-    const opts = { $fetch, key: autoKey, ...options }
+    const fetch = (typeof client === 'string' ? nuxtApp[`$${client}`] : client) as typeof $fetch
+    const opts = { $fetch: fetch, key: autoKey, ...options }
 
     return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
   }
