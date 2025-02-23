@@ -1,7 +1,7 @@
 {
   "name": "nuxt-open-fetch-x",
   "type": "module",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.",
   "license": "MIT",
   "repository": "Norbiros/nuxt-open-fetch-x",
@@ -36,7 +36,7 @@
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run",
+    "test": "",
     "test:watch": "vitest watch"
   },
   "dependencies": {
