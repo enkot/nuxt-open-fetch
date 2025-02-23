@@ -8,11 +8,15 @@ Find and replace all on all files (CMD+SHIFT+F):
 -->
 [![Nuxt Open Fetch](./docs/public/cover.png)](https://nuxt-open-fetch.vercel.app/)
 
-# Nuxt Open Fetch
+# Nuxt Open Fetch X
 
 [![npm version][npm-version-src]][npm-version-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
+
+> [!IMPORTANT]  
+> This repository is fork of original [nuxt-open-fetch](https://github.com/enkot/nuxt-open-fetch) by [enkot](https://github.com/enkot).\
+> It does not have many additional features, but it has updated dependencies and some bug fixes.
 
 Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.
 
@@ -37,30 +41,30 @@ In other words - `$fetch` and `useFetch` on steroids. Uses awesome [openapi-type
 
 ## Quick Setup
 
-1. Add `nuxt-open-fetch` dependency to your project
+1. Add `nuxt-open-fetch-x` dependency to your project
 
 ```bash
 # Using pnpm
-pnpm add -D nuxt-open-fetch
+pnpm add -D nuxt-open-fetch-x
 
 # Using yarn
-yarn add --dev nuxt-open-fetch
+yarn add --dev nuxt-open-fetch-x
 
 # Using npm
-npm install --save-dev nuxt-open-fetch
+npm install --save-dev nuxt-open-fetch-x
 ```
 
-2. Add `nuxt-open-fetch` to the `modules` section of `nuxt.config.ts`
+2. Add `nuxt-open-fetch-x` to the `modules` section of `nuxt.config.ts`
 
 ```js
 export default defineNuxtConfig({
   modules: [
-    'nuxt-open-fetch'
+    'nuxt-open-fetch-x'
   ]
 })
 ```
 
-That's it! You can now use `nuxt-open-fetch` in your Nuxt app ✨
+That's it! You can now use `nuxt-open-fetch-x` in your Nuxt app ✨
 
 ## Development
 

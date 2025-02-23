@@ -8,7 +8,7 @@
     "generate": "nuxi generate"
   },
   "dependencies": {
-    "nuxt-open-fetch": "workspace:*"
+    "nuxt-open-fetch-x": "workspace:*"
   },
   "devDependencies": {
     "nuxt": "^3.10.2"
