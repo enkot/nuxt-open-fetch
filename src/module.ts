@@ -1,7 +1,7 @@
-import { existsSync } from 'node:fs'
 import type { Readable } from 'node:stream'
 import type { FetchOptions } from 'ofetch'
 import type { OpenAPI3, OpenAPITSOptions } from 'openapi-typescript'
+import { existsSync } from 'node:fs'
 import {
   addImportsSources,
   addPlugin,
@@ -13,8 +13,8 @@ import {
   defineNuxtModule,
 } from '@nuxt/kit'
 import openapiTS, { astToString } from 'openapi-typescript'
-import { camelCase, kebabCase, pascalCase } from 'scule'
 import { join } from 'pathe'
+import { camelCase, kebabCase, pascalCase } from 'scule'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
