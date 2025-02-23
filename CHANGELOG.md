@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.9.7
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.9.6...v0.9.7)
+
 ## v0.9.6
 
 
