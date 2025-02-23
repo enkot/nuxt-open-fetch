@@ -14,7 +14,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > This repository is fork of original [nuxt-open-fetch](https://github.com/enkot/nuxt-open-fetch) by [enkot](https://github.com/enkot).\
 > It does not have many additional features, but it has updated dependencies and some bug fixes.
 

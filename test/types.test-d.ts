@@ -1,8 +1,8 @@
+import type { paths } from '#build/types/open-fetch/schemas/pets'
 import type { Ref } from 'vue'
 import { describe, expectTypeOf, it } from 'vitest'
 import { createOpenFetch } from '../src/runtime/fetch'
 import { createUseOpenFetch } from '../src/runtime/useFetch'
-import type { paths } from '#build/types/open-fetch/schemas/pets'
 
 interface ReturnData {
   id?: number
