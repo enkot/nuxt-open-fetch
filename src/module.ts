@@ -188,7 +188,7 @@ export const ${fetchName.composable} = createUseOpenFetch<${pascalCase(name)}Pat
  */
 export const ${fetchName.lazyComposable} = createUseOpenFetch<${pascalCase(name)}Paths>('${name}', true)
 
-export type ${pascalCase(name)}Response<T extends keyof ${pascalCase(name)}Operations, R extends keyof ${pascalCase(name)}Operations[T]['responses'] = 200 extends keyof ${pascalCase(name)}Operations[T]['responses'] ? 200 : never> = ${pascalCase(name)}Operations[T]['responses'][R] extends { content: { 'application/json': infer U } }
+export type ${pascalCase(name)}Response<T extends keyof ${pascalCase(name)}Operations, R extends keyof ${pascalCase(name)}Operations[T]['responses'] & number = Extract<keyof ${pascalCase(name)}Operations[T]['responses'] & number, 200 | 201 | 202 | 203 | 204 | 205 | 206 | 207 | 208 | 226>> = ${pascalCase(name)}Operations[T]['responses'][R] extends { content: { 'application/json': infer U } }
   ? U
   : never
 
