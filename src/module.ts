@@ -192,7 +192,7 @@ export type ${pascalCase(name)}Response<T extends keyof ${pascalCase(name)}Opera
   ? U
   : never
 
-export type ${pascalCase(name)}RequestBody<T extends keyof ${pascalCase(name)}Operations> = ${pascalCase(name)}Operations[T]['requestBody'] extends { content: { 'application/json': infer U } }
+export type ${pascalCase(name)}RequestBody<T extends keyof ${pascalCase(name)}Operations> = ${pascalCase(name)}Operations[T] extends { requestBody?: { content: { 'application/json': infer U } } | undefined }
   ? U
   : never
 
