@@ -2,6 +2,7 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
   extends: ['./pets'],
   devtools: { enabled: true },
+
   openFetch: {
     clients: {
       api: {
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   runtimeConfig: {
     public: {
       openFetch: {
@@ -18,4 +20,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2025-03-21',
 })
