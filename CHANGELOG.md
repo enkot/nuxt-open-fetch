@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.10.0
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.9.7...v0.10.0)
+
+### 🩹 Fixes
+
+- Manually generate keys to prevent double fetching ([12dcc2d](https://github.com/Norbiros/nuxt-open-fetch-x/commit/12dcc2d))
+
+### 🏡 Chore
+
+- Rebrand to `nuxt-open-fetch-x` in more places ([949633e](https://github.com/Norbiros/nuxt-open-fetch-x/commit/949633e))
+- Update to nuxt `3.16.1` ([40d2397](https://github.com/Norbiros/nuxt-open-fetch-x/commit/40d2397))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.9.7
 
 [compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.9.6...v0.9.7)
