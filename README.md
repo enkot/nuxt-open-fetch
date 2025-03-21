@@ -99,11 +99,11 @@ Made with 💚
 Published under the [MIT License](./LICENCE).
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/nuxt-open-fetch/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-version-href]: https://npmjs.com/package/nuxt-open-fetch
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-open-fetch-x/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/nuxt-open-fetch-x
 
-[license-src]: https://img.shields.io/npm/l/nuxt-open-fetch.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://npmjs.com/package/nuxt-open-fetch
+[license-src]: https://img.shields.io/npm/l/nuxt-open-fetch-x.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/nuxt-open-fetch-x
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
