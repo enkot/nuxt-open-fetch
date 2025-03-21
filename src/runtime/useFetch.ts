@@ -4,7 +4,7 @@ import type { $Fetch } from 'ofetch'
 import type { Ref } from 'vue'
 import type { FetchResponseData, FetchResponseError, FilterMethods, ParamsOption, RequestBodyOption } from './fetch'
 import { useFetch, useNuxtApp } from 'nuxt/app'
-import { toValue } from 'vue'
+import { hash } from 'ohash'
 
 type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T
 type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>
@@ -44,8 +44,7 @@ export type UseOpenFetchClient<Paths, Lazy> = <
   url: ReqT | (() => ReqT),
   options?: Lazy extends true
     ? Omit<UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>, 'lazy'>
-    : UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>,
-  autoKey?: string
+    : UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>
 ) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
 
 export function createUseOpenFetch<
@@ -60,12 +59,20 @@ export function createUseOpenFetch<
   Paths,
   Lazy extends boolean,
 >(client: $Fetch | OpenFetchClientName, lazy = false): UseOpenFetchClient<Paths, Lazy> {
-  return (url: string | (() => string), options: any = {}, autoKey?: string) => {
+  return (url: string | (() => string), options: any = {}) => {
     // https://nuxt.com/docs/guide/recipes/custom-usefetch#custom-usefetchuseasyncdata
     const nuxtApp = useNuxtApp()
     const fetch = (typeof client === 'string' ? nuxtApp[`$${client}`] : client) as typeof $fetch
-    const opts = { $fetch: fetch, key: autoKey, ...options }
 
-    return useFetch(() => toValue(url), lazy ? { ...opts, lazy } : opts)
+    // Temporary solution for duplicated requests
+    const key = hash({
+      url: (typeof url === 'string' ? url : url()),
+      method: options.method,
+      query: options.query,
+      body: options.body,
+    })
+
+    const opts = { $fetch: fetch, key, ...options }
+    return useFetch(url, lazy ? { ...opts, lazy } : { ...opts })
   }
 }
