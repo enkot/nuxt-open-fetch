@@ -73,6 +73,10 @@ export function createUseOpenFetch<
     })
 
     const opts = { $fetch: fetch, key, ...options }
+    if (opts.header) {
+      opts.headers = opts.header
+      delete opts.header
+    }
     return useFetch(url, lazy ? { ...opts, lazy } : { ...opts })
   }
 }
