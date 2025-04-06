@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.10.1
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.0...v0.10.1)
+
+### 🚀 Enhancements
+
+- Added type helper for request path ([#84](https://github.com/Norbiros/nuxt-open-fetch-x/pull/84))
+
+### 🩹 Fixes
+
+- Add header parameters to headers ([#80](https://github.com/Norbiros/nuxt-open-fetch-x/pull/80))
+- Type helpers bug fixes ([#89](https://github.com/Norbiros/nuxt-open-fetch-x/pull/89))
+- Proper module builder configuration ([1c94bbb](https://github.com/Norbiros/nuxt-open-fetch-x/commit/1c94bbb))
+
+### 🏡 Chore
+
+- Update dependencies ([2e46ef3](https://github.com/Norbiros/nuxt-open-fetch-x/commit/2e46ef3))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.10.0
 
 [compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.9.7...v0.10.0)

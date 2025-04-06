@@ -1,7 +1,7 @@
 {
   "name": "nuxt-open-fetch-x",
   "type": "module",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.",
   "license": "MIT",
   "repository": "Norbiros/nuxt-open-fetch-x",
