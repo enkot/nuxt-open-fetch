@@ -197,6 +197,8 @@ export type ${pascalCase(name)}RequestBody<T extends keyof ${pascalCase(name)}Op
   : never
 
 export type ${pascalCase(name)}RequestQuery<T extends keyof ${pascalCase(name)}Operations> = ${pascalCase(name)}Operations[T]['parameters'] extends { query?: infer U } ? U : never
+
+export type ${pascalCase(name)}RequestPath<T extends keyof ${pascalCase(name)}Operations> = ${pascalCase(name)}Operations[T]['parameters'] extends { path?: infer U } ? U : never
 `.trimStart()).join('\n')}`.trimStart()
       },
       write: true,
