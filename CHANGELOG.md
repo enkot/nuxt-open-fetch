@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.2
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.1...v0.10.2)
+
+### 🩹 Fixes
+
+- Key generation not taking path parameters into account ([c978ee9](https://github.com/Norbiros/nuxt-open-fetch-x/commit/c978ee9))
+
+### ❤️ Contributors
+
+- Anthony Aslangul <anthony.aslangul@gmail.com>
+
 ## v0.10.1
 
 [compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.0...v0.10.1)
