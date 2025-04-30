@@ -68,6 +68,7 @@ export function createUseOpenFetch<
     const key = hash({
       url: (typeof url === 'string' ? url : url()),
       method: options.method,
+      path: options.path,
       query: options.query,
       body: options.body,
     })
