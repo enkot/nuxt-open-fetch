@@ -2,3 +2,5 @@ packages:
   - ./
   - docs
   - playground
+onlyBuiltDependencies:
+  - sharp

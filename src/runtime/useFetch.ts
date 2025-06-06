@@ -23,8 +23,8 @@ type UseOpenFetchOptions<
   PickKeys extends KeysOf<DataT> = KeysOf<DataT>,
   DefaultT = null,
   Operation = 'get' extends LowercasedMethod ? ('get' extends keyof Params ? Params['get'] : never) : LowercasedMethod extends keyof Params ? Params[LowercasedMethod] : never,
-> =
-  ComputedMethodOption<Method, Params>
+>
+= ComputedMethodOption<Method, Params>
   & ComputedOptions<ParamsOption<Operation>>
   & ComputedOptions<RequestBodyOption<Operation>>
   & Omit<UseFetchOptions<ResT, DataT, PickKeys, DefaultT>, 'query' | 'body' | 'method'>
