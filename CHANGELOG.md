@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.4
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.3...v0.10.4)
+
+### 🩹 Fixes
+
+- Properly allow Nuxt `v4` ([87638eb](https://github.com/Norbiros/nuxt-open-fetch-x/commit/87638eb))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.10.3
 
 [compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.2...v0.10.3)
