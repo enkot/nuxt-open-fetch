@@ -48,7 +48,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: `nuxt-${moduleName}`,
     configKey: camelCase(moduleName),
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '>=3.0.0',
     },
   },
   async setup(options, nuxt) {
