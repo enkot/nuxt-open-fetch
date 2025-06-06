@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.10.3
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.2...v0.10.3)
+
+### 🏡 Chore
+
+- Allow Nuxt `v4` ([45eab69](https://github.com/Norbiros/nuxt-open-fetch-x/commit/45eab69))
+- Update `packageManager` to pnpm `10.11.1` ([6d29bdf](https://github.com/Norbiros/nuxt-open-fetch-x/commit/6d29bdf))
+- Update all project dependencies ([29cc849](https://github.com/Norbiros/nuxt-open-fetch-x/commit/29cc849))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.10.2
 
 [compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.1...v0.10.2)
