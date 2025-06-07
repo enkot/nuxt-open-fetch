@@ -102,7 +102,7 @@ importers:
       nuxt-og-image:
         specifier: ^3.0.6
         version: 3.1.1(magicast@0.3.5)(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(terser@5.41.0)(yaml@2.8.0))(vue@3.5.13(typescript@5.6.3))
-      nuxt-open-fetch-x:
+      nuxt-open-fetch:
         specifier: 'workspace:'
         version: link:..
     devDependencies:
@@ -124,7 +124,7 @@ importers:
 
   playground:
     dependencies:
-      nuxt-open-fetch-x:
+      nuxt-open-fetch:
         specifier: workspace:*
         version: link:..
     devDependencies:
