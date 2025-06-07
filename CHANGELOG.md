@@ -1,6 +1,60 @@
 # Changelog
 
 
+## v0.12.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.5...v0.12.0)
+
+### 🚀 Enhancements
+
+- Rebrand to `nuxt-open-fetch-x` ([d63207e](https://github.com/enkot/nuxt-open-fetch/commit/d63207e))
+- Added type helper for request path ([#84](https://github.com/enkot/nuxt-open-fetch/pull/84))
+- Update copyright years ([f96ea95](https://github.com/enkot/nuxt-open-fetch/commit/f96ea95))
+
+### 🩹 Fixes
+
+- Prevent duplicated requests ([#83](https://github.com/enkot/nuxt-open-fetch/pull/83))
+- Manually generate keys to prevent double fetching ([d4e4b2e](https://github.com/enkot/nuxt-open-fetch/commit/d4e4b2e))
+- Add header parameters to headers ([#80](https://github.com/enkot/nuxt-open-fetch/pull/80))
+- Type helpers bug fixes ([#89](https://github.com/enkot/nuxt-open-fetch/pull/89))
+- Proper module builder configuration ([f48d0cf](https://github.com/enkot/nuxt-open-fetch/commit/f48d0cf))
+- Key generation not taking path parameters into account ([c96f2ca](https://github.com/enkot/nuxt-open-fetch/commit/c96f2ca))
+- Properly allow Nuxt `v4` ([951bc97](https://github.com/enkot/nuxt-open-fetch/commit/951bc97))
+- Resolve schema dir from rootDir ([8cc014b](https://github.com/enkot/nuxt-open-fetch/commit/8cc014b))
+- **docs:** Update `openapi` directory ([0229098](https://github.com/enkot/nuxt-open-fetch/commit/0229098))
+
+### 📖 Documentation
+
+- Improved configuration docs ([67355e2](https://github.com/enkot/nuxt-open-fetch/commit/67355e2))
+- Update `README.md` ([ea6a5f5](https://github.com/enkot/nuxt-open-fetch/commit/ea6a5f5))
+
+### 🏡 Chore
+
+- Update to Nuxt 3.15 ([3fce4d7](https://github.com/enkot/nuxt-open-fetch/commit/3fce4d7))
+- Run `eslint` ([c3b3360](https://github.com/enkot/nuxt-open-fetch/commit/c3b3360))
+- **release:** V0.9.6 ([87df9e4](https://github.com/enkot/nuxt-open-fetch/commit/87df9e4))
+- **release:** V0.9.7 ([47af5f6](https://github.com/enkot/nuxt-open-fetch/commit/47af5f6))
+- Rebrand to `nuxt-open-fetch-x` in more places ([cbe8753](https://github.com/enkot/nuxt-open-fetch/commit/cbe8753))
+- Update to nuxt `3.16.1` ([a1eaf0a](https://github.com/enkot/nuxt-open-fetch/commit/a1eaf0a))
+- **release:** V0.10.0 ([eacb1a1](https://github.com/enkot/nuxt-open-fetch/commit/eacb1a1))
+- Update dependencies ([37360b6](https://github.com/enkot/nuxt-open-fetch/commit/37360b6))
+- **release:** V0.10.1 ([d366fc9](https://github.com/enkot/nuxt-open-fetch/commit/d366fc9))
+- **release:** V0.10.2 ([1f68254](https://github.com/enkot/nuxt-open-fetch/commit/1f68254))
+- Allow Nuxt `v4` ([94fd7dc](https://github.com/enkot/nuxt-open-fetch/commit/94fd7dc))
+- Update `packageManager` to pnpm `10.11.1` ([f1bf6e5](https://github.com/enkot/nuxt-open-fetch/commit/f1bf6e5))
+- Update all project dependencies ([a9458d3](https://github.com/enkot/nuxt-open-fetch/commit/a9458d3))
+- **release:** V0.10.3 ([efc8152](https://github.com/enkot/nuxt-open-fetch/commit/efc8152))
+- **release:** V0.10.4 ([036e043](https://github.com/enkot/nuxt-open-fetch/commit/036e043))
+- **release:** V0.11.0 ([635424a](https://github.com/enkot/nuxt-open-fetch/commit/635424a))
+- Revert rebranding to `nuxt-open-fetch` ([7aac0cf](https://github.com/enkot/nuxt-open-fetch/commit/7aac0cf))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+- Julien Huang ([@huang-julien](https://github.com/huang-julien))
+- Anthony Aslangul <anthony.aslangul@gmail.com>
+- Enkot ([@enkot](https://github.com/enkot))
+
 ## v0.11.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.10.4...v0.11.0)
