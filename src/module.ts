@@ -62,8 +62,8 @@ export default defineNuxtModule<ModuleOptions>({
       .map(([key, { schema: _, ...options }]) => [key, options])) as any
 
     for (const layer of nuxt.options._layers) {
-      const { srcDir, openFetch } = layer.config
-      const schemasDir = resolve(srcDir, 'openapi')
+      const { rootDir, openFetch } = layer.config
+      const schemasDir = resolve(rootDir, 'openapi')
       const layerClients = Object.entries(options.clients).filter(([key]) => openFetch?.clients?.[key])
 
       for (const [name, config] of layerClients) {
@@ -81,7 +81,7 @@ export default defineNuxtModule<ModuleOptions>({
           schema = schema ? new URL(`file://${schema}`) : undefined
         }
         else if (typeof config.schema === 'string') {
-          schema = isValidUrl(config.schema) ? config.schema : new URL(`file://${resolve(srcDir, config.schema)}`)
+          schema = isValidUrl(config.schema) ? config.schema : new URL(`file://${resolve(rootDir, config.schema)}`)
         }
 
         if (!schema)
