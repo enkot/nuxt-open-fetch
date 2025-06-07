@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxthq/studio',
     'nuxt-og-image',
-    'nuxt-open-fetch-x',
+    'nuxt-open-fetch',
   ],
 
   devtools: {

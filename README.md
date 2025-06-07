@@ -8,15 +8,11 @@ Find and replace all on all files (CMD+SHIFT+F):
 -->
 [![Nuxt Open Fetch](./docs/public/cover.png)](https://nuxt-open-fetch.vercel.app/)
 
-# Nuxt Open Fetch X
+# Nuxt Open Fetch
 
 [![npm version][npm-version-src]][npm-version-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
-
-> [!IMPORTANT]
-> This repository is a fork of the original, now unmaintained [nuxt-open-fetch](https://github.com/enkot/nuxt-open-fetch) by [enkot](https://github.com/enkot).\
-> While it doesn't add many new features, it includes numerous bug fixes, Nuxt 4 support, and other improvements.
 
 Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.
 
@@ -41,34 +37,30 @@ In other words - `$fetch` and `useFetch` on steroids. Uses awesome [openapi-type
 
 ## Quick Setup
 
-1. Add `nuxt-open-fetch-x` dependency to your project
+1. Add `nuxt-open-fetch` dependency to your project
 
 ```bash
 # Using pnpm
-pnpm add -D nuxt-open-fetch-x
+pnpm add -D nuxt-open-fetch
 
 # Using yarn
-yarn add --dev nuxt-open-fetch-x
+yarn add --dev nuxt-open-fetch
 
 # Using npm
-npm install --save-dev nuxt-open-fetch-x
+npm install --save-dev nuxt-open-fetch
 ```
 
-2. Add `nuxt-open-fetch-x` to the `modules` section of `nuxt.config.ts`
+2. Add `nuxt-open-fetch` to the `modules` section of `nuxt.config.ts`
 
 ```js
 export default defineNuxtConfig({
   modules: [
-    'nuxt-open-fetch-x'
+    'nuxt-open-fetch'
   ]
 })
 ```
 
-That's it! You can now use `nuxt-open-fetch-x` in your Nuxt app ✨
-
-## Migrate from `nuxt-open-fetch`
-
-To migrate from `nuxt-open-fetch`, simply replace all instances of `nuxt-open-fetch` with `nuxt-open-fetch-x` in your `package.json` and `nuxt.config.ts.`
+That's it! You can now use `nuxt-open-fetch` in your Nuxt app ✨
 
 ## Development
 
@@ -103,11 +95,11 @@ Made with 💚
 Published under the [MIT License](./LICENCE).
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/nuxt-open-fetch-x/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-version-href]: https://npmjs.com/package/nuxt-open-fetch-x
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-open-fetch/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/nuxt-open-fetch
 
-[license-src]: https://img.shields.io/npm/l/nuxt-open-fetch-x.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://npmjs.com/package/nuxt-open-fetch-x
+[license-src]: https://img.shields.io/npm/l/nuxt-open-fetch.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/nuxt-open-fetch
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
