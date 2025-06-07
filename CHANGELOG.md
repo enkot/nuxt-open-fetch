@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.11.0
+
+[compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.4...v0.11.0)
+
+### 🩹 Fixes
+
+- Resolve schema dir from rootDir ([ca8e57e](https://github.com/Norbiros/nuxt-open-fetch-x/commit/ca8e57e))
+
+### 📖 Documentation
+
+- Update `README.md` ([61f7567](https://github.com/Norbiros/nuxt-open-fetch-x/commit/61f7567))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+- Julien Huang ([@huang-julien](https://github.com/huang-julien))
+
 ## v0.10.4
 
 [compare changes](https://github.com/Norbiros/nuxt-open-fetch-x/compare/v0.10.3...v0.10.4)
