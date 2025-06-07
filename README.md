@@ -15,8 +15,8 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![Nuxt][nuxt-src]][nuxt-href]
 
 > [!IMPORTANT]
-> This repository is fork of original [nuxt-open-fetch](https://github.com/enkot/nuxt-open-fetch) by [enkot](https://github.com/enkot).\
-> It does not have many additional features, but it has updated dependencies and some bug fixes.
+> This repository is a fork of the original, now unmaintained [nuxt-open-fetch](https://github.com/enkot/nuxt-open-fetch) by [enkot](https://github.com/enkot).\
+> While it doesn't add many new features, it includes numerous bug fixes, Nuxt 4 support, and other improvements.
 
 Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.
 
@@ -65,6 +65,10 @@ export default defineNuxtConfig({
 ```
 
 That's it! You can now use `nuxt-open-fetch-x` in your Nuxt app ✨
+
+## Migrate from `nuxt-open-fetch`
+
+To migrate from `nuxt-open-fetch`, simply replace all instances of `nuxt-open-fetch` with `nuxt-open-fetch-x` in your `package.json` and `nuxt.config.ts.`
 
 ## Development
 
