@@ -14,7 +14,7 @@ import {
 } from '@nuxt/kit'
 import openapiTS, { astToString } from 'openapi-typescript'
 import { join } from 'pathe'
-import { camelCase, kebabCase, pascalCase } from 'scule'
+import { kebabCase, pascalCase } from 'scule'
 
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
@@ -43,10 +43,13 @@ interface ResolvedSchema {
 
 const moduleName = 'open-fetch'
 
+import { name, version } from '../package.json'
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: `nuxt-${moduleName}`,
-    configKey: camelCase(moduleName),
+    name,
+    version,
+    configKey: 'openFetch',
     compatibility: {
       nuxt: '>=3.0.0 <5.0.0-alpha.0',
     },
