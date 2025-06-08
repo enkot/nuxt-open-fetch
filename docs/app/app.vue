@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import type { ParsedContent } from '@nuxt/content'
-import './styles/twoslash.css'
-
 const { seo } = useAppConfig()
 
-const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation())
-const { data: files } = useLazyFetch<ParsedContent[]>('/api/search.json', {
-  default: () => [],
+const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs'))
+const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
   server: false,
 })
 
@@ -34,7 +30,7 @@ provide('navigation', navigation)
 </script>
 
 <template>
-  <div>
+  <UApp>
     <NuxtLoadingIndicator />
 
     <AppHeader />
@@ -53,7 +49,5 @@ provide('navigation', navigation)
         :navigation="navigation"
       />
     </ClientOnly>
-
-    <UNotifications />
-  </div>
+  </UApp>
 </template>
