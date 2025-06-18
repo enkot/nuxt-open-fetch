@@ -4,7 +4,8 @@ import type { $Fetch } from 'ofetch'
 import type { Ref } from 'vue'
 import type { FetchResponseData, FetchResponseError, FilterMethods, ParamsOption, RequestBodyOption } from './fetch'
 import { useFetch, useNuxtApp } from 'nuxt/app'
-import { hash } from 'ohash'
+import { digest } from 'ohash'
+import { toValue } from 'vue'
 
 type PickFrom<T, K extends Array<string>> = T extends Array<any> ? T : T extends Record<string, any> ? keyof T extends K[number] ? T : K[number] extends never ? T : Pick<T, K[number]> : T
 type KeysOf<T> = Array<T extends T ? keyof T extends string ? keyof T : never : never>
@@ -64,15 +65,8 @@ export function createUseOpenFetch<
     const nuxtApp = useNuxtApp()
     const fetch = (typeof client === 'string' ? nuxtApp[`$${client}`] : client) as typeof $fetch
 
-    // Temporary solution for duplicated requests
-    const key = hash({
-      url: (typeof url === 'string' ? url : url()),
-      method: options.method,
-      path: options.path,
-      query: options.query,
-      body: options.body,
-    })
-
+    // The autokey in Nuxt is a bit buggy in our use case, so we create our own.
+    const key = options.key ?? createAutoKey(client.toString(), url, options)
     const opts = { $fetch: fetch, key, ...options }
     if (opts.header) {
       opts.headers = opts.header
@@ -80,4 +74,19 @@ export function createUseOpenFetch<
     }
     return useFetch(url, lazy ? { ...opts, lazy } : { ...opts })
   }
+}
+
+function createAutoKey(client: string, url: string | (() => string), options: any) {
+  const resolvedRequestOptions = {
+    url,
+    method: options.method,
+    path: options.path,
+    query: options.query,
+    body: options.body,
+  }
+
+  // Convert to json string and use a custom replacer function to unref all refs.
+  const resolvedRequestOptionsJson = JSON.stringify(resolvedRequestOptions, (_, value) => toValue(value))
+
+  return `$${client}-${digest(resolvedRequestOptionsJson)}`
 }
