@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.12.1
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.12.0...v0.12.1)
+
+### 🩹 Fixes
+
+- Resolve multiple bugs in auto key generation ([#97](https://github.com/enkot/nuxt-open-fetch/pull/97))
+- **playground:** Rewrite playground code ([3abd499](https://github.com/enkot/nuxt-open-fetch/commit/3abd499))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.12.0
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.9.5...v0.12.0)
