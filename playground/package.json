@@ -11,6 +11,6 @@
     "nuxt-open-fetch": "workspace:*"
   },
   "devDependencies": {
-    "nuxt": "^3.16.2"
+    "nuxt": "^3.17.5"
   }
 }

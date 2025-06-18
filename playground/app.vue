@@ -1,27 +1,16 @@
 <script setup lang="ts">
-import { ref, usePets } from '#imports'
+import { useApi } from '#imports'
 
-// const { $api } = useNuxtApp()
-
-const petId = ref(1)
-
-// const res = await $api('/pet/{petId}', {
-//   path: {
-//     petId: petId.value,
-//   },
-// })
-
-// await $pets('/store/order', {
-//   method: 'POST',
-//   body: {
-//     petId: petId.value,
-//   },
-// })
-
-const { data, execute } = await usePets('/pet/{petId}', {
+const { data, execute } = await useApi('/pet/{petId}', {
   immediate: false,
   path: {
-    petId,
+    petId: 1,
+  },
+})
+
+const { data: value } = await useApi('/pet/{petId}', {
+  path: {
+    petId: 3,
   },
 })
 </script>
@@ -29,6 +18,7 @@ const { data, execute } = await usePets('/pet/{petId}', {
 <template>
   <h1>Playground</h1>
   <pre>{{ data }}</pre>
+  <pre>{{ value }}</pre>
   <button @click="() => execute()">
     execute
   </button>
