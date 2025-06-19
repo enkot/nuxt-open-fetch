@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.12.2
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.12.1...v0.12.2)
+
+### 🩹 Fixes
+
+- Correct module build process (once again) ([a11f21f](https://github.com/enkot/nuxt-open-fetch/commit/a11f21f))
+
+### 🏡 Chore
+
+- **release:** V0.12.1 ([e221a79](https://github.com/enkot/nuxt-open-fetch/commit/e221a79))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+
 ## v0.12.1
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.12.0...v0.12.1)
