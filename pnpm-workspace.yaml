@@ -3,4 +3,8 @@ packages:
   - docs
   - playground
 onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
   - sharp
+  - unrs-resolver
+  - vue-demi

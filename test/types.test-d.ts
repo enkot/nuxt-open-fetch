@@ -1,4 +1,4 @@
-import type { paths } from '#build/types/open-fetch/schemas/pets'
+import type { paths } from '#build/types/open-fetch/schemas/api'
 import type { Ref } from 'vue'
 import { describe, expectTypeOf, it } from 'vitest'
 import { createOpenFetch } from '../src/runtime/fetch'
@@ -55,7 +55,7 @@ describe('$[client]', async () => {
 })
 
 describe('use[Client]', async () => {
-  const usePets = createUseOpenFetch<paths>('pets')
+  const usePets = createUseOpenFetch<paths>('api')
 
   it('is function', () => {
     expectTypeOf(usePets).toBeFunction()
