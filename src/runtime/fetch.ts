@@ -1,4 +1,6 @@
-import type { FetchContext, FetchError, FetchOptions } from 'ofetch'
+import type { NuxtApp, RuntimeNuxtHooks } from '#app'
+import type { OpenFetchClientName } from '#open-fetch'
+import type { FetchContext, FetchError, FetchHooks, FetchOptions } from 'ofetch'
 import type {
   ErrorResponse,
   MediaType,
@@ -52,20 +54,62 @@ export function openFetchRequestInterceptor(ctx: FetchContext) {
   ctx.request = fillPath(ctx.request as string, (ctx.options).path)
 }
 
+function createHook<T extends keyof FetchHooks>(nuxtApp: NuxtApp, baseOpts: FetchOptions, hook: T, hookIdentifier?: OpenFetchClientName) {
+  return async (...args: Parameters<RuntimeNuxtHooks[`openFetch:${T}`]>) => {
+    await nuxtApp.callHook(`openFetch:${hook}`, ...args)
+
+    if (hookIdentifier) {
+      await nuxtApp.callHook(`openFetch:${hook}:${hookIdentifier}`, ...args)
+    }
+
+    const ctx = args[0]
+    const baseHook = baseOpts[hook]
+
+    if (baseHook) {
+      await (Array.isArray(baseHook)
+        ? Promise.all(baseHook.map(h => h(ctx as any)))
+        : baseHook(ctx as any))
+    }
+  }
+}
+
+function getHooks(nuxtApp: NuxtApp, baseOpts: FetchOptions, hookIdentifier?: OpenFetchClientName) {
+  const hooks: Array<keyof FetchHooks> = [
+    'onRequest',
+    'onRequestError',
+    'onResponse',
+    'onResponseError',
+  ]
+
+  return hooks.reduce<FetchHooks>((acc, hook) => {
+    acc[hook as keyof FetchHooks] = createHook(nuxtApp, baseOpts, hook as keyof FetchHooks, hookIdentifier)
+    return acc
+  }, {} as FetchHooks)
+}
+
 export function createOpenFetch<Paths>(
   options: FetchOptions | ((options: FetchOptions) => FetchOptions),
   localFetch?: typeof globalThis.$fetch,
+  hookIdentifier?: string,
 ): OpenFetchClient<Paths> {
-  return (url: string, opts: any) => {
-    opts = typeof options === 'function'
-      ? options(opts)
+  const nuxtApp = useNuxtApp()
+
+  return (url: string, baseOpts: any) => {
+    baseOpts = typeof options === 'function'
+      ? options(baseOpts)
       : {
           ...options,
-          ...opts,
+          ...baseOpts,
         }
+
+    const opts: FetchOptions & { path?: Record<string, string> } = {
+      ...baseOpts,
+      ...getHooks(nuxtApp, baseOpts, hookIdentifier as OpenFetchClientName),
+    }
+
     const $fetch = getFetch(url, opts, localFetch)
 
-    return $fetch(fillPath(url, opts?.path), opts)
+    return $fetch(fillPath(url, opts?.path), opts as any)
   }
 }
 
