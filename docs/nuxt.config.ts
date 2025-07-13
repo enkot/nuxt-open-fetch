@@ -1,15 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: ['@nuxt/ui-pro'],
-
   modules: [
+    '@nuxt/ui-pro',
     'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
-    '@nuxt/ui',
-    '@nuxthq/studio',
     'nuxt-og-image',
     'nuxt-open-fetch',
   ],
@@ -17,6 +14,8 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+
+  css: ['~/assets/css/main.css'],
 
   site: {
     url: 'https://nuxt-open-fetch.vercel.app',
@@ -26,8 +25,14 @@ export default defineNuxtConfig({
     disableTransition: true,
   },
 
-  routeRules: {
-    '/api/search.json': { prerender: true },
+  content: {
+    build: {
+      markdown: {
+        toc: {
+          searchDepth: 1,
+        },
+      },
+    },
   },
 
   future: {
@@ -80,6 +85,7 @@ export default defineNuxtConfig({
     floatingVueOptions: {
       classMarkdown: 'prose prose-primary dark:prose-invert',
     },
+    // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
     throws: false,
     includeNuxtTypes: true,
   },
