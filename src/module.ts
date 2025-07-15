@@ -175,16 +175,20 @@ type InferMaybeArray<T> = T extends Array<infer U> ? U : T
 type FetchHooksContext<T extends keyof FetchHooks> = InferFirstParameter<NonNullable<InferMaybeArray<FetchHooks[T]>>>
 type HookResult = import('@nuxt/schema').HookResult
 
-type _GlobalFetchHooks = {
+export type GlobalFetchHooks = {
   [K in keyof Required<FetchHooks> as \`openFetch:\${K}\`]: (ctx: FetchHooksContext<K>) => HookResult
 }
 
-type _ClientFetchHooks = {
+export type ClientFetchHooks = {
   [K in keyof Required<FetchHooks> as \`openFetch:\${K}:\${OpenFetchClientName}\`]: (ctx: FetchHooksContext<K>) => HookResult
 }
 
 declare module '#app' {
-  interface RuntimeNuxtHooks extends _GlobalFetchHooks, _ClientFetchHooks {}
+  interface RuntimeNuxtHooks extends GlobalFetchHooks, ClientFetchHooks {}
+}
+
+declare module 'nitropack' {
+  interface NitroRuntimeHooks extends GlobalFetchHooks, ClientFetchHooks {}
 }
 
 export {}

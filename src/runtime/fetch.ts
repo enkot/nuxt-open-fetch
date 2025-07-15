@@ -1,6 +1,8 @@
 import type { NuxtApp, RuntimeNuxtHooks } from '#app'
 import type { OpenFetchClientName } from '#open-fetch'
+import type { ClientFetchHooks, GlobalFetchHooks } from '~/.nuxt/types/open-fetch-hooks'
 import type { FetchContext, FetchError, FetchHooks, FetchOptions } from 'ofetch'
+import type { Hookable } from 'hookable'
 import type {
   ErrorResponse,
   MediaType,
@@ -54,12 +56,12 @@ export function openFetchRequestInterceptor(ctx: FetchContext) {
   ctx.request = fillPath(ctx.request as string, (ctx.options).path)
 }
 
-function createHook<T extends keyof FetchHooks>(nuxtApp: NuxtApp, baseOpts: FetchOptions, hook: T, hookIdentifier?: OpenFetchClientName) {
+function createHook<T extends keyof FetchHooks>(hooks: NonNullable<ReturnType<typeof getHooks>>, baseOpts: FetchOptions, hook: T, hookIdentifier?: OpenFetchClientName) {
   return async (...args: Parameters<RuntimeNuxtHooks[`openFetch:${T}`]>) => {
-    await nuxtApp.callHook(`openFetch:${hook}`, ...args)
+    await hooks.callHook(`openFetch:${hook}`, ...args)
 
     if (hookIdentifier) {
-      await nuxtApp.callHook(`openFetch:${hook}:${hookIdentifier}`, ...args)
+      await hooks.callHook(`openFetch:${hook}:${hookIdentifier}`, ...args)
     }
 
     const ctx = args[0]
@@ -73,18 +75,40 @@ function createHook<T extends keyof FetchHooks>(nuxtApp: NuxtApp, baseOpts: Fetc
   }
 }
 
-function getHooks(nuxtApp: NuxtApp, baseOpts: FetchOptions, hookIdentifier?: OpenFetchClientName) {
-  const hooks: Array<keyof FetchHooks> = [
+function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOptions, hookIdentifier?: OpenFetchClientName) {
+  const openFetchHooks: Array<keyof FetchHooks> = [
     'onRequest',
     'onRequestError',
     'onResponse',
     'onResponseError',
   ]
 
-  return hooks.reduce<FetchHooks>((acc, hook) => {
-    acc[hook as keyof FetchHooks] = createHook(nuxtApp, baseOpts, hook as keyof FetchHooks, hookIdentifier)
+  if (!hooks)
+    return {} as FetchHooks
+
+  return openFetchHooks.reduce<FetchHooks>((acc, hook) => {
+    acc[hook as keyof FetchHooks] = createHook(hooks, baseOpts, hook as keyof FetchHooks, hookIdentifier)
     return acc
   }, {} as FetchHooks)
+}
+
+function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
+  try {
+    const nuxtApp = tryUseNuxtApp()
+
+
+    if (nuxtApp) {
+      return nuxtApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
+    }
+  } catch {}
+
+  try {
+    const nitroApp = useNitroApp()
+
+    return nitroApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
+  } catch {}
+
+  return null
 }
 
 export function createOpenFetch<Paths>(
@@ -92,7 +116,7 @@ export function createOpenFetch<Paths>(
   localFetch?: typeof globalThis.$fetch,
   hookIdentifier?: string,
 ): OpenFetchClient<Paths> {
-  const nuxtApp = useNuxtApp()
+  const hooks = getHooks()
 
   return (url: string, baseOpts: any) => {
     baseOpts = typeof options === 'function'
@@ -104,7 +128,7 @@ export function createOpenFetch<Paths>(
 
     const opts: FetchOptions & { path?: Record<string, string> } = {
       ...baseOpts,
-      ...getHooks(nuxtApp, baseOpts, hookIdentifier as OpenFetchClientName),
+      ...getOpenFetchHooks(hooks, baseOpts, hookIdentifier as OpenFetchClientName),
     }
 
     const $fetch = getFetch(url, opts, localFetch)
