@@ -1,3 +1,4 @@
+import type { $Fetch, NitroFetchRequest } from 'nitropack'
 import { createOpenFetch, defineNuxtPlugin, useRequestFetch, useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin({
@@ -9,7 +10,7 @@ export default defineNuxtPlugin({
     return {
       provide: Object.entries(clients).reduce((acc, [name, client]) => ({
         ...acc,
-        [name]: createOpenFetch(client, $fetch),
+        [name]: createOpenFetch(client, $fetch as $Fetch<unknown, NitroFetchRequest>, name),
       }), {}),
     }
   },

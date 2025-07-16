@@ -2,7 +2,11 @@ import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin({
   enforce: 'pre',
-  setup() {
+  setup(nuxtApp) {
+    nuxtApp.hook('openFetch:onRequest', (ctx) => {
+      ctx.options.headers.set('X-Custom-Header', 'MyValue-nuxt')
+    })
+
     // const { public: { openFetch: clients } } = useRuntimeConfig()
     // const $fetch = useRequestFetch()
 

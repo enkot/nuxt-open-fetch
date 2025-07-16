@@ -164,6 +164,37 @@ export default defineNuxtModule<ModuleOptions>({
       from: resolve('runtime/fetch'),
     }])
 
+    addTypeTemplate({
+      filename: 'types/open-fetch-hooks.d.ts',
+      getContents: () => `
+import type { OpenFetchClientName } from '#open-fetch'
+import type { FetchHooks } from 'ofetch'
+
+type InferFirstParameter<T> = T extends (arg: infer U, ...args: any[]) => any ? U : never
+type InferMaybeArray<T> = T extends Array<infer U> ? U : T
+type FetchHooksContext<T extends keyof FetchHooks> = InferFirstParameter<NonNullable<InferMaybeArray<FetchHooks[T]>>>
+type HookResult = import('@nuxt/schema').HookResult
+
+export type GlobalFetchHooks = {
+  [K in keyof Required<FetchHooks> as \`openFetch:\${K}\`]: (ctx: FetchHooksContext<K>) => HookResult
+}
+
+export type ClientFetchHooks = {
+  [K in keyof Required<FetchHooks> as \`openFetch:\${K}:\${OpenFetchClientName}\`]: (ctx: FetchHooksContext<K>) => HookResult
+}
+
+declare module '#app' {
+  interface RuntimeNuxtHooks extends GlobalFetchHooks, ClientFetchHooks {}
+}
+
+declare module 'nitropack' {
+  interface NitroRuntimeHooks extends GlobalFetchHooks, ClientFetchHooks {}
+}
+
+export {}
+`,
+    })
+
     addTemplate({
       filename: `${moduleName}.ts`,
       getContents() {

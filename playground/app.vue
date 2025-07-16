@@ -13,12 +13,17 @@ const { data: value } = await useApi('/pet/{petId}', {
     petId: 3,
   },
 })
+
+const {
+  data: helloValue,
+} = useFetch('/api/hello')
 </script>
 
 <template>
   <h1>Playground</h1>
-  <pre>{{ data }}</pre>
-  <pre>{{ value }}</pre>
+  <pre>New: {{ data }}</pre>
+  <pre>Immediate: {{ value }}</pre>
+  <pre>Nitro: {{ helloValue }}</pre>
   <button @click="() => execute()">
     execute
   </button>

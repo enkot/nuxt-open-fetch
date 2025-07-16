@@ -11,7 +11,6 @@ export default defineNitroPlugin((nitroApp) => {
   const clients = useRuntimeConfig().public.openFetch
 
   Object.entries(clients).forEach(([name, client]) => {
-    // @ts-expect-error - This is a dynamic property
-    nitroApp[`$${name}`] = createOpenFetch(client, nitroApp.localFetch)
+    nitroApp[`$${name}`] = createOpenFetch(client, nitroApp.localFetch, name)
   })
 })
