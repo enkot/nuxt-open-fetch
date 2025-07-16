@@ -1,8 +1,7 @@
-import type { NuxtApp, RuntimeNuxtHooks } from '#app'
+import type { RuntimeNuxtHooks } from '#app'
 import type { OpenFetchClientName } from '#open-fetch'
-import type { ClientFetchHooks, GlobalFetchHooks } from '~/.nuxt/types/open-fetch-hooks'
-import type { FetchContext, FetchError, FetchHooks, FetchOptions } from 'ofetch'
 import type { Hookable } from 'hookable'
+import type { FetchContext, FetchError, FetchHooks, FetchOptions } from 'ofetch'
 import type {
   ErrorResponse,
   MediaType,
@@ -10,6 +9,7 @@ import type {
   ResponseObjectMap,
   SuccessResponse,
 } from 'openapi-typescript-helpers'
+import type { ClientFetchHooks, GlobalFetchHooks } from '~/.nuxt/types/open-fetch-hooks'
 
 export type FetchResponseData<T extends Record<string | number, any>> = SuccessResponse<ResponseObjectMap<T>, MediaType>
 export type FetchResponseError<T extends Record<string | number, any>> = FetchError<ErrorResponse<ResponseObjectMap<T>, MediaType>>
@@ -95,18 +95,17 @@ function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOp
 function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
   try {
     const nuxtApp = tryUseNuxtApp()
-
-
     if (nuxtApp) {
       return nuxtApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
     }
-  } catch {}
+  }
+  catch {}
 
   try {
     const nitroApp = useNitroApp()
-
     return nitroApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
-  } catch {}
+  }
+  catch {}
 
   return null
 }
