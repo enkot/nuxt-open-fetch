@@ -16,6 +16,8 @@ import openapiTS, { astToString } from 'openapi-typescript'
 import { join } from 'pathe'
 import { kebabCase, pascalCase } from 'scule'
 
+import { name, version } from '../package.json'
+
 type OpenAPI3Schema = string | URL | OpenAPI3 | Readable
 
 export interface OpenFetchOptions extends Pick<FetchOptions, 'baseURL' | 'query' | 'headers'> { }
@@ -42,8 +44,6 @@ interface ResolvedSchema {
 }
 
 const moduleName = 'open-fetch'
-
-import { name, version } from '../package.json'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
