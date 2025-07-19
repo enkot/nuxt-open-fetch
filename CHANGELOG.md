@@ -5,6 +5,14 @@
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.12.2...v0.13.0)
 
+## 🚨 Highlights
+
+New `nuxt-open-fetch` docs are available at [nuxt-open-fetch.norbiros.dev](https://nuxt-open-fetch.norbiros.dev).
+
+Thanks to @Eschricht, there is a new system for customizing your fetch calls - [Nuxt Hooks](https://nuxt-open-fetch.norbiros.dev/advanced/hooks). This is the **recommended** way to implement custom and not very complex modifications like adding auth headers, logging errors, showing toasts, etc.
+
+Plugins are and will be still available, so there are no breaking changes in this release.
+
 ### 🚀 Enhancements
 
 - Do not require type stubs on install ([7622068](https://github.com/enkot/nuxt-open-fetch/commit/7622068))
