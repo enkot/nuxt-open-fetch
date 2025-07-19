@@ -2,7 +2,7 @@
   "name": "nuxt-open-fetch",
   "type": "module",
   "version": "0.12.2",
-  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912",
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
   "description": "Generate zero-overhead, 100% typed OpenAPI clients for Nuxt.",
   "author": {
     "name": "Taras Batenkov",
@@ -53,9 +53,9 @@
     "release": "pnpm lint && pnpm test && pnpm prepack && changelogen --release && pnpm publish && git push --follow-tags",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test": "cd playground/ && vitest run",
+    "test:watch": "cd playground/ && vitest watch",
+    "typecheck": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
     "@nuxt/kit": "^4.0.0",
@@ -71,16 +71,13 @@
     "@nuxt/eslint-config": "^1.6.0",
     "@nuxt/module-builder": "^1.0.1",
     "@nuxt/schema": "^4.0.0",
-    "@nuxt/test-utils": "^3.19.2",
     "@types/node": "^24.0.15",
-    "@vue/test-utils": "^2.4.6",
     "changelogen": "^0.6.2",
     "eslint": "^9.31.0",
     "h3": "^1.15.3",
     "happy-dom": "^18.0.1",
     "listhen": "^1.9.0",
     "nuxt": "^4.0.0",
-    "ofetch": "^1.4.1",
-    "vitest": "^3.2.4"
+    "ofetch": "^1.4.1"
   }
 }

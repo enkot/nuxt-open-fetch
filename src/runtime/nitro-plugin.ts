@@ -1,16 +1,14 @@
-import type { NitroApp } from 'nitropack'
-import { createOpenFetch, useRuntimeConfig } from '#imports'
+// @ts-ignore
+import { defineNitroPlugin, useRuntimeConfig } from '#imports'
+import { createOpenFetch } from './fetch'
 
-type NitroAppPlugin = (nitro: NitroApp) => void
-
-function defineNitroPlugin(def: NitroAppPlugin): NitroAppPlugin {
-  return def
-}
-
+// @ts-ignore
 export default defineNitroPlugin((nitroApp) => {
   const clients = useRuntimeConfig().public.openFetch
 
+  // @ts-ignore
   Object.entries(clients).forEach(([name, client]) => {
+    // @ts-ignore
     nitroApp[`$${name}`] = createOpenFetch(client, nitroApp.localFetch, name)
   })
 })

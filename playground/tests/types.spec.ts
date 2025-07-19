@@ -1,8 +1,8 @@
-import type { paths } from '#build/types/open-fetch/schemas/api'
+import type { paths } from '#open-fetch-schemas/api'
 import type { Ref } from 'vue'
 import { describe, expectTypeOf, it } from 'vitest'
-import { createOpenFetch } from '../src/runtime/fetch'
-import { createUseOpenFetch } from '../src/runtime/useFetch'
+import { createOpenFetch } from '../../src/runtime/fetch'
+import { createUseOpenFetch } from '../../src/runtime/useFetch'
 
 interface ReturnData {
   id?: number
@@ -89,7 +89,7 @@ describe('use[Client]', async () => {
       immediate: false,
     })
 
-    expectTypeOf(data).toMatchTypeOf<Ref<ReturnData | null>>()
+    expectTypeOf(data).toMatchTypeOf<Ref<ReturnData | undefined>>()
   })
 
   it('has correct "transform" input parameter type', () => () => {
@@ -114,7 +114,7 @@ describe('use[Client]', async () => {
 
     expectTypeOf(data).toMatchTypeOf<Ref<{
       foo: string
-    } | null>>()
+    } | undefined>>()
   })
 
   it('has correct reponse type using "default"', () => () => {
@@ -159,6 +159,6 @@ describe('use[Client]', async () => {
 
     expectTypeOf(data).toMatchTypeOf<Ref<{
       name: string
-    } | null>>()
+    } | undefined>>()
   })
 })

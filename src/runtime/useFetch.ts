@@ -40,13 +40,13 @@ export type UseOpenFetchClient<Paths, Lazy> = <
   ErrorT = Methods[DefaultMethod] extends Record<string | number, any> ? FetchResponseError<Methods[DefaultMethod]> : never,
   DataT = ResT,
   PickKeys extends KeysOf<DataT> = KeysOf<DataT>,
-  DefaultT = null,
+  DefaultT = undefined,
 >(
   url: ReqT | (() => ReqT),
   options?: Lazy extends true
     ? Omit<UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>, 'lazy'>
     : UseOpenFetchOptions<Method, LowercasedMethod, Methods, ResT, DataT, PickKeys, DefaultT>
-) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | null>
+) => AsyncData<PickFrom<DataT, PickKeys> | DefaultT, ErrorT | undefined>
 
 export function createUseOpenFetch<
   Paths,

@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
-    "generate": "nuxi generate"
+    "generate": "nuxi generate",
+    "test": "vitest"
   },
   "dependencies": {
     "nuxt-open-fetch": "workspace:*"
   },
   "devDependencies": {
-    "nuxt": "^4.0.0"
+    "@nuxt/test-utils": "^3.19.2",
+    "nuxt": "^4.0.0",
+    "vitest": "^3.2.4"
   }
 }

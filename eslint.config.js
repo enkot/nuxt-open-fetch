@@ -4,6 +4,7 @@ export default antfu({
   typescript: {
     overrides: {
       'ts/no-unsafe-function-type': 'off',
+      'ts/ban-ts-comment': 'off',
     },
   },
 })

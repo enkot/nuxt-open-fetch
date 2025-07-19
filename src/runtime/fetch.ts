@@ -1,5 +1,6 @@
 import type { RuntimeNuxtHooks } from '#app'
-import type { OpenFetchClientName } from '#open-fetch'
+import type { OpenFetchClientName } from '#build/open-fetch'
+import type { ClientFetchHooks, GlobalFetchHooks } from '#build/types/open-fetch-hooks'
 import type { Hookable } from 'hookable'
 import type { FetchContext, FetchError, FetchHooks, FetchOptions } from 'ofetch'
 import type {
@@ -9,7 +10,6 @@ import type {
   ResponseObjectMap,
   SuccessResponse,
 } from 'openapi-typescript-helpers'
-import type { ClientFetchHooks, GlobalFetchHooks } from '~/.nuxt/types/open-fetch-hooks'
 
 export type FetchResponseData<T extends Record<string | number, any>> = SuccessResponse<ResponseObjectMap<T>, MediaType>
 export type FetchResponseError<T extends Record<string | number, any>> = FetchError<ErrorResponse<ResponseObjectMap<T>, MediaType>>
@@ -57,11 +57,12 @@ export function openFetchRequestInterceptor(ctx: FetchContext) {
 }
 
 function createHook<T extends keyof FetchHooks>(hooks: NonNullable<ReturnType<typeof getHooks>>, baseOpts: FetchOptions, hook: T, hookIdentifier?: OpenFetchClientName) {
+  // @ts-ignore
   return async (...args: Parameters<RuntimeNuxtHooks[`openFetch:${T}`]>) => {
     await hooks.callHook(`openFetch:${hook}`, ...args)
 
     if (hookIdentifier) {
-      await hooks.callHook(`openFetch:${hook}:${hookIdentifier}`, ...args)
+      await hooks.callHook(`openFetch:${hook}:${hookIdentifier}`, ...args as any)
     }
 
     const ctx = args[0]
@@ -87,6 +88,7 @@ function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOp
     return {} as FetchHooks
 
   return openFetchHooks.reduce<FetchHooks>((acc, hook) => {
+    // @ts-ignore
     acc[hook as keyof FetchHooks] = createHook(hooks, baseOpts, hook as keyof FetchHooks, hookIdentifier)
     return acc
   }, {} as FetchHooks)
@@ -94,6 +96,7 @@ function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOp
 
 function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
   try {
+    // @ts-ignore
     const nuxtApp = tryUseNuxtApp()
     if (nuxtApp) {
       return nuxtApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
@@ -102,6 +105,7 @@ function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
   catch {}
 
   try {
+    // @ts-ignore
     const nitroApp = useNitroApp()
     return nitroApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
   }

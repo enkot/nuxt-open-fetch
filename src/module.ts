@@ -272,7 +272,7 @@ ${schemas.map(({ name }) => `
 import type { paths as ${pascalCase(name)}Paths } from '#open-fetch-schemas/${kebabCase(name)}'
 `.trimStart()).join('').trimEnd()}
 
-declare module 'nitropack' {
+declare module 'nitropack/types' {
   interface NitroApp {
     ${schemas.map(({ name }) => `$${name}: OpenFetchClient<${pascalCase(name)}Paths>`.trimStart()).join('\n    ')}
   }

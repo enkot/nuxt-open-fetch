@@ -1,5 +1,5 @@
-import type { $Fetch, NitroFetchRequest } from 'nitropack'
-import { createOpenFetch, defineNuxtPlugin, useRequestFetch, useRuntimeConfig } from '#imports'
+import { defineNuxtPlugin, useRequestFetch, useRuntimeConfig } from '#imports'
+import { createOpenFetch } from './fetch'
 
 export default defineNuxtPlugin({
   enforce: 'pre',
@@ -8,9 +8,9 @@ export default defineNuxtPlugin({
     const $fetch = useRequestFetch()
 
     return {
-      provide: Object.entries(clients).reduce((acc, [name, client]) => ({
+      provide: Object.entries(clients as any).reduce((acc, [name, client]) => ({
         ...acc,
-        [name]: createOpenFetch(client, $fetch as $Fetch<unknown, NitroFetchRequest>, name),
+        [name]: createOpenFetch(client as any, $fetch as any, name),
       }), {}),
     }
   },
