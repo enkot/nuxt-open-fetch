@@ -69,6 +69,10 @@ export default defineNuxtModule<ModuleOptions>({
       const schemasDir = resolve(rootDir, 'openapi')
       const layerClients = Object.entries(options.clients).filter(([key]) => openFetch?.clients?.[key])
 
+      if (nuxt.options.dev) {
+        nuxt.options.watch.push(schemasDir)
+      }
+
       for (const [name, config] of layerClients) {
         // Skip if schema already added by upper layer or if config is not defined
         if (schemas.some(item => item.name === name) || !config)
