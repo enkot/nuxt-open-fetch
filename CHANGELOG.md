@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v0.13.0
+
+[compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.12.2...v0.13.0)
+
+### 🚀 Enhancements
+
+- Do not require type stubs on install ([7622068](https://github.com/enkot/nuxt-open-fetch/commit/7622068))
+- Add contributors to `package.json` ([3dfb1a8](https://github.com/enkot/nuxt-open-fetch/commit/3dfb1a8))
+- Add Nuxt runtime hooks for fetch client hooks ([9bb2cde](https://github.com/enkot/nuxt-open-fetch/commit/9bb2cde))
+- **ci:** Add CI configuration for linting and testing ([cc3e587](https://github.com/enkot/nuxt-open-fetch/commit/cc3e587))
+- Watch schemas directory in development mode ([f88f2fb](https://github.com/enkot/nuxt-open-fetch/commit/f88f2fb))
+- Add major release script to package.json ([840ac40](https://github.com/enkot/nuxt-open-fetch/commit/840ac40))
+
+### 🩹 Fixes
+
+- **docs:** Add missing `better-sqlite3` ([ecddddf](https://github.com/enkot/nuxt-open-fetch/commit/ecddddf))
+- **docs:** Update link to Nuxt hooks in custom client documentation ([155255a](https://github.com/enkot/nuxt-open-fetch/commit/155255a))
+- **ci:** Temporary disable `test` checks ([368ace8](https://github.com/enkot/nuxt-open-fetch/commit/368ace8))
+- Resolve a lot of TypeScript issues ([9388a9c](https://github.com/enkot/nuxt-open-fetch/commit/9388a9c))
+- Add TypeScript type checking to the `release` script ([69fc9f4](https://github.com/enkot/nuxt-open-fetch/commit/69fc9f4))
+
+### 🏡 Chore
+
+- **docs:** Update to Nuxt UI & Nuxt Content `v3` ([77b6599](https://github.com/enkot/nuxt-open-fetch/commit/77b6599))
+- Update dependencies + Nuxt v4 ([8a6e11b](https://github.com/enkot/nuxt-open-fetch/commit/8a6e11b))
+- Run formatter ([9658c46](https://github.com/enkot/nuxt-open-fetch/commit/9658c46))
+
+### ❤️ Contributors
+
+- Norbiros ([@Norbiros](https://github.com/Norbiros))
+- Johannes Eschricht ([@Eschricht](https://github.com/Eschricht))
+
 ## v0.12.2
 
 [compare changes](https://github.com/enkot/nuxt-open-fetch/compare/v0.12.1...v0.12.2)
