@@ -51,6 +51,7 @@
     "docs": "pnpm dev:prepare && nuxt dev docs --uiDev",
     "docs:build": "pnpm dev:prepare && nuxt build docs",
     "release": "pnpm lint && pnpm test && pnpm typecheck && pnpm prepack && changelogen --release && pnpm publish && git push --follow-tags",
+    "release:major": "pnpm lint && pnpm test && pnpm typecheck && pnpm prepack && changelogen --release --major && pnpm publish && git push --follow-tags",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "cd playground/ && vitest run",
