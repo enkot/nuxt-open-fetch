@@ -11,6 +11,8 @@ import type {
   SuccessResponse,
 } from 'openapi-typescript-helpers'
 
+type Hooks = Hookable<GlobalFetchHooks & ClientFetchHooks> | null
+
 export type FetchResponseData<T extends Record<string | number, any>> = SuccessResponse<ResponseObjectMap<T>, MediaType>
 export type FetchResponseError<T extends Record<string | number, any>> = FetchError<ErrorResponse<ResponseObjectMap<T>, MediaType>>
 
@@ -56,7 +58,7 @@ export function openFetchRequestInterceptor(ctx: FetchContext) {
   ctx.request = fillPath(ctx.request as string, (ctx.options).path)
 }
 
-function createHook<T extends keyof FetchHooks>(hooks: NonNullable<ReturnType<typeof getHooks>>, baseOpts: FetchOptions, hook: T, hookIdentifier?: OpenFetchClientName) {
+function createHook<T extends keyof FetchHooks>(hooks: NonNullable<Hooks>, baseOpts: FetchOptions, hook: T, hookIdentifier?: OpenFetchClientName) {
   // @ts-ignore
   return async (...args: Parameters<RuntimeNuxtHooks[`openFetch:${T}`]>) => {
     await hooks.callHook(`openFetch:${hook}`, ...args)
@@ -76,7 +78,7 @@ function createHook<T extends keyof FetchHooks>(hooks: NonNullable<ReturnType<ty
   }
 }
 
-function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOptions, hookIdentifier?: OpenFetchClientName) {
+function getOpenFetchHooks(hooks: Hooks, baseOpts: FetchOptions, hookIdentifier?: OpenFetchClientName) {
   const openFetchHooks: Array<keyof FetchHooks> = [
     'onRequest',
     'onRequestError',
@@ -94,35 +96,12 @@ function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOp
   }, {} as FetchHooks)
 }
 
-function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
-  try {
-    // @ts-ignore
-    const { tryUseNuxtApp } = await import('#app')
-    const nuxtApp = tryUseNuxtApp()
-    if (nuxtApp) {
-      return nuxtApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
-    }
-  }
-  catch {}
-
-  try {
-    // @ts-ignore
-    const { useNitroApp } = await import('#internal/nitro')
-    const nitroApp = useNitroApp()
-    return nitroApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
-  }
-  catch {}
-
-  return null
-}
-
 export function createOpenFetch<Paths>(
   options: FetchOptions | ((options: FetchOptions) => FetchOptions),
   localFetch?: typeof globalThis.$fetch,
   hookIdentifier?: string,
+  hooks: Hookable<any> | null = null,
 ): OpenFetchClient<Paths> {
-  const hooks = getHooks()
-
   return (url: string, baseOpts: any) => {
     baseOpts = typeof options === 'function'
       ? options(baseOpts)

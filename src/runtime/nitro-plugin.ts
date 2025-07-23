@@ -9,6 +9,6 @@ export default defineNitroPlugin((nitroApp) => {
   // @ts-ignore
   Object.entries(clients).forEach(([name, client]) => {
     // @ts-ignore
-    nitroApp[`$${name}`] = createOpenFetch(client, nitroApp.localFetch, name)
+    nitroApp[`$${name}`] = createOpenFetch(client, nitroApp.localFetch, name, nitroApp.hooks)
   })
 })
