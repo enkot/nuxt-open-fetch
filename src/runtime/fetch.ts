@@ -97,6 +97,7 @@ function getOpenFetchHooks(hooks: ReturnType<typeof getHooks>, baseOpts: FetchOp
 function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
   try {
     // @ts-ignore
+    const { tryUseNuxtApp } = await import('#app')
     const nuxtApp = tryUseNuxtApp()
     if (nuxtApp) {
       return nuxtApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
@@ -106,6 +107,7 @@ function getHooks(): Hookable<GlobalFetchHooks & ClientFetchHooks> | null {
 
   try {
     // @ts-ignore
+    const { useNitroApp } = await import('#internal/nitro')
     const nitroApp = useNitroApp()
     return nitroApp.hooks as Hookable<GlobalFetchHooks | ClientFetchHooks>
   }
