@@ -81,11 +81,14 @@ export default defineNuxtModule<ModuleOptions>({
         let schema: OpenAPI3Schema | undefined = config.schema
 
         if (!config.schema) {
-          const jsonPath = resolve(schemasDir, `${name}/openapi.json`)
-          const yamlPath = resolve(schemasDir, `${name}/openapi.yaml`)
-
-          schema = existsSync(jsonPath) ? jsonPath : existsSync(yamlPath) ? yamlPath : undefined
-          schema = schema ? new URL(`file://${schema}`) : undefined
+          const extensions = ['json', 'yaml', 'yml']
+          for (const extension of extensions) {
+            const filePath = resolve(schemasDir, `${name}/openapi.${extension}`)
+            if (existsSync(filePath)) {
+              schema = new URL(`file://${filePath}`)
+              break
+            }
+          }
         }
         else if (typeof config.schema === 'string') {
           schema = isValidUrl(config.schema) ? config.schema : new URL(`file://${resolve(rootDir, config.schema)}`)
